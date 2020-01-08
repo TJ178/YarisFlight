@@ -12,29 +12,22 @@ public class Player {
 	
 	//attributes
 	private int x, y; 			//position of frog
-	private boolean alive;		//aliveness of our reptilian  friend
-	private int width, height; 	// size of froggy
+	private boolean alive;		//aliveness of our manual 2007 red yaris driving friend
+	private int width, height; 	// size of yar'
 	private Image img;			//image
-	private int vx, vy;
-	private boolean noSmash;
-	private int logIndex;
-	private int score;
-	private int lives;
-	private int highscore;
+	private int vx, vy;			//velocity 
+	private double rv;	    		//rotation velocity  
 	
 	public Player(String fileName) {
-		width = 50;
-		height = 50;
-		x = (900/2) - (width/2);
-		y = 800;
+		//width;
+		//height;
+		//x;
+		//y;
 		vx = 0;
 		vy = 0;
+		rv = 0;
 		img = getImage(fileName);
 		init(x, y);
-		noSmash = false;
-		score = 0;
-		highscore = 0;
-		lives = 5;
 		alive = true;
 	}
 	
@@ -60,65 +53,33 @@ public class Player {
 			}
 		}
 	}
-	public void resetRound(int keyCode) {
-		if(keyCode == 32 && !isAlive()) {
-			reset();
-			lives = 5;
-			score = 0;
-		}
-	}
+
+	//returns aliveness
 	public boolean isAlive() {
-		return lives > 0;
+		return alive;
 	}
-	public void score() {
-		reset();
-		score ++;
-	}
-	public void isDed() {
-		reset();
-		lives +=-1;
-	}
-	public int getLives() {
-		return lives;
-	}
-	public void setLives(int newLives) {
-		lives = newLives;
-	}
-	public void decrementLives() {
-		lives+=-1; //:)
-	}
-	public int getHScore() {
-		return highscore;
-	}
-	public void newHScore() {
-		if(score > highscore) {
-			highscore = score;
-		}
-	}
-	public int getScore() {
-		return score;
-	}
-	public void setIndex(int num) {
-		logIndex = num;
-	}
-	public int getIndex() {
-		return logIndex;
-	}
-	public boolean getSmash() {
-		return noSmash;
-	}
-	public void setSmash(boolean bool) {
-		noSmash = bool;
-	}
+	
+	//getters and setters for vx, vy, rv
 	public void setVx(int newVx) {
 		vy = 0;
 		vx = newVx;
 	}
+	
 	public void setVy(int newVy) {
 		vx = 0;
 		vy = newVy;
 	}
 	
+	public double getRv() {
+		return rv;
+	}
+
+
+	public void setRv(double rv) {
+		this.rv = rv;
+	}
+	
+	//getters and setters for x and y
 	public int getX() {
 		return (int) tx.getTranslateX();
 	}
@@ -135,13 +96,27 @@ public class Player {
 		tx.setToTranslation(tx.getTranslateX(), newY);
 	}
 	
+	/*
+	 * colliding method, I'll leave it for reference for now
 	public boolean collided(int ox, int oy, int ow, int oh) {
 		Rectangle obs = new Rectangle(ox, oy, ow, oh);
 		Rectangle froggy = new Rectangle((int) tx.getTranslateX(), (int) tx.getTranslateY(), width, height);
 		return obs.intersects(froggy);
 	}
+	*/
+	
+	//prob wont use but lateral move method
 	public void move() {
 		tx.translate(vx, vy);
+	}
+	
+	//rotate methods
+	public void rotateCW() {
+		tx.rotate(rv);
+	}
+	
+	public void rotateCCW() {
+		tx.rotate(-rv);
 	}
 	
 	
