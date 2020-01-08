@@ -119,7 +119,7 @@ public class Player {
 		tx.rotate(-rv);
 	}
 	
-	
+	//paint and transform mumbo jumbo 
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
