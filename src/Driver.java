@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javafx.scene.layout.Background;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,6 +28,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	public void paint(Graphics g){
 		super.paintComponent(g);
+		g.setColor(Color.CYAN);
+		g.fillRect(0, 0, screen_width, screen_height);
 		
 		g.drawRect(10, 10, 50, 50);
 	}
