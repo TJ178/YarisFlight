@@ -136,8 +136,8 @@ public class Player {
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			//URL imageURL = Froggy.class.getResource(path);
-			//tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
+			URL imageURL = Player.class.getResource(path);
+			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
