@@ -16,7 +16,8 @@ public class Player {
 	private int width, height; 	// size of yar'
 	private Image img;			//image
 	private int vx, vy;			//velocity 
-	private double rv;	    		//rotation velocity  
+	private double rv;	    	//rotation velocity  
+	private double pi = Math.PI;
 	
 	public Player(String fileName) {
 		//width;
@@ -33,8 +34,8 @@ public class Player {
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
 	
-	//vx setter 
 	
+	/*
 	public void jump(int dist, int keyCode) {
 		if(isAlive()) {
 			switch(keyCode) {
@@ -53,7 +54,8 @@ public class Player {
 			}
 		}
 	}
-
+	*/
+	
 	//returns aliveness
 	public boolean isAlive() {
 		return alive;
