@@ -11,7 +11,11 @@ import javax.swing.ImageIcon;
 public class Player {
 	
 	//attributes
-	private int x, y; 			//position of frog
+	private int x, y;
+	private int displayX = 500, displayY = 400;
+	private double scale = .25;
+	private int offsetx = (int)(540*scale);
+	private int offsety = (int)(390*scale);
 	private boolean alive;		//aliveness of our manual 2007 red yaris driving friend
 	private int width, height; 	// size of yar'
 	private Image img;			//image
@@ -22,17 +26,18 @@ public class Player {
 	public Player(String fileName) {
 		//width;
 		//height;
-		//x;
-		//y;
+		x = -offsetx;
+		y = -offsety;
 		vx = 0;
 		vy = 0;
 		rv = 0;
 		img = getImage(fileName);
-		init(x, y);
 		alive = true;
+		tx = AffineTransform.getTranslateInstance(x+displayX, y+displayY);
+		tx.scale(scale, scale);
 	}
 	
-	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
+	private AffineTransform tx;// = AffineTransform.getTranslateInstance(x, y);
 	
 	
 	/*
@@ -110,6 +115,7 @@ public class Player {
 	//prob wont use but lateral move method
 	public void move() {
 		tx.translate(vx, vy);
+		tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
 	}
 	
 	//rotate methods
@@ -129,7 +135,7 @@ public class Player {
 
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(1, 1);
+		tx.scale(scale, scale);
 	}
 
 	// converts image to make it drawable in paint

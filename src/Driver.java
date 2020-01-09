@@ -24,7 +24,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	//put variables // things to update in here
 	public void update(){
-		
+		player.move();
 	}
 	
 	public void paint(Graphics g){
@@ -67,7 +67,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		//sprite instantiation
 		player = new Player("yarisright.png");
-		
+		//player.setX(screen_width/2);
+		//player.setY(screen_height/2);
 		
 		
 		f.add(this);
@@ -123,14 +124,37 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		
+		switch(key){
+		case 37: //left arrow key
+			player.setRv(-.10);
+			break;
+		case 39:
+			player.setRv(.10);
+			break;
+		default:
+			System.out.println(key);
+		}
+		
 		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		
+		switch(key){
+		case 37: //left arrow key
+			player.setRv(0);
+			break;
+		case 39:
+			player.setRv(0);
+			break;
+		default:
+			System.out.println(key);
+		}
 		
 	}
 
