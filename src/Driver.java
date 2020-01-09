@@ -19,6 +19,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private int screen_width = 1000;
 	private Timer t;
 	
+	Player player;
+	
 	
 	//put variables // things to update in here
 	public void update(){
@@ -29,8 +31,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		super.paintComponent(g);
 		g.setColor(Color.CYAN);
 		g.fillRect(0, 0, screen_width, screen_height);
+		player.paint(g);
 		
-		g.drawRect(10, 10, 50, 50);
 	}
 	
 	
@@ -64,6 +66,9 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		f.addMouseListener(this);
 		
 		//sprite instantiation
+		player = new Player("yarisright.png");
+		
+		
 		
 		f.add(this);
 		t = new Timer(17, this);

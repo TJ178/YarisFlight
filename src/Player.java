@@ -143,6 +143,8 @@ public class Player {
 		}
 		return tempImage;
 	}
+	
+	
 	public void reset() {
 		// TODO Auto-generated method stub
 		tx.setToTranslation(x, y);
