@@ -1,12 +1,15 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+
 
 public class Player {
 	
@@ -17,24 +20,27 @@ public class Player {
 	private int offsetx = (int)(540*scale);
 	private int offsety = (int)(390*scale);
 	private boolean alive;		//aliveness of our manual 2007 red yaris driving friend
-	private int width = (int)(768*scale);
-	private int height= (int)(652*scale); 	// size of yar'
+	private int width = (int)(1024*scale); //768x 652
+	private int height= (int)(768*scale); 	// size of yar'
 	private Image img;			//image
 	private int vx, vy;			//velocity 
 	private double rv;	    	//rotation velocity  
 	private double pi = Math.PI;
 	
+	private int airDrag = 0;
+	private Shape bounds;
+	
 	public Player(String fileName) {
 		//width;
 		//height;
-		x = -offsetx;
-		y = -offsety;
+		x = 0;
+		y = 200;
 		vx = 0;
 		vy = 0;
 		rv = 0;
 		img = getImage(fileName);
 		alive = true;
-		tx = AffineTransform.getTranslateInstance(x+displayX, y+displayY);
+		tx = AffineTransform.getTranslateInstance(displayX-offsetx, displayY-offsety);
 		tx.scale(scale, scale);
 	}
 	
@@ -66,6 +72,11 @@ public class Player {
 	public boolean isAlive() {
 		return alive;
 	}
+	
+	public Shape getBounds(){
+		return bounds;
+	}
+	
 	
 	//getters and setters for vx, vy, rv
 	public void setVx(int newVx) {
@@ -118,11 +129,13 @@ public class Player {
 		//tx.translate(vx, vy);
 		x += vx;
 		y += vy;
-		if(y - height/2 < 0){
-			vy = 0; 
-		}
 		System.out.println("Player x: "+x+" y: "+y);
 		tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
+		
+		bounds = new Rectangle(92,206,900,359);
+		//AffineTransform trans = (AffineTransform) tx.clone();
+		//trans.setToScale(1, 1);
+		bounds = tx.createTransformedShape(bounds);
 	}
 	
 	//rotate methods
@@ -138,6 +151,8 @@ public class Player {
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
+		g2.setColor(Color.BLACK);
+		g2.draw(bounds);
 	}
 
 	private void init(double a, double b) {
