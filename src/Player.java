@@ -17,7 +17,8 @@ public class Player {
 	private int offsetx = (int)(540*scale);
 	private int offsety = (int)(390*scale);
 	private boolean alive;		//aliveness of our manual 2007 red yaris driving friend
-	private int width, height; 	// size of yar'
+	private int width = (int)(768*scale);
+	private int height= (int)(652*scale); 	// size of yar'
 	private Image img;			//image
 	private int vx, vy;			//velocity 
 	private double rv;	    	//rotation velocity  
@@ -88,19 +89,19 @@ public class Player {
 	
 	//getters and setters for x and y
 	public int getX() {
-		return (int) tx.getTranslateX();
+		return x;
 	}
 	
 	public void setX(int newX) {
-		tx.setToTranslation(newX, tx.getTranslateY());
+		x = newX;
 	}
 	
 	public int getY() {
-		return (int) tx.getTranslateY();
+		return y;
 	}
 	
 	public void setY(int newY) {
-		tx.setToTranslation(tx.getTranslateX(), newY);
+		y = newY;
 	}
 	
 	/*
@@ -114,7 +115,13 @@ public class Player {
 	
 	//prob wont use but lateral move method
 	public void move() {
-		tx.translate(vx, vy);
+		//tx.translate(vx, vy);
+		x += vx;
+		y += vy;
+		if(y - height/2 < 0){
+			vy = 0; 
+		}
+		System.out.println("Player x: "+x+" y: "+y);
 		tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
 	}
 	

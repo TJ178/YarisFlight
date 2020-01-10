@@ -20,6 +20,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private Timer t;
 	
 	Player player;
+	Ground ground;
 	
 	
 	//put variables // things to update in here
@@ -32,6 +33,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setColor(Color.CYAN);
 		g.fillRect(0, 0, screen_width, screen_height);
 		player.paint(g);
+		ground.paint(g, player.getY());
 		
 	}
 	
@@ -69,6 +71,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		player = new Player("yarisright.png");
 		//player.setX(screen_width/2);
 		//player.setY(screen_height/2);
+		ground = new Ground();
 		
 		
 		f.add(this);
@@ -134,6 +137,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		case 39:
 			player.setRv(.10);
 			break;
+		case 40:
+			player.setVy(-10);
+			break;
+		case 38:
+			player.setVy(10);
+			break;
 		default:
 			System.out.println(key);
 		}
@@ -151,6 +160,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			break;
 		case 39:
 			player.setRv(0);
+			break;
+		case 40:
+			player.setVy(0);
+			break;
+		case 38:
+			player.setVy(0);
 			break;
 		default:
 			System.out.println(key);
