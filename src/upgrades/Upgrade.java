@@ -1,4 +1,6 @@
+package upgrades;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 
 
 public class Upgrade {
@@ -7,9 +9,13 @@ public class Upgrade {
 	protected int weight;
 	protected int drag;
 	protected int lift;
-	protected int speed;
+	//protected int speed;
 	
-	public Upgrade() {
+	public Upgrade(int weight, int drag, int lift) {
+		this.weight = weight;
+		//this.speed = speed;
+		this.lift = lift;
+		this.drag = drag;
 		
 	}
 	
