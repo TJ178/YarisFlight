@@ -22,17 +22,26 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	Player player;
 	Ground ground;
 	
+	WingsUpgrade wings;
 	
 	//put variables // things to update in here
 	public void update(){
 		player.move();
+		wings.move(player.getRv());
 	}
 	
 	public void paint(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.CYAN);
 		g.fillRect(0, 0, screen_width, screen_height);
+		g.setColor(Color.blue);
+		//wing paint
+		wings.paint(g);
+		
 		player.paint(g);
+		g.fillOval((int)wings.getAnchorX() - 50, (int)wings.getAnchorY() - 50, 100, 100);
+
+
 		ground.paint(g, player.getY());
 		
 	}
@@ -71,8 +80,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		player = new Player("yarisright.png");
 		//player.setX(screen_width/2);
 		//player.setY(screen_height/2);
+		wings = new WingsUpgrade();
+		wings.upgrade1();
+		
 		ground = new Ground();
 		
+	
 		
 		f.add(this);
 		t = new Timer(17, this);

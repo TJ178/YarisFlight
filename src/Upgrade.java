@@ -1,4 +1,4 @@
-package upgrades;
+
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 
@@ -16,7 +16,6 @@ public class Upgrade {
 		//this.speed = speed;
 		this.lift = lift;
 		this.drag = drag;
-		
 	}
 	
 	public String getImgPath() {
