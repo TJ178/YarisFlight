@@ -22,11 +22,18 @@ public class Player {
 	private int width = (int)(1024*scale); //768x 652
 	private int height= (int)(768*scale); 	// size of yar'
 	private Image img;			//image
+	
 	private int vx, vy;			//velocity 
+	private int ax, ay;			//acceleration
+	private int appliedForceX, appliedForceY;
+	private int netArea = 10; ////TODO: make netArea a function of the angle
+	private int mass = 100;
+	
 	private double rv;	    	//rotation velocity  
 	private double pi = Math.PI;
 	
 	private int airDrag = 0;
+	private int gravity = -10;
 	private Shape bounds;
 	
 	public Player(String fileName) {
@@ -88,6 +95,15 @@ public class Player {
 		vy = newVy;
 	}
 	
+	public void setAx(int newAx){
+		ax = newAx;
+	}
+	
+	public void setAy(int newAy){
+		ay = newAy;
+		ay += gravity;
+	}
+	
 	public double getRv() {
 		return rv;
 	}
@@ -126,6 +142,11 @@ public class Player {
 	//prob wont use but lateral move method
 	public void move() {
 		//tx.translate(vx, vy);
+		updateAccelerations();
+		vx += ax;
+		vy += ay;
+		
+		
 		x += vx;
 		y += vy;
 		System.out.println("Player x: "+x+" y: "+y);
@@ -136,6 +157,22 @@ public class Player {
 		//trans.setToScale(1, 1);
 		bounds = tx.createTransformedShape(bounds);
 	}
+	
+	public void updateAccelerations(){
+		int fx = appliedForceX;
+		int fy = appliedForceY;
+		fy += gravity;
+		double netForceAngle = Math.atan(fx/fy);
+		
+		
+		double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
+		double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
+		netforce -= .5 * Math.pow(netvelocity, 2) * airDrag * netArea;
+		
+		fx = (int) (Math.cos(netForceAngle)*netforce);
+		fy = (int) (Math.sin(netForceAngle)*netforce);
+	}
+	
 	
 	//rotate methods
 	public void rotateCW() {

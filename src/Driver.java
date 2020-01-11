@@ -21,6 +21,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	Player player;
 	Ground ground;
+	Cloud cloud;
 	
 	WingsUpgrade wings;
 	
@@ -78,6 +79,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		//sprite instantiation
 		player = new Player("yarisright.png");
+		cloud = new Cloud("cloud.png");
+
 		//player.setX(screen_width/2);
 		//player.setY(screen_height/2);
 		wings = new WingsUpgrade();
