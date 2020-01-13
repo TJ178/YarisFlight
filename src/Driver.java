@@ -40,7 +40,6 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		wings.paint(g);
 		
 		player.paint(g);
-		g.fillOval((int)wings.getAnchorX() - 50, (int)wings.getAnchorY() - 50, 100, 100);
 
 
 		ground.paint(g, player.getY());
