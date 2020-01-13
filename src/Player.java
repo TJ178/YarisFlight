@@ -25,7 +25,7 @@ public class Player {
 	
 	private int vx, vy;			//velocity 
 	private int ax, ay;			//acceleration
-	private int appliedForceX, appliedForceY;
+	private int appliedForceX = 5, appliedForceY;
 	private int netArea = 10; ////TODO: make netArea a function of the angle
 	private int mass = 100;
 	
@@ -149,28 +149,33 @@ public class Player {
 		
 		x += vx;
 		y += vy;
-		System.out.println("Player x: "+x+" y: "+y);
+		
+		System.out.println("Accel x: "+ax+" y: "+ay);
 		tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
 		
 		bounds = new Rectangle(92,206,900,359);
 		//AffineTransform trans = (AffineTransform) tx.clone();
 		//trans.setToScale(1, 1);
 		bounds = tx.createTransformedShape(bounds);
+		
 	}
 	
 	public void updateAccelerations(){
 		int fx = appliedForceX;
 		int fy = appliedForceY;
 		fy += gravity;
-		double netForceAngle = Math.atan(fx/fy);
+		double netForceAngle = Math.atan(fy/fx);
 		
 		
 		double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
 		double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
 		netforce -= .5 * Math.pow(netvelocity, 2) * airDrag * netArea;
+		System.out.println(netforce);
 		
 		fx = (int) (Math.cos(netForceAngle)*netforce);
 		fy = (int) (Math.sin(netForceAngle)*netforce);
+		ax = fx;
+		ay = fy;
 	}
 	
 	

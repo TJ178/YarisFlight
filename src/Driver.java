@@ -153,7 +153,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(.10);
 			break;
 		case 40:
-			player.setVy(-10);
+			player.setAy(10);
 			break;
 		case 38:
 			player.setVy(10);
