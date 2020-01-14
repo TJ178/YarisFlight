@@ -19,6 +19,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private int screen_width = 1000;
 	private Timer t;
 	
+	public Cloud[] cloudRow1 = new Cloud[99999];
+	
 	Player player;
 	Ground ground;
 	Cloud cloud;
@@ -45,7 +47,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void paint(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.CYAN);
-		g.fillRect(0, 0, screen_width, screen_height);
+		//g.fillRect(0, 0, screen_width, screen_height);
 		g.setColor(Color.blue);
 		//wing paint
 		if(wings.getLevel() < 2) {
@@ -64,6 +66,14 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("ForceY: " + player.getAppliedForceY(), 0, 40);
 
 		ground.paint(g, player.getY());
+	
+		
+		for(int i = 10; i< cloudRow1.length; i+=100) {
+			cloudRow1[i].paint(g);
+			System.out.println("CLOUD" + cloudRow1[i].getX());
+			
+		}
+	//	}
 		
 	}
 	
@@ -99,7 +109,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		//sprite instantiation
 		player = new Player("yarisright.png");
-		cloud = new Cloud("cloud.png");
+		//cloud = new Cloud("cloud.png");
+		
+		for(int i = 10; i< cloudRow1.length; i+=10) {
+			cloudRow1[i] = new Cloud("cloud.png");
+		}
 
 		//player.setX(screen_width/2);
 		//player.setY(screen_height/2);
