@@ -2,10 +2,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -15,6 +17,8 @@ public class Player {
 	//attributes
 	private int x, y;
 	private int displayX = 500, displayY = 400;
+	private double angle;
+	
 	private double scale = .25;
 	private int offsetx = (int)(540*scale);
 	private int offsety = (int)(390*scale);
@@ -26,22 +30,27 @@ public class Player {
 	private double vx, vy;			//velocity 
 	private double ax, ay;			//acceleration
 	private int appliedForceX = 5, appliedForceY;
+	private double appliedThrust;
 	private int netArea = 10; ////TODO: make netArea a function of the angle
-	private int mass = 100;
+	private int mass = 1;
+	private double liftdragratio = 10
+			;
+	
 	private boolean onGround = false;
 	
 	private double rv;	    	//rotation velocity  
 	private double pi = Math.PI;
 	
 	private int airDrag = 0;
-	private int gravity = -3;
+	private int gravity = -10;
 	private Shape bounds;
 	
 	public Player(String fileName) {
 		//width;
 		//height;
 		x = 0;
-		y = 200;
+		y = 500;
+		angle = 0;
 		vx = 0;
 		vy = 0;
 		rv = 0;
@@ -99,9 +108,15 @@ public class Player {
 	public void setAx(int newAx){
 		ax = newAx;
 	}
+	public double getAy(){
+		return ay;
+	}
+	public double getAx(){
+		return ax;
+	}
 	
-	public void setAy(int newAy){
-		appliedForceY = newAy;
+	public void setThrust(int newThrust){
+		appliedThrust = newThrust;
 		//appliedForceY += gravity;
 	}
 	
@@ -163,12 +178,15 @@ public class Player {
 		x += vx;
 		y += vy;
 		
-		if(onGround && ay <= 0) {
-			y = (int) (40);
-		}
+		//if(onGround && ay <= 0) {
+			//y = (int) (40);
+		//}
 		
 		System.out.println("Accel x: "+ax+" y: "+ay);
 		tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
+		//tx.setToRotation(angle, displayX, displayY);
+		angle = -extractAngle(tx);
+		//System.out.println(angle);
 		
 		bounds = new Rectangle(92,206,900,359);
 		//AffineTransform trans = (AffineTransform) tx.clone();
@@ -178,33 +196,69 @@ public class Player {
 	}
 	
 	public void updateAccelerations(){
-		double fx = appliedForceX;
+		/*double fx = appliedForceX;
 		double fy = appliedForceY;
 		if(!onGround) {
 			fy += gravity;
-		}
-		double netForceAngle = Math.atan(fy/fx);
+		}*/
 		
 		
-		double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
-		double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
-		netforce -= .5 * Math.pow(netvelocity, 2) * airDrag * netArea;
-		System.out.println(netforce);
 		
-		fx = Math.cos(netForceAngle)*netforce;
-		fy = Math.sin(netForceAngle)*netforce;
-		ax = (int) fx;
-		ay = (int) fy;
+		//double netForceAngle = Math.atan(fy/fx);
+		
+		
+		
+		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angle; //* angle; //* lift coefficient changes with angle
+		double drag = lift * Math.pow(liftdragratio, -1);
+		
+		//x and y components, but currently offset in relation to the player's angle
+		double tempX = appliedThrust - drag;
+		double tempY = lift;
+		
+		//get netforce, then offset angle to be same plane as screen
+		double tempNet = Math.sqrt(Math.pow(tempX, 2)+Math.pow(tempY,2));
+		double tempAngle = Math.atan(tempY/tempX) + angle;
+		System.out.println(gravity);
+		
+		//apply gravity
+		double fx = Math.cos(tempAngle)*tempNet;
+		double fy = Math.sin(tempAngle)*tempNet + gravity;
+		System.out.println("fx: "+fx);
+		System.out.println("fy: "+fy);
+		
+		
+		//double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
+		//double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
+
+		//System.out.println(tempNet);
+		
+		
+		//fy = Math.sin(netForceAngle)*netforce;
+		ax = fx / mass;
+		ay = fy / mass;
 	}
+	
+	private static double extractAngle(AffineTransform at)
+    {
+        Point2D p0 = new Point();
+        Point2D p1 = new Point(1,0);
+        Point2D pp0 = at.transform(p0, null);
+        Point2D pp1 = at.transform(p1, null);
+        double dx = pp1.getX() - pp0.getX();
+        double dy = pp1.getY() - pp0.getY();
+        double angle = Math.atan2(dy, dx);
+        return angle;
+    }
+	
 	
 	
 	//rotate methods
 	public void rotateCW() {
-		tx.rotate(rv);
+		angle += rv;
 	}
 	
 	public void rotateCCW() {
-		tx.rotate(-rv);
+		angle -= rv;
 	}
 	
 	//paint and transform mumbo jumbo 
