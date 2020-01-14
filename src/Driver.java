@@ -37,10 +37,14 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.fillRect(0, 0, screen_width, screen_height);
 		g.setColor(Color.blue);
 		//wing paint
-		wings.paint(g);
-		
+		if(wings.getLevel() < 2) {
+			wings.paint(g);
+		}
 		player.paint(g);
-
+		if(wings.getLevel() > 1) {
+			wings.paint(g);
+		}
+		
 
 		ground.paint(g, player.getY());
 		
@@ -84,7 +88,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//player.setY(screen_height/2);
 		wings = new WingsUpgrade();
 		wings.upgrade1();
-		
+		wings.upgrade2();
 		ground = new Ground();
 		
 	
