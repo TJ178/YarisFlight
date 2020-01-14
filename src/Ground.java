@@ -9,7 +9,7 @@ public class Ground {
 	private int y = 0;
 	private int displayY;
 	
-	private Rectangle bounds;
+	private Rectangle bounds = new Rectangle();
 	
 	public Ground(){
 		

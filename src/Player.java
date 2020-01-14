@@ -23,17 +23,18 @@ public class Player {
 	private int height= (int)(768*scale); 	// size of yar'
 	private Image img;			//image
 	
-	private int vx, vy;			//velocity 
-	private int ax, ay;			//acceleration
+	private double vx, vy;			//velocity 
+	private double ax, ay;			//acceleration
 	private int appliedForceX = 5, appliedForceY;
 	private int netArea = 10; ////TODO: make netArea a function of the angle
 	private int mass = 100;
+	private boolean onGround = false;
 	
 	private double rv;	    	//rotation velocity  
 	private double pi = Math.PI;
 	
 	private int airDrag = 0;
-	private int gravity = -10;
+	private int gravity = -3;
 	private Shape bounds;
 	
 	public Player(String fileName) {
@@ -100,8 +101,16 @@ public class Player {
 	}
 	
 	public void setAy(int newAy){
-		ay = newAy;
-		ay += gravity;
+		appliedForceY = newAy;
+		//appliedForceY += gravity;
+	}
+	
+	public void setGround(boolean g) {
+		onGround = g;
+	}
+	
+	public boolean onGround() {
+		return onGround;
 	}
 	
 	public double getRv() {
@@ -130,6 +139,10 @@ public class Player {
 		y = newY;
 	}
 	
+	public int getAppliedForceY() {
+		return appliedForceY;
+	}
+	
 	/*
 	 * colliding method, I'll leave it for reference for now
 	public boolean collided(int ox, int oy, int ow, int oh) {
@@ -150,6 +163,10 @@ public class Player {
 		x += vx;
 		y += vy;
 		
+		if(onGround && ay <= 0) {
+			y = (int) (40);
+		}
+		
 		System.out.println("Accel x: "+ax+" y: "+ay);
 		tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
 		
@@ -161,9 +178,11 @@ public class Player {
 	}
 	
 	public void updateAccelerations(){
-		int fx = appliedForceX;
-		int fy = appliedForceY;
-		fy += gravity;
+		double fx = appliedForceX;
+		double fy = appliedForceY;
+		if(!onGround) {
+			fy += gravity;
+		}
 		double netForceAngle = Math.atan(fy/fx);
 		
 		
@@ -172,10 +191,10 @@ public class Player {
 		netforce -= .5 * Math.pow(netvelocity, 2) * airDrag * netArea;
 		System.out.println(netforce);
 		
-		fx = (int) (Math.cos(netForceAngle)*netforce);
-		fy = (int) (Math.sin(netForceAngle)*netforce);
-		ax = fx;
-		ay = fy;
+		fx = Math.cos(netForceAngle)*netforce;
+		fy = Math.sin(netForceAngle)*netforce;
+		ax = (int) fx;
+		ay = (int) fy;
 	}
 	
 	

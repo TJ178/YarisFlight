@@ -25,10 +25,21 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	WingsUpgrade wings;
 	
+	CollisionHandler collision;
+	
 	//put variables // things to update in here
 	public void update(){
 		player.move();
 		wings.move(player.getRv());
+		
+		if(collision.inGround()) {
+			player.setVx(0);
+			player.setVy(0);
+			player.setGround(true);
+		}else {
+			player.setGround(false);
+		}
+		
 	}
 	
 	public void paint(Graphics g){
@@ -40,6 +51,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		wings.paint(g);
 		
 		player.paint(g);
+		g.setColor(Color.black);
+		g.drawString("x: " + player.getX(), 0, 10);
+		g.drawString("y: " + player.getY(), 0, 20);
+		g.drawString("ground: " + player.onGround(), 0, 30);
+		g.drawString("ForceY: " + player.getAppliedForceY(), 0, 40);
 
 
 		ground.paint(g, player.getY());
@@ -86,6 +102,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		wings.upgrade1();
 		
 		ground = new Ground();
+		
+		collision = new CollisionHandler(player, ground);
 		
 	
 		
@@ -153,10 +171,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(.10);
 			break;
 		case 40:
-			player.setAy(10);
+			player.setAy(5);
 			break;
 		case 38:
-			player.setVy(10);
+			player.setAy(5);
 			break;
 		default:
 			System.out.println(key);
@@ -177,10 +195,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(0);
 			break;
 		case 40:
-			player.setVy(0);
+			player.setAy(0);
 			break;
 		case 38:
-			player.setVy(0);
+			player.setAy(0);
 			break;
 		default:
 			System.out.println(key);
