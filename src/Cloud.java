@@ -1,147 +1,226 @@
-
-
-//public class Cloud extends Entity{
-	
-
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
 
-public class Cloud extends Entity {
-
-	private int cx , cy; 						//position of car;
-	private int cwidth = 85, cheight = 40; 		//width and height of cars
-	private Image cimg;							//car image
-	private int cvx, cvy;	
+public class Cloud {
 	
+	//attributes
+	private int x =1000, y;
+	private int displayX = 1000, displayY = 200;
+	private double scale = .25;
+	private int offsetx = (int)(540*scale);
+	private int offsety = (int)(390*scale);
+	//private boolean alive;		//aliveness of our manual 2007 red yaris driving friend
+	//private int width = (int)(1024*scale); //768x 652
+//	private int height= (int)(768*scale); 	// size of yar'
+	private Image img;			//image
 	
- 
-//car constructor 
-public Cloud(String fileName) {
-	cx = 100;
-	cy = 400;
-	cvx = 0;
-	cvy = 0;
-	cwidth = 85;
-	cheight = 40;
+	/*private double vx, vy;			//velocity 
+	private double ax, ay;			//acceleration
+	private int appliedForceX = 5, appliedForceY;
+	private int netArea = 10; ////TODO: make netArea a function of the angle
+	private int mass = 100;
+	private boolean onGround = false;
 	
+	private double rv;	    	//rotation velocity  
+	private double pi = Math.PI;
 	
-	
-	//ok to be blackboxed and not explain
-	cimg = getImage(fileName);
-	init(cx, cy);
-}
-
-public Cloud(String fileName, int startCX, int startCY) {
-	cx = startCX;
-	cy = startCY;
-	cvx = 0;
-	cvy = 0;
-	cwidth = 85;
-	cheight = 40;
-	
-	
-	//ok to be blackboxed and not explain
-	cimg = getImage(fileName);
-	init(cx, cy);
-}
-
-//cars can't move diagonally
-public void setCvx(int cxVelocity) {
-	cvx = cxVelocity;
-	
-	if(cvy!=0) {
-		cvx = 0;
+	private int airDrag = 0;
+	private int gravity = -3;
+	private Shape bounds;
+	*/
+	public Cloud(String fileName) {
+		//width;
+		//height;
+		x = 8000;
+		y = 100;
+	/*	vx = 0;
+		vy = 0;
+		rv = 0;*/
+		img = getImage(fileName);
+		//alive = true;
+		tx = AffineTransform.getTranslateInstance(displayX-offsetx, displayY-offsety);
+		tx.scale(scale, scale);
 	}
-}
-
-
-public void setCvy(int cyVelocity) {
-	cvy = cyVelocity;
-	if(cvx!=0) {
-		cvy = 0;
-	}
-}
-
-//the cars reset loop back to where they started when they go off the screen
-public void move() {
-	ctx.translate(cvx,  cvy);
 	
-	if (ctx.getTranslateX() > 1500 && cvx > 0) {
-		ctx.setToTranslation(-470, cy);
-		cvx = 2;
-		cwidth = 85;
-		cheight = 40;
+	private AffineTransform tx;// = AffineTransform.getTranslateInstance(x, y);
+	
+	
+	/*
+	public void jump(int dist, int keyCode) {
+		if(isAlive()) {
+			switch(keyCode) {
+				case 37:
+					tx.setToTranslation(tx.getTranslateX() - dist, tx.getTranslateY());
+					break;
+				case 38:
+					tx.setToTranslation(tx.getTranslateX(), tx.getTranslateY() - dist);
+					break;
+				case 39:
+					tx.setToTranslation(tx.getTranslateX() + dist, tx.getTranslateY());			
+					break;
+				case 40:
+					tx.setToTranslation(tx.getTranslateX(), tx.getTranslateY() + dist);			
+					break;
+			}
+		}
+	}
+	*/
+	
+	//returns aliveness
+/*	public boolean isAlive() {
+		return alive;
+	}
+	
+	public Shape getBounds(){
+		return bounds;
+	}
+	
+	
+	//getters and setters for vx, vy, rv
+	public void setVx(int newVx) {
+		vy = 0;
+		vx = newVx;
+	}
+	
+	public void setVy(int newVy) {
+		vx = 0;
+		vy = newVy;
+	}
+	
+	public void setAx(int newAx){
+		ax = newAx;
+	}
+	
+	public void setAy(int newAy){
+		appliedForceY = newAy;
+		//appliedForceY += gravity;
+	}
+	
+	public void setGround(boolean g) {
+		onGround = g;
+	}
+	
+	public boolean onGround() {
+		return onGround;
+	}
+	
+	public double getRv() {
+		return rv;
+	}
+
+
+	public void setRv(double rv) {
+		this.rv = rv;
+	}
+	*/
+	//getters and setters for x and y
+	public int getX() {
+		return x;
+	}
+	
+	public void setX(int newX) {
+		x = newX;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void setY(int newY) {
+		y = newY;
+	}
+	
+	/*public int getAppliedForceY() {
+		return appliedForceY;
+	}
+	*/
+	/*
+	 * colliding method, I'll leave it for reference for now
+	public boolean collided(int ox, int oy, int ow, int oh) {
+		Rectangle obs = new Rectangle(ox, oy, ow, oh);
+		Rectangle froggy = new Rectangle((int) tx.getTranslateX(), (int) tx.getTranslateY(), width, height);
+		return obs.intersects(froggy);
+	}
+	*/
+	
+	//prob wont use but lateral move method
+	public void move() {
+		//tx.translate(vx, vy);
+	/*	updateAccelerations();
+		vx += ax;
+		vy += ay;
 		
+		
+		x += vx;
+		y += vy;
+		
+		if(onGround && ay <= 0) {
+			y = (int) (40);
+		}
+	*/	
+		//System.out.println("Accel x: "+ax+" y: "+ay);
+	//	tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
+	/*
+		bounds = new Rectangle(92,206,900,359);
+		//AffineTransform trans = (AffineTransform) tx.clone();
+		//trans.setToScale(1, 1);
+		bounds = tx.createTransformedShape(bounds);
+	*/
 	}
 	
-	if (ctx.getTranslateX() < -2000 && cvx < 0) {
-		ctx.setToTranslation(1700, cy);
-		cvx = 2;
-		cwidth = 85;
-		cheight = 40;
+	/*public void updateAccelerations(){
+		double fx = appliedForceX;
+		double fy = appliedForceY;
+		if(!onGround) {
+			fy += gravity;
+		}
+		double netForceAngle = Math.atan(fy/fx);
+		
+		
+		double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
+		double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
+		netforce -= .5 * Math.pow(netvelocity, 2) * airDrag * netArea;
+		System.out.println(netforce);
+		
+		fx = Math.cos(netForceAngle)*netforce;
+		fy = Math.sin(netForceAngle)*netforce;
+		ax = (int) fx;
+		ay = (int) fy;
 	}
-}
-
-
-
-private AffineTransform ctx = AffineTransform.getTranslateInstance(cx, cy);
-
-
-
-//draw the affinetransform
-public void paint(Graphics g) {
-	Graphics2D g2 = (Graphics2D) g;
-	g2.drawImage(cimg, ctx, null);
+	*/
 	
-	//g2.draw(new Rectangle((int)(ctx.getTranslateX()), (int)(ctx.getTranslateY()), cwidth, cheight)); 	
-}
+	//rotate methods
+/*	public void rotateCW() {
+		tx.rotate(rv);
+	}
+	
+	public void rotateCCW() {
+		tx.rotate(-rv);
+	}
+*/	
+	//paint and transform mumbo jumbo 
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawImage(img, tx, null);
+		g2.setColor(Color.BLACK);
+	//	g2.draw(bounds);
+	}
 
-private void init(double a, double b) {
-	ctx.setToTranslation(a, b);
-	ctx.scale(1, 1);
-}
+	private void init(double a, double b) {
+		tx.setToTranslation(a, b);
+		tx.scale(scale, scale);
+	}
 
-	//getters and setters for car variables
-	public int getCx() {
-	return (int) ctx.getTranslateX();
-}
-
-public void setCx(int cx) {
-	this.cx = cx;
-}
-
-public int getCy() {
-	return (int) ctx.getTranslateY();
-}
-
-public void setCy(int cy) {
-	this.cy = cy;
-}
-
-public int getCwidth() {
-	return cwidth;
-
-}
-
-public void setCwidth(int cwidth) {
-	this.cwidth = cwidth;
-}
-
-public int getCheight() {
-	return cheight;
-}
-
-public void setCheight(int cheight) {
-	this.cheight = cheight;
-}
-
+	// converts image to make it drawable in paint
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
@@ -153,4 +232,12 @@ public void setCheight(int cheight) {
 		return tempImage;
 	}
 	
+	
+	public void reset() {
+		// TODO Auto-generated method stub
+		tx.setToTranslation(x, y);
+	//	vx = 0;
+	//	vy = 0;
+	}
+
 }
