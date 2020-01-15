@@ -51,8 +51,8 @@ public class Player {
 		x = 0;
 		y = 500;
 		angle = 0;
-		vx = 0;
-		vy = 10;
+		vx = 5;
+		vy = 5;
 		rv = 0;
 		img = getImage(fileName);
 		alive = true;
@@ -217,7 +217,7 @@ public class Player {
 		
 		
 		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angle; //* angle; //* lift coefficient changes with angle
-		double drag = lift * Math.pow(liftdragratio, -1);
+		double drag = Math.pow(lift,2) * Math.pow(liftdragratio, -1);
 		System.out.println("angle: "+ angle);
 		System.out.println("lift: " + lift);
 		System.out.println("drag: " + drag);
@@ -231,7 +231,7 @@ public class Player {
 		
 		//get netforce, then offset angle to be same plane as screen
 		double tempNet = Math.sqrt(Math.pow(tempX, 2)+Math.pow(tempY,2));
-		double tempAngle = Math.atan(tempY/tempX) + angle;
+		double tempAngle = Math.atan(tempY/tempX) + angle; /// need to fix angle offset -> make sure that angle is based on 0 -> 2pi rather than 0 -> pi/2
 		//System.out.println(tempAngle);
 		//System.out.println(tempNet);
 		
