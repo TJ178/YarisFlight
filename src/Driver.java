@@ -26,6 +26,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	Cloud cloud;
 	
 	WingsUpgrade wings;
+	EngineUpgrade engine;
 	
 	CollisionHandler collision;
 	
@@ -33,6 +34,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void update(){
 		player.move();
 		wings.move(player.getRv());
+		engine.move(player.getRv());
 		
 		if(collision.inGround()) {
 			player.setVx(0);
@@ -50,6 +52,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//g.fillRect(0, 0, screen_width, screen_height);
 		g.setColor(Color.blue);
 		//wing paint
+		engine.paint(g);
 		if(wings.getLevel() < 2) {
 			wings.paint(g);
 		}
@@ -120,6 +123,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		wings = new WingsUpgrade();
 		wings.upgrade1();
 		wings.upgrade2();
+		
+		engine = new EngineUpgrade();
+		engine.upgrade1();
+		
 		ground = new Ground();
 		
 		collision = new CollisionHandler(player, ground);
