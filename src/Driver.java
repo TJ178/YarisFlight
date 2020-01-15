@@ -58,6 +58,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("ForceY: " + player.getAppliedForceY(), 0, 40);
 		g.drawString("accelX: " + player.getAx(),0, 50);
 		g.drawString("accelY: " + player.getAy(),0, 60);
+		g.drawString("vx: " + player.getVx(),0, 70);
+		g.drawString("vy: " + player.getVy(),0, 80);
 
 
 		ground.paint(g, player.getY());
@@ -173,10 +175,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(.10);
 			break;
 		case 40:
-			player.setThrust(5);
+			player.setThrust(10);
 			break;
 		case 38:
-			player.setThrust(5);
+			player.setThrust(10);
 			break;
 		default:
 			System.out.println(key);

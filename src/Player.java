@@ -32,7 +32,7 @@ public class Player {
 	private int appliedForceX = 5, appliedForceY;
 	private double appliedThrust;
 	private int netArea = 10; ////TODO: make netArea a function of the angle
-	private int mass = 1;
+	private int mass = 100;
 	private double liftdragratio = 10
 			;
 	
@@ -52,7 +52,7 @@ public class Player {
 		y = 500;
 		angle = 0;
 		vx = 0;
-		vy = 0;
+		vy = 10;
 		rv = 0;
 		img = getImage(fileName);
 		alive = true;
@@ -103,6 +103,14 @@ public class Player {
 	public void setVy(int newVy) {
 		vx = 0;
 		vy = newVy;
+	}
+	
+	public double getVy(){
+		return vy;
+	}
+	
+	public double getVx(){
+		return vx;
 	}
 	
 	public void setAx(int newAx){
@@ -210,21 +218,35 @@ public class Player {
 		
 		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angle; //* angle; //* lift coefficient changes with angle
 		double drag = lift * Math.pow(liftdragratio, -1);
-		
+		System.out.println("angle: "+ angle);
+		System.out.println("lift: " + lift);
+		System.out.println("drag: " + drag);
 		//x and y components, but currently offset in relation to the player's angle
-		double tempX = appliedThrust - drag;
-		double tempY = lift;
+		double tempX = appliedThrust +0.05;
+		double tempY = lift + 0.05;
+		System.out.println(tempX);
+		System.out.println(tempY);
+		
+		
 		
 		//get netforce, then offset angle to be same plane as screen
 		double tempNet = Math.sqrt(Math.pow(tempX, 2)+Math.pow(tempY,2));
 		double tempAngle = Math.atan(tempY/tempX) + angle;
-		System.out.println(gravity);
+		//System.out.println(tempAngle);
+		//System.out.println(tempNet);
+		
 		
 		//apply gravity
 		double fx = Math.cos(tempAngle)*tempNet;
 		double fy = Math.sin(tempAngle)*tempNet + gravity;
-		System.out.println("fx: "+fx);
-		System.out.println("fy: "+fy);
+		
+		double dragAngle = Math.atan(vy/vx);
+		fx -= Math.cos(dragAngle)*drag;
+		fy -= Math.sin(dragAngle)*drag;
+		
+		
+		System.out.print("fx: "+fx);
+		System.out.println(" fy: "+fy);
 		
 		
 		//double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
