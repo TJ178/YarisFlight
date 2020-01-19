@@ -204,11 +204,66 @@ public class Player {
 	}
 	
 	public void updateAccelerations(){
+		double windAngle = Math.atan(vy/vx);
+		if(vx < 0){
+			windAngle *= -1;
+		}
+		double angleOfAttack = angle - windAngle;
+		
+		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
+		double drag = Math.abs( lift * Math.pow(liftdragratio, -1));
+		System.out.println("angle: "+ angle);
+		System.out.println("angleOfAttack: " + angleOfAttack);
+		System.out.println("lift: " + lift);
+		System.out.println("drag: " + drag);
+		//x and y components, but currently offset in relation to the player's angle
+		double tempX = appliedThrust;
+		double tempY = lift;
+		//System.out.println(tempX);
+		//System.out.println(tempY);
+		
+		
+		
+		//get netforce, then offset angle to be same plane as screen
+		double tempNet = Math.sqrt(Math.pow(tempX, 2)+Math.pow(tempY,2));
+		double tempAngle = Math.atan(tempY/tempX) + angle; /// need to fix angle offset -> make sure that angle is based on 0 -> 2pi rather than 0 -> pi/2
+		//System.out.println(tempAngle);
+		//System.out.println(tempNet);
+		
+		
+		//apply gravity
+		double fx = Math.cos(tempAngle)*tempNet;
+		double fy = Math.sin(tempAngle)*tempNet + gravity;
+		
+		double dragAngle = Math.atan(vy/vx);
+		if(vx < 0){
+			dragAngle *= -1;
+		}
+		fx -= Math.cos(dragAngle)*drag;
+		fy -= Math.sin(dragAngle)*drag;
+		
+		
+		System.out.print("fx: "+fx);
+		System.out.println(" fy: "+fy);
+		
+		
+		//double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
+		//double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
+
+		//System.out.println(tempNet);
+		
+		
+		//fy = Math.sin(netForceAngle)*netforce;
+		ax = fx / mass;
+		ay = fy / mass;
+		
+		
+		
 		/*double fx = appliedForceX;
 		double fy = appliedForceY;
 		if(!onGround) {
 			fy += gravity;
-		}*/
+		}
 		
 		
 		
@@ -258,6 +313,7 @@ public class Player {
 		//fy = Math.sin(netForceAngle)*netforce;
 		ax = fx / mass;
 		ay = fy / mass;
+		*/
 	}
 	
 	private static double extractAngle(AffineTransform at)

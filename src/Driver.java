@@ -177,7 +177,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(.10);
 			break;
 		case 40:
-			player.setThrust(10);
+			player.setThrust(20);
 			break;
 		case 38:
 			player.setThrust(10);
