@@ -17,15 +17,17 @@ public class Cloud extends Entity {
 
 	private int cx , cy; 						//position of car;
 	private int cwidth = 85, cheight = 40; 		//width and height of cars
-	private Image cimg;							//car image
+	private Image cimg;					//car image
+	private double scale = 0.5;
+	
 	private int cvx, cvy;	
 	
 	
  
 //car constructor 
 public Cloud(String fileName) {
-	cx = 100;
-	cy = 400;
+	cx = 1000;
+	cy = 200;
 	cvx = 0;
 	cvy = 0;
 	cwidth = 85;
@@ -94,8 +96,19 @@ public void move() {
 private AffineTransform ctx = AffineTransform.getTranslateInstance(cx, cy);
 
 
+//two paint functions because need to implement the superclass paint(Graphics)
 
-//draw the affinetransform
+public void paint(Graphics g, int playerx, int playery) {
+	Graphics2D g2 = (Graphics2D) g;
+	ctx.setToTranslation(cx-playerx, cy+playery);
+	ctx.scale(scale,scale);
+	
+	
+	g2.drawImage(cimg, ctx, null);
+	
+	//g2.draw(new Rectangle((int)(ctx.getTranslateX()), (int)(ctx.getTranslateY()), cwidth, cheight)); 	
+}
+
 public void paint(Graphics g) {
 	Graphics2D g2 = (Graphics2D) g;
 	g2.drawImage(cimg, ctx, null);
@@ -103,9 +116,10 @@ public void paint(Graphics g) {
 	//g2.draw(new Rectangle((int)(ctx.getTranslateX()), (int)(ctx.getTranslateY()), cwidth, cheight)); 	
 }
 
+
 private void init(double a, double b) {
 	ctx.setToTranslation(a, b);
-	ctx.scale(1, 1);
+	ctx.scale(scale,scale);
 }
 
 	//getters and setters for car variables

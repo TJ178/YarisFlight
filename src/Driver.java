@@ -47,6 +47,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setColor(Color.CYAN);
 		g.fillRect(0, 0, screen_width, screen_height);
 		g.setColor(Color.blue);
+		cloud.paint(g, player.getX(), player.getY());
+		
 		//wing paint
 		wings.paint(g);
 		
