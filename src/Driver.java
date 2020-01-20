@@ -49,9 +49,14 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void paint(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.CYAN);
-		//g.fillRect(0, 0, screen_width, screen_height);
+		g.fillRect(0, 0, screen_width, screen_height);
 		g.setColor(Color.blue);
-		cloud.paint(g, player.getX(), player.getY());
+		
+		//paint clouds
+		for(int i = 10; i< cloudRow1.length; i+=100) {
+			cloudRow1[i].paint(g, player.getX(), player.getY());
+			//System.out.println("CLOUD" + cloudRow1[i].getX());	
+		}
 		
 		//wing paint
 		engine.paint(g);
@@ -75,14 +80,6 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("vy: " + player.getVy(),0, 80);
 
 		ground.paint(g, player.getY());
-	
-		
-		for(int i = 10; i< cloudRow1.length; i+=100) {
-			cloudRow1[i].paint(g);
-			System.out.println("CLOUD" + cloudRow1[i].getX());
-			
-		}
-	//	}
 		
 	}
 	
@@ -129,6 +126,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		wings = new WingsUpgrade();
 		wings.upgrade1();
 		wings.upgrade2();
+		
+		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
 		engine.upgrade1();
@@ -197,10 +196,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		switch(key){
 		case 37: //left arrow key
-			player.setRv(.10);
+			player.setRv(.05);
 			break;
 		case 39:
-			player.setRv(-.10);
+			player.setRv(-.05);
 			break;
 		case 40:
 			player.setThrust(20);
