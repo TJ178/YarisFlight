@@ -206,11 +206,95 @@ public class Player {
 	public void updateAccelerations(){
 		double windAngle = Math.atan(vy/vx);
 		if(vx < 0){
+			windAngle += Math.PI;
+		}
+		
+		
+		System.out.println(windAngle);
+		
+		double correctedAngle = 0;
+		if(angle < -Math.PI/2){
+			correctedAngle = -Math.PI - angle;
+		}else if(angle > Math.PI/2){
+			correctedAngle = Math.PI-angle;
+		}else{
+			correctedAngle = angle;
+		}
+		double angleOfAttack = correctedAngle - windAngle;
+		
+		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
+		double drag = Math.abs( lift * Math.pow(liftdragratio, -1));
+		System.out.println("cAngle: "+ correctedAngle);
+		System.out.println("angleOfAttack: " + angleOfAttack);
+		System.out.println("lift: " + lift);
+		System.out.println("drag: " + drag);
+		//x and y components, but currently offset in relation to the player's angle
+		double tempX = appliedThrust;
+		double tempY = lift;
+		//System.out.println(tempX);
+		//System.out.println(tempY);
+		
+		
+		
+		//get netforce, then offset angle to be same plane as screen
+		if(angle < 0){
+			correctedAngle = angle + Math.PI;
+		}else{
+			correctedAngle = angle;
+		}
+		
+		double tempNet = Math.sqrt(Math.pow(tempX, 2)+Math.pow(tempY,2));
+		double tempAngle = Math.atan(tempY/tempX);
+		System.out.println("temp atan : "+ tempAngle);
+		if(tempX < 0){
+			tempAngle += Math.PI;
+			System.out.println("tempX is negative");
+		}
+		tempAngle += correctedAngle;
+		System.out.println("tempAngle: "+ tempAngle);
+		//System.out.println(tempNet);
+		
+		
+		//apply gravity
+		double fx = Math.cos(tempAngle)*tempNet;
+		System.out.println("fx: "+fx);
+		double fy = Math.sin(tempAngle)*tempNet + gravity;
+		
+		double dragAngle = Math.atan(vy/vx);
+		if(vx < 0){
+			dragAngle += Math.PI;
+		}
+		fx -= Math.cos(dragAngle)*drag;
+		fy -= Math.sin(dragAngle)*drag;
+		
+		
+		System.out.print("fx: "+fx);
+		System.out.println(" fy: "+fy);
+		
+		
+		//double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
+		//double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
+
+		//System.out.println(tempNet);
+		
+		
+		//fy = Math.sin(netForceAngle)*netforce;
+		ax = fx / mass;
+		ay = fy / mass;
+		
+		
+		
+		////////////////////////works but only on right quadrants
+		
+		
+		/*double windAngle = Math.atan(vy/vx);
+		if(vx < 0){
 			windAngle *= -1;
 		}
 		double angleOfAttack = angle - windAngle;
 		
 		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
+		
 		double drag = Math.abs( lift * Math.pow(liftdragratio, -1));
 		System.out.println("angle: "+ angle);
 		System.out.println("angleOfAttack: " + angleOfAttack);
@@ -255,9 +339,10 @@ public class Player {
 		
 		//fy = Math.sin(netForceAngle)*netforce;
 		ax = fx / mass;
-		ay = fy / mass;
+		ay = fy / mass;*/
 		
 		
+		///////////// doesn't work
 		
 		/*double fx = appliedForceX;
 		double fy = appliedForceY;

@@ -6,7 +6,7 @@ public class PhysicsTesting {
 	//variables
 	static int x, y;
 	static double angle = -Math.PI*.75;
-	static double vx = -10;
+	static double vx = 0;
 	static double vy = 10;			//velocity 
 	static double ax = 0;
 	static double ay = 0;			//acceleration
@@ -35,25 +35,56 @@ public class PhysicsTesting {
 	}
 
 	public static void main(String[] args) {
-		updateAccelerations();
-		System.out.println("ax:" + ax);
-		System.out.println("ay:" + ay);
-		System.out.println();
-		vx += ax;
-		vy += ay;
+		/*for(int i = 0; i < 30; i++){
+			updateAccelerations();
+			System.out.println("ax:" + ax);
+			System.out.println("ay:" + ay);
+			System.out.println();
+			vx += ax;
+			vy += ay;
+		}*/
 		
+		/*for(int i = 0; i < 6; i++){
+			double d = (Math.PI/6)*i;
+			angle = d;
+			double windAngle = 0;
+			if(vx < 0){
+				windAngle += Math.PI;
+			}
+			System.out.println(windAngle);
+			
+			double tempAngle;
+			if(angle < 0){
+				tempAngle = angle + Math.PI;
+			}else{
+				tempAngle = angle;
+			}
+			double angleOfAttack = tempAngle - windAngle;
+			System.out.print("angle: " + angle);
+			System.out.println("   aa: "+ angleOfAttack);
+		}
 		
-		updateAccelerations();
-		System.out.println("ax:" + ax);
-		System.out.println("ay:" + ay);
-		System.out.println();
-		vx += ax;
-		vy += ay;
-		
-		updateAccelerations();
-		System.out.println("ax:" + ax);
-		System.out.println("ay:" + ay);
-		System.out.println();
+		for(int i = 5; i >= 0; i--){
+			double d = -(Math.PI/6)*i;
+			angle = d;
+			double windAngle = 0;
+			if(vx < 0){
+				windAngle += Math.PI;
+			}
+			System.out.println(windAngle);
+			
+			double tempAngle;
+			if(angle < 0){
+				tempAngle = angle + Math.PI;
+			}else{
+				tempAngle = angle;
+			}
+			double angleOfAttack = tempAngle - windAngle;
+			System.out.print("angle: " + angle);
+			System.out.println("   aa: "+ angleOfAttack);
+		}*/
+		System.out.println(Math.cos(Math.PI*6));
+	
 
 	}
 	
@@ -65,13 +96,13 @@ public class PhysicsTesting {
 		}
 		System.out.println(windAngle);
 		
-		double tempAngle;
+		double correctedAngle;
 		if(angle < 0){
-			tempAngle = angle + Math.PI;
+			correctedAngle = angle + 2*Math.PI;
 		}else{
-			tempAngle = angle;
+			correctedAngle = angle;
 		}
-		double angleOfAttack = tempAngle - windAngle;
+		double angleOfAttack = correctedAngle - windAngle;
 		
 		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
 		double drag = Math.abs( lift * Math.pow(liftdragratio, -1));
@@ -89,11 +120,11 @@ public class PhysicsTesting {
 		
 		//get netforce, then offset angle to be same plane as screen
 		double tempNet = Math.sqrt(Math.pow(tempX, 2)+Math.pow(tempY,2));
-		tempAngle = Math.atan(tempY/tempX);
+		double tempAngle = Math.atan(tempY/tempX);
 		if(tempX < 0){
 			tempAngle += Math.PI;
 		}
-		tempAngle += angle;
+		tempAngle += correctedAngle;
 		//System.out.println(tempAngle);
 		//System.out.println(tempNet);
 		
