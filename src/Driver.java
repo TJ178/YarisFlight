@@ -57,7 +57,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("x: " + player.getX(), 0, 10);
 		g.drawString("y: " + player.getY(), 0, 20);
 		g.drawString("ground: " + player.onGround(), 0, 30);
-		g.drawString("ForceY: " + player.getAppliedForceY(), 0, 40);
+		g.drawString("Thrust: " + player.getThrust(), 0, 40);
 		g.drawString("accelX: " + player.getAx(),0, 50);
 		g.drawString("accelY: " + player.getAy(),0, 60);
 		g.drawString("vx: " + player.getVx(),0, 70);
@@ -114,7 +114,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 		
 		f.add(this);
-		t = new Timer(100, this);
+		t = new Timer(17, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -171,10 +171,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		switch(key){
 		case 37: //left arrow key
-			player.setRv(-.10);
+			player.setRv(.10);
 			break;
 		case 39:
-			player.setRv(.10);
+			player.setRv(-.10);
 			break;
 		case 40:
 			player.setThrust(20);

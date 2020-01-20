@@ -103,6 +103,20 @@ public void paint(Graphics g, int playerx, int playery) {
 	ctx.setToTranslation(cx-playerx, cy+playery);
 	ctx.scale(scale,scale);
 	
+	if (ctx.getTranslateX() < 0) {
+		cx = playerx + 1000;
+		
+	}else if (ctx.getTranslateX() > 1000) {
+		cx = playerx;
+	}
+	if (ctx.getTranslateY() < 0) {
+		cy = playery;
+		
+	}else if (ctx.getTranslateY() > 800) {
+		cy = playery - 400;
+	}
+	
+	
 	
 	g2.drawImage(cimg, ctx, null);
 	
