@@ -184,7 +184,7 @@ public class WingsUpgrade extends Upgrade {
 	
 	//rotation mechanics
 	public void move(double rv) {
-		tx.rotate(rv, anchorX, anchorY);
+		tx.rotate(-rv, anchorX, anchorY);
 		this.rv = rv;
 	}
 	

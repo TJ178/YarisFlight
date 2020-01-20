@@ -2,78 +2,62 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
 
 public class Player {
 	
-	//attributes
-	private int x, y;
-	private int displayX = 500, displayY = 400;
-	private double scale = .25;
-	private int offsetx = (int)(540*scale);
-	private int offsety = (int)(390*scale);
-	private boolean alive;		//aliveness of our manual 2007 red yaris driving friend
-	private int width = (int)(1024*scale); //768x 652
-	private int height= (int)(768*scale); 	// size of yar'
-	private Image img;			//image
-	
+	//instance variables
+	private int x, y;				//position in map
 	private double vx, vy;			//velocity 
 	private double ax, ay;			//acceleration
-	private int appliedForceX = 5, appliedForceY;
-	private int netArea = 10; ////TODO: make netArea a function of the angle
-	private int mass = 100;
-	private boolean onGround = false;
+	private double angle;			//current flight angle
+	private double rv;	    		//rotation velocity
+	private double appliedThrust;	//forward thrust from yaris
 	
-	private double rv;	    	//rotation velocity  
-	private double pi = Math.PI;
+	//display variables
+	private double scale = .25;					//size of yaris on screen
+	private int displayX = 500, displayY = 400;	//display location for yaris (the center)
+	private int offsetx = (int)(540*scale);		//offset of yaris image (to center yaris)
+	private int offsety = (int)(390*scale);
+	private int width = (int)(1024*scale);		//size of yaris image
+	private int height= (int)(768*scale); 		
+	private Image img;							//image
 	
-	private int airDrag = 0;
-	private int gravity = -3;
-	private Shape bounds;
+	//physics variables
+	private int mass = 100;						//thiccness of yaris,, actually controls the strength of the physics
+	private double liftdragratio = 4;			//amount of drag compared to lift
+	private int gravity = -15;					//make her fall
+	
+	//gameplay variables
+	private boolean onGround = false;			//keep track if yaris dies
+	private boolean alive;						//aliveness of our manual 2007 red yaris driving friend
+	private Shape bounds;						//collision boundaries for yaris (for obstacles and ground)
 	
 	public Player(String fileName) {
 		//width;
 		//height;
 		x = 0;
-		y = 200;
-		vx = 0;
-		vy = 0;
+		y = 500;
+		angle = 0;
+		vx = 5;
+		vy = 5;
 		rv = 0;
 		img = getImage(fileName);
 		alive = true;
 		tx = AffineTransform.getTranslateInstance(displayX-offsetx, displayY-offsety);
 		tx.scale(scale, scale);
+		bounds = new Rectangle();
 	}
 	
-	private AffineTransform tx;// = AffineTransform.getTranslateInstance(x, y);
-	
-	
-	/*
-	public void jump(int dist, int keyCode) {
-		if(isAlive()) {
-			switch(keyCode) {
-				case 37:
-					tx.setToTranslation(tx.getTranslateX() - dist, tx.getTranslateY());
-					break;
-				case 38:
-					tx.setToTranslation(tx.getTranslateX(), tx.getTranslateY() - dist);
-					break;
-				case 39:
-					tx.setToTranslation(tx.getTranslateX() + dist, tx.getTranslateY());			
-					break;
-				case 40:
-					tx.setToTranslation(tx.getTranslateX(), tx.getTranslateY() + dist);			
-					break;
-			}
-		}
-	}
-	*/
+	private AffineTransform tx;
 	
 	//returns aliveness
 	public boolean isAlive() {
@@ -96,13 +80,29 @@ public class Player {
 		vy = newVy;
 	}
 	
+	public double getVy(){
+		return vy;
+	}
+	
+	public double getVx(){
+		return vx;
+	}
+	
 	public void setAx(int newAx){
 		ax = newAx;
 	}
+	public double getAy(){
+		return ay;
+	}
+	public double getAx(){
+		return ax;
+	}
 	
-	public void setAy(int newAy){
-		appliedForceY = newAy;
-		//appliedForceY += gravity;
+	public void setThrust(int newThrust){
+		appliedThrust = newThrust;
+	}
+	public double getThrust(){
+		return appliedThrust;
 	}
 	
 	public void setGround(boolean g) {
@@ -117,12 +117,10 @@ public class Player {
 		return rv;
 	}
 
-
 	public void setRv(double rv) {
 		this.rv = rv;
 	}
 	
-	//getters and setters for x and y
 	public int getX() {
 		return x;
 	}
@@ -139,10 +137,6 @@ public class Player {
 		y = newY;
 	}
 	
-	public int getAppliedForceY() {
-		return appliedForceY;
-	}
-	
 	/*
 	 * colliding method, I'll leave it for reference for now
 	public boolean collided(int ox, int oy, int ow, int oh) {
@@ -152,60 +146,148 @@ public class Player {
 	}
 	*/
 	
-	//prob wont use but lateral move method
+	
 	public void move() {
-		//tx.translate(vx, vy);
+		//update physics and apply new velocity
 		updateAccelerations();
+		
 		vx += ax;
 		vy += ay;
 		
+		/// maximum velocity - hopefully won't reach this
+		if(vx > 100){
+			vx = 100;
+		}else if(vx < -100){
+			vx = -100;
+		}
+		if(vy > 100){
+			vy = 100;
+		}else if(vy < -100){
+			vy = -100;
+		}
 		
 		x += vx;
 		y += vy;
+		angle += rv;
 		
-		if(onGround && ay <= 0) {
-			y = (int) (40);
+		//keep angle within bounds from 0 to 2pi
+		if(angle > Math.PI*2){
+			angle = 0;
+		}else if(angle < 0){
+			angle = Math.PI*2;
 		}
 		
-		System.out.println("Accel x: "+ax+" y: "+ay);
-		tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
+		//stop yaris if it collides with ground
+		//if(onGround && ay <= 0) {
+			//y = (int) (40);
+		//}
 		
+		//rotate the yaris display variables to match physics
+		
+		//tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
+		//tx.setToRotation(-angle, displayX, displayY);
+		tx.setToTranslation(displayX, displayY);
+		tx.rotate(-angle);
+
+		tx.translate(-offsetx, -offsety);
+		tx.scale(scale, scale);
+		
+		//create bounds for yaris & rotate them to match physics
 		bounds = new Rectangle(92,206,900,359);
-		//AffineTransform trans = (AffineTransform) tx.clone();
-		//trans.setToScale(1, 1);
 		bounds = tx.createTransformedShape(bounds);
 		
 	}
 	
 	public void updateAccelerations(){
-		double fx = appliedForceX;
-		double fy = appliedForceY;
-		if(!onGround) {
-			fy += gravity;
+		double windAngle = Math.atan2(vy, vx);
+		//System.out.println(windAngle);
+		
+		double correctedAngle = 0;
+		/*if(angle < -Math.PI/2){
+			correctedAngle = -Math.PI - angle;
+		}else if(angle > Math.PI/2){
+			correctedAngle = Math.PI-angle;
+		}else{
+			correctedAngle = angle;
+		}*/
+		
+		if(windAngle < 0){
+			correctedAngle = windAngle + 2*Math.PI;
+		}else{
+			correctedAngle = windAngle;
 		}
-		double netForceAngle = Math.atan(fy/fx);
+		//System.out.println(correctedAngle);
+		
+		double angleOfAttack = angle - correctedAngle;
+		if(Math.abs(angle - correctedAngle) > Math.PI){
+			angleOfAttack = correctedAngle - angle;
+		}
 		
 		
-		double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
-		double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
-		netforce -= .5 * Math.pow(netvelocity, 2) * airDrag * netArea;
-		System.out.println(netforce);
+		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
+		double drag = Math.abs( lift * Math.pow(liftdragratio, -1));
+		//System.out.println("angle: "+ angle);
+		//System.out.println("angleOfAttack: " + angleOfAttack);
+		//System.out.println("lift: " + lift);
+		//System.out.println("drag: " + drag);
 		
-		fx = Math.cos(netForceAngle)*netforce;
-		fy = Math.sin(netForceAngle)*netforce;
-		ax = (int) fx;
-		ay = (int) fy;
-	}
-	
-	
-	//rotate methods
-	public void rotateCW() {
-		tx.rotate(rv);
-	}
-	
-	public void rotateCCW() {
-		tx.rotate(-rv);
-	}
+		
+		
+		//get netforce, then offset angle to be same plane as screen
+		/*if(angle < 0){
+			correctedAngle = angle + 2*Math.PI;
+		}else{
+			correctedAngle = angle;
+		}*/
+		//System.out.println("cAngle: "+ correctedAngle);
+		double costheta = vx / Math.sqrt(Math.pow(vx, 2) + Math.pow(vy, 2));
+		double sintheta = vy / Math.sqrt(Math.pow(vx, 2) + Math.pow(vy, 2));
+		
+		double fx = (appliedThrust - drag)*costheta - lift*sintheta;
+		double fy = (appliedThrust - drag)*sintheta + lift*costheta + gravity;
+		
+		
+		////////////old system that exists just in case
+		
+		/*double tempNet = Math.sqrt(Math.pow(tempX, 2)+Math.pow(tempY,2));
+		double tempAngle = Math.atan(tempY/tempX);
+		System.out.println("temp atan : "+ tempAngle);
+		if(tempX < 0){
+			tempAngle += Math.PI;
+			System.out.println("tempX is negative");
+		}
+		tempAngle += correctedAngle;
+		System.out.println("tempAngle: "+ tempAngle);
+		//System.out.println(tempNet);
+		
+		
+		//apply gravity
+		double fx = Math.cos(tempAngle)*tempNet;
+		System.out.println("fx: "+fx);
+		double fy = Math.sin(tempAngle)*tempNet + gravity;
+		
+		double dragAngle = Math.atan(vy/vx);
+		if(vx < 0){
+			dragAngle += Math.PI;
+		}
+		fx -= Math.cos(dragAngle)*drag;
+		fy -= Math.sin(dragAngle)*drag;
+		
+		
+		System.out.print("fx: "+fx);
+		System.out.println(" fy: "+fy);*/
+		
+		
+		//double netforce = Math.sqrt(Math.pow(fx, 2)+Math.pow(fy,2));
+		//double netvelocity = Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2));
+
+		//System.out.println(tempNet);
+		
+		
+		//fy = Math.sin(netForceAngle)*netforce;
+		ax = fx / mass;
+		ay = fy / mass;
+	}	
 	
 	//paint and transform mumbo jumbo 
 	public void paint(Graphics g) {
@@ -214,12 +296,7 @@ public class Player {
 		g2.setColor(Color.BLACK);
 		g2.draw(bounds);
 	}
-
-	private void init(double a, double b) {
-		tx.setToTranslation(a, b);
-		tx.scale(scale, scale);
-	}
-
+	
 	// converts image to make it drawable in paint
 	private Image getImage(String path) {
 		Image tempImage = null;

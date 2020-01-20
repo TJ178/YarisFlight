@@ -36,13 +36,13 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		wings.move(player.getRv());
 		engine.move(player.getRv());
 		
-		if(collision.inGround()) {
-			player.setVx(0);
-			player.setVy(0);
+		/*if(collision.inGround()) {
+			//player.setVx(0);
+			//player.setVy(0);
 			player.setGround(true);
 		}else {
 			player.setGround(false);
-		}
+		}*/
 		
 	}
 	
@@ -51,6 +51,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setColor(Color.CYAN);
 		//g.fillRect(0, 0, screen_width, screen_height);
 		g.setColor(Color.blue);
+		cloud.paint(g, player.getX(), player.getY());
+		
 		//wing paint
 		engine.paint(g);
 		if(wings.getLevel() < 2) {
@@ -66,7 +68,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("x: " + player.getX(), 0, 10);
 		g.drawString("y: " + player.getY(), 0, 20);
 		g.drawString("ground: " + player.onGround(), 0, 30);
-		g.drawString("ForceY: " + player.getAppliedForceY(), 0, 40);
+		g.drawString("Thrust: " + player.getThrust(), 0, 40);
+		g.drawString("accelX: " + player.getAx(),0, 50);
+		g.drawString("accelY: " + player.getAy(),0, 60);
+		g.drawString("vx: " + player.getVx(),0, 70);
+		g.drawString("vy: " + player.getVy(),0, 80);
 
 		ground.paint(g, player.getY());
 	
@@ -191,19 +197,21 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		switch(key){
 		case 37: //left arrow key
-			player.setRv(-.10);
-			break;
-		case 39:
 			player.setRv(.10);
 			break;
+		case 39:
+			player.setRv(-.10);
+			break;
 		case 40:
-			player.setAy(5);
+			player.setThrust(20);
 			break;
 		case 38:
-			player.setAy(5);
+			player.setThrust(10);
 			break;
 		default:
 			System.out.println(key);
+			update();
+			repaint();
 		}
 		
 		
@@ -221,10 +229,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(0);
 			break;
 		case 40:
-			player.setAy(0);
+			player.setThrust(0);
 			break;
 		case 38:
-			player.setAy(0);
+			player.setThrust(0);
 			break;
 		default:
 			System.out.println(key);
