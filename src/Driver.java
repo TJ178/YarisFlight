@@ -19,11 +19,14 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private int screen_width = 1000;
 	private Timer t;
 	
+	public Cloud[] cloudRow1 = new Cloud[99999];
+	
 	Player player;
 	Ground ground;
 	Cloud cloud;
 	
 	WingsUpgrade wings;
+	EngineUpgrade engine;
 	
 	CollisionHandler collision;
 	
@@ -31,6 +34,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void update(){
 		player.move();
 		wings.move(player.getRv());
+		engine.move(player.getRv());
 		
 		/*if(collision.inGround()) {
 			//player.setVx(0);
@@ -45,14 +49,21 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void paint(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.CYAN);
-		g.fillRect(0, 0, screen_width, screen_height);
+		//g.fillRect(0, 0, screen_width, screen_height);
 		g.setColor(Color.blue);
 		cloud.paint(g, player.getX(), player.getY());
 		
 		//wing paint
-		wings.paint(g);
-		
+		engine.paint(g);
+		if(wings.getLevel() < 2) {
+			wings.paint(g);
+		}
 		player.paint(g);
+
+		if(wings.getLevel() > 1) {
+			wings.paint(g);
+		}
+		
 		g.setColor(Color.black);
 		g.drawString("x: " + player.getX(), 0, 10);
 		g.drawString("y: " + player.getY(), 0, 20);
@@ -63,8 +74,15 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("vx: " + player.getVx(),0, 70);
 		g.drawString("vy: " + player.getVy(),0, 80);
 
-
 		ground.paint(g, player.getY());
+	
+		
+		for(int i = 10; i< cloudRow1.length; i+=100) {
+			cloudRow1[i].paint(g);
+			System.out.println("CLOUD" + cloudRow1[i].getX());
+			
+		}
+	//	}
 		
 	}
 	
@@ -100,12 +118,20 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		//sprite instantiation
 		player = new Player("yarisright.png");
-		cloud = new Cloud("cloud.png");
+		//cloud = new Cloud("cloud.png");
+		
+		for(int i = 10; i< cloudRow1.length; i+=10) {
+			cloudRow1[i] = new Cloud("cloud.png");
+		}
 
 		//player.setX(screen_width/2);
 		//player.setY(screen_height/2);
 		wings = new WingsUpgrade();
 		wings.upgrade1();
+		wings.upgrade2();
+		
+		engine = new EngineUpgrade();
+		engine.upgrade1();
 		
 		ground = new Ground();
 		
