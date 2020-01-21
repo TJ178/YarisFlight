@@ -19,7 +19,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private int screen_width = 1000;
 	private Timer t;
 	
-	public Cloud[] cloudRow1 = new Cloud[99999];
+	public Cloud[] cloudRow1 = new Cloud[2];
 	
 	Player player;
 	Ground ground;
@@ -53,7 +53,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setColor(Color.blue);
 		
 		//paint clouds
-		for(int i = 10; i< cloudRow1.length; i+=100) {
+		for(int i = 0; i< cloudRow1.length; i++) {
 			cloudRow1[i].paint(g, player.getX(), player.getY());
 			//System.out.println("CLOUD" + cloudRow1[i].getX());	
 		}
@@ -117,7 +117,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		player = new Player("yarisright.png");
 		//cloud = new Cloud("cloud.png");
 		
-		for(int i = 10; i< cloudRow1.length; i+=10) {
+		for(int i = 0; i < cloudRow1.length; i++) {
 			cloudRow1[i] = new Cloud("cloud.png");
 		}
 
@@ -139,7 +139,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 		
 		f.add(this);
-		t = new Timer(17, this);
+		t = new Timer(5, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -209,8 +209,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			break;
 		default:
 			System.out.println(key);
-			update();
-			repaint();
+			//update();
+			//repaint();
 		}
 		
 		
