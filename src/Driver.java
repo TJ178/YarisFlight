@@ -19,7 +19,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private int screen_width = 1000;
 	private Timer t;
 	
-	public Cloud[] cloudRow1 = new Cloud[2];
+	public Cloud[] cloudRow1 = new Cloud[5];
 	
 	Player player;
 	Ground ground;

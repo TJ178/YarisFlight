@@ -26,12 +26,12 @@ public class Cloud extends Entity {
  
 //car constructor 
 public Cloud(String fileName) {
-	cx = 1000;
-	cy = 200;
+	cx = (int)(Math.random()*1000-500);
+	cy = (int)(Math.random()*800);
 	cvx = 0;
 	cvy = 0;
-	cwidth = 85;
-	cheight = 40;
+	cwidth = (int)(386*scale);
+	cheight = (int)(167*scale);
 	
 	
 	
@@ -93,22 +93,24 @@ private AffineTransform ctx = AffineTransform.getTranslateInstance(cx, cy);
 
 public void paint(Graphics g, int playerx, int playery) {
 	Graphics2D g2 = (Graphics2D) g;
-	ctx.setToTranslation(cx-playerx, -cy+playery);
-	ctx.scale(scale,scale);
 	
-	if (ctx.getTranslateX() < 0-cwidth) {
+	
+	if (ctx.getTranslateX() < -100-cwidth) {
 		cx = playerx + 1000;
 		
-	}else if (ctx.getTranslateX() > 1000) {
+	}else if (ctx.getTranslateX() > 1100) {
 		cx = playerx;
 	}
-	if (ctx.getTranslateY() < 0) {
-		cy = playery + 400;
-		
-	}else if (ctx.getTranslateY() > 800) {
-		cy = playery - 400;;
+	if (ctx.getTranslateY() < -100) {
+		cy = playery -800;
 		System.out.println(cy);
+		
+	}else if (ctx.getTranslateY() > 900) {
+		cy = playery + cheight;
+		//System.out.println(cy);
 	}
+	ctx.setToTranslation(cx-playerx, -cy+playery);
+	ctx.scale(scale,scale);
 	
 	
 	g2.drawImage(cimg, ctx, null);
