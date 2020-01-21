@@ -32,14 +32,14 @@ public class EngineUpgrade extends Upgrade {
 	private int weightU2 = 20;
 	private int dragU2 = 5;
 	private int liftU2 = 20;
-	private int widthU2 = (int)(186 * scale);	//186 × 119 pixels
+	private int widthU2 = (int)(186 * scale);	//385 × 1500 pixels
 	private int heightU2 = (int)(119 * scale);
-	private double scaleU2 = 0.75;
-	private double anchorxU2 = 50;
-	private double anchoryU2 = 13;
+	private double scaleU2 = 0.3;
+	private double anchorxU2 = 172;
+	private double anchoryU2 = -343;
 	
 	private String imgU1 = "rocketU1_right.png"; //1287 × 494 pixels
-	private String imgU2;
+	private String imgU2 = "thicc_rocket.png"; //384 × 799 pixels
 
 	
 	private Image img;
@@ -69,6 +69,7 @@ public class EngineUpgrade extends Upgrade {
 		
 		level = 1;
 		tx = AffineTransform.getTranslateInstance(310, 375); //392 && 322
+		//tx.rotate(-Math.PI / 4);
 		tx.scale(scaleU1, scaleU1);
 	}
 	
@@ -76,7 +77,8 @@ public class EngineUpgrade extends Upgrade {
 		uprade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
 		
 		level = 2;
-		tx = AffineTransform.getTranslateInstance(displayX-offsetx + 495, displayY-offsety + 385); //392 && 322
+		tx = AffineTransform.getTranslateInstance(displayX-offsetx + 440, displayY-offsety + 340); //392 && 322
+		tx.rotate(Math.PI / 2);
 		tx.scale(scaleU2, scaleU2);
 	}
 	
