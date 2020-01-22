@@ -25,8 +25,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	Ground ground;
 	Cloud cloud;
 	
-	WingsUpgrade wings;
-	EngineUpgrade engine;
+	WingsUpgrade wings;		//wings upgrade
+	EngineUpgrade engine;	//engine upgrade
 	
 	CollisionHandler collision;
 	

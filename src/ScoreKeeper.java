@@ -38,12 +38,43 @@ public class ScoreKeeper {
 			altitudeRecord = currentScore.getMaxDist();
 		}
 		
+		
+		
 	}
 	
+	public int getMoney() {
+		return money;
+	}
+
+
+	
+
+	public boolean getNewAltRecord() {
+		return newAltRecord;
+	}
+
+
+	
+
+	public boolean getNewDistRecord() {
+		return newDistRecord;
+	}
+
+
+	
+	public boolean getNewSpeedRecord() {
+		return newSpeedRecord;
+	}
+
+
+	
+
 	public void start() {
 		currentScore = new Score();
 		newAltRecord = false;
 		newDistRecord = false;
 		newSpeedRecord = false;
+		
+		
 	}
 }
