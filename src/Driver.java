@@ -96,8 +96,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void startGame(){
 		scorekeep.start();
 		
-		player.setX(0);
-		player.setY(900);
+		player.setX(-400);
+		player.setY(1200);
 		player.onRamp = true;
 	}
 	
@@ -152,7 +152,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		scorekeep = new ScoreKeeper();
 		
-		startGame();
+		//startGame();
 		
 		f.add(this);
 		t = new Timer(17, this);
