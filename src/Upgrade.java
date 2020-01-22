@@ -18,6 +18,10 @@ public class Upgrade {
 		this.drag = drag;
 	}
 	
+	public Upgrade(){
+		
+	}
+	
 	public String getImgPath() {
 		return imgPath;
 	}

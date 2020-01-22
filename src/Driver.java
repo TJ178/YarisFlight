@@ -30,6 +30,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	CollisionHandler collision;
 	
+	RampUpgrade ramp;
+
+	ScoreKeeper scorekeep;
+	
 	//put variables // things to update in here
 	public void update(){
 		player.move();
@@ -78,7 +82,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("accelY: " + player.getAy(),0, 60);
 		g.drawString("vx: " + player.getVx(),0, 70);
 		g.drawString("vy: " + player.getVy(),0, 80);
-
+		
+		ramp.paint(g, player.getX(), player.getY());
 		ground.paint(g, player.getY());
 		
 	}
@@ -88,7 +93,13 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	
 	
-	
+	public void startGame(){
+		scorekeep.start();
+		
+		player.setX(0);
+		player.setY(900);
+		player.onRamp = true;
+	}
 	
 	
 	
@@ -137,7 +148,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		collision = new CollisionHandler(player, ground);
 		
-	
+		ramp = new RampUpgrade("Ramp_Top.png", "Ramp_middle.png", "Ramp_bottom_toEdit.png", "Ramp_ExtraPart.png");
+		
+		scorekeep = new ScoreKeeper();
+		
+		startGame();
 		
 		f.add(this);
 		t = new Timer(17, this);

@@ -40,6 +40,7 @@ public class Player {
 	private boolean onGround = false;			//keep track if yaris dies
 	private boolean alive;						//aliveness of our manual 2007 red yaris driving friend
 	private Shape bounds;						//collision boundaries for yaris (for obstacles and ground)
+	public boolean onRamp;
 	
 	public Player(String fileName) {
 		//width;
@@ -149,53 +150,58 @@ public class Player {
 	
 	public void move() {
 		//update physics and apply new velocity
-		updateAccelerations();
-		
-		vx += ax;
-		vy += ay;
-		
-		/// maximum velocity - hopefully won't reach this
-		if(vx > 100){
-			vx = 100;
-		}else if(vx < -100){
-			vx = -100;
+		if(!onRamp){
+			updateAccelerations();
+			
+			vx += ax;
+			vy += ay;
+			
+			/// maximum velocity - hopefully won't reach this
+			if(vx > 100){
+				vx = 100;
+			}else if(vx < -100){
+				vx = -100;
+			}
+			if(vy > 100){
+				vy = 100;
+			}else if(vy < -100){
+				vy = -100;
+			}
+			
+			x += vx;
+			y += vy;
+			angle += rv;
+			
+			//keep angle within bounds from 0 to 2pi
+			if(angle > Math.PI*2){
+				angle = 0;
+			}else if(angle < 0){
+				angle = Math.PI*2;
+			}
+			
+			//stop yaris if it collides with ground
+			//if(onGround && ay <= 0) {
+				//y = (int) (40);
+			//}
+			
+			//rotate the yaris display variables to match physics
+			
+			//tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
+			//tx.setToRotation(-angle, displayX, displayY);
+			tx.setToTranslation(displayX, displayY);
+			tx.rotate(-angle);
+	
+			tx.translate(-offsetx, -offsety);
+			tx.scale(scale, scale);
+			
+			//create bounds for yaris & rotate them to match physics
+			bounds = new Rectangle(92,206,900,359);
+			bounds = tx.createTransformedShape(bounds);
+		}else{
+			
+			
+			
 		}
-		if(vy > 100){
-			vy = 100;
-		}else if(vy < -100){
-			vy = -100;
-		}
-		
-		x += vx;
-		y += vy;
-		angle += rv;
-		
-		//keep angle within bounds from 0 to 2pi
-		if(angle > Math.PI*2){
-			angle = 0;
-		}else if(angle < 0){
-			angle = Math.PI*2;
-		}
-		
-		//stop yaris if it collides with ground
-		//if(onGround && ay <= 0) {
-			//y = (int) (40);
-		//}
-		
-		//rotate the yaris display variables to match physics
-		
-		//tx.rotate(rv, displayX/*-offsetx*scale*/, displayY/*-offsety*scale*/);
-		//tx.setToRotation(-angle, displayX, displayY);
-		tx.setToTranslation(displayX, displayY);
-		tx.rotate(-angle);
-
-		tx.translate(-offsetx, -offsety);
-		tx.scale(scale, scale);
-		
-		//create bounds for yaris & rotate them to match physics
-		bounds = new Rectangle(92,206,900,359);
-		bounds = tx.createTransformedShape(bounds);
-		
 	}
 	
 	public void updateAccelerations(){
