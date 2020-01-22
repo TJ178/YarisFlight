@@ -140,7 +140,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 		
 		f.add(this);
-		t = new Timer(5, this);
+		t = new Timer(17, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
