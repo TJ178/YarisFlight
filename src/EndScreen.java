@@ -22,23 +22,34 @@ import java.awt.geom.AffineTransform;
 
 public class EndScreen {
 
+//	public Score currentScore;
 
-		public void paint(Graphics g) {
+		public void paint(Graphics g, ScoreKeeper ScoreKeeper, Score currentScore) {
 			Graphics2D g2 = (Graphics2D) g;
+			
+		//	ScoreKeeper currentScore;
+			
 			//g2.drawImage(img, btx, null);
 			
 			//g.setFont(font);
 			
 			//background
 			g.setColor(Color.red); 				
-			g.fillRect(0, 0, 900, 900);
+			g.fillRect(0, 0, 1000, 1000);
 			
 			//title
 			g.setColor(Color.white);
-			g.drawString("Nice work! You flew:", 300, 100);
+			g.drawString("Nice work! You now have "+ScoreKeeper.getMoney()+" dollars", 300, 100);
 			
-			//g.drawString(distanceMax+" meters", x, y);
-		
+			g.drawString("Distance flown: "+currentScore.getMaxDist()*18+" meters", 300, 200);
+			g.drawString("Max Altitude: "+currentScore.getMaxAlt()*18+" meters", 300, 300);
+			g.drawString("Max Speed: "+currentScore.getMaxSpeed()*18+" meters/sec", 300, 400);
+			
+			g.drawString("High Scores:", 400, 700);
+			g.drawString("Distance: "+currentScore.getMaxDist(), 300, 500);
+			g.drawString("Altitude: "+currentScore.getMaxAlt(), 300, 600);
+			g.drawString("Speed: "+currentScore.getMaxSpeed(), 300, 700);
+			
 		
 			
 		}

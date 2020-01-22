@@ -25,14 +25,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	Ground ground;
 	Cloud cloud;
 	
-	WingsUpgrade wings;
-	EngineUpgrade engine;
+	WingsUpgrade wings;		//wings upgrade
+	EngineUpgrade engine;	//engine upgrade
 	
 	CollisionHandler collision;
-	
-	RampUpgrade ramp;
-
-	ScoreKeeper scorekeep;
 	
 	//put variables // things to update in here
 	public void update(){
@@ -82,8 +78,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("accelY: " + player.getAy(),0, 60);
 		g.drawString("vx: " + player.getVx(),0, 70);
 		g.drawString("vy: " + player.getVy(),0, 80);
-		
-		ramp.paint(g, player.getX(), player.getY());
+
 		ground.paint(g, player.getY());
 		
 	}
@@ -93,13 +88,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	
 	
-	public void startGame(){
-		scorekeep.start();
-		
-		player.setX(-400);
-		player.setY(1200);
-		player.onRamp = true;
-	}
+	
 	
 	
 	
@@ -136,23 +125,19 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//player.setY(screen_height/2);
 		wings = new WingsUpgrade();
 		wings.upgrade1();
-		//wings.upgrade2();
+		wings.upgrade2();
 		
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
 		engine.upgrade1();
-		engine.upgrade2();
+		//engine.upgrade2();
 		
 		ground = new Ground();
 		
 		collision = new CollisionHandler(player, ground);
 		
-		ramp = new RampUpgrade("Ramp_Top.png", "Ramp_middle.png", "Ramp_bottom_toEdit.png", "Ramp_ExtraPart.png");
-		
-		scorekeep = new ScoreKeeper();
-		
-		//startGame();
+	
 		
 		f.add(this);
 		t = new Timer(17, this);

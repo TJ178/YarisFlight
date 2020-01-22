@@ -29,7 +29,7 @@ public class MainMenu {
 			
 			//background
 			g.setColor(Color.cyan); 				
-			g.fillRect(0, 0, 900, 900);
+			g.fillRect(0, 0, 1000, 1000);
 			
 			//title
 			g.setColor(Color.white);
