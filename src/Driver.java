@@ -125,13 +125,13 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//player.setY(screen_height/2);
 		wings = new WingsUpgrade();
 		wings.upgrade1();
-		wings.upgrade2();
+		//wings.upgrade2();
 		
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
 		engine.upgrade1();
-		//engine.upgrade2();
+		engine.upgrade2();
 		
 		ground = new Ground();
 		

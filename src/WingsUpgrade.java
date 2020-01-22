@@ -144,8 +144,8 @@ public class WingsUpgrade extends Upgrade {
 	private String imgU2 = "air-canada-flight_wing.png";
 
 	private double[] scales = {scaleU1, scaleU2};
-	private double[] transX = {0, -40};
-	private double[] transY = {0, 0};
+	private double[] transX = {-170, -40};
+	private double[] transY = {-140, 0};
 	
 	private Image img;
 	
