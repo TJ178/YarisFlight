@@ -33,8 +33,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	//put variables // things to update in here
 	public void update(){
 		player.move();
-		wings.move(player.getRv());
-		engine.move(player.getRv());
+		wings.moveTo(player.getAngle());
+		engine.moveTo(player.getAngle());
 		
 		/*if(collision.inGround()) {
 			//player.setVx(0);
@@ -60,12 +60,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		//wing paint
 		engine.paint(g);
-		if(wings.getLevel() < 2) {
+		if(wings.getLevel() < 1) {
 			wings.paint(g);
 		}
 		player.paint(g);
 
-		if(wings.getLevel() > 1) {
+		if(wings.getLevel() > 0) {
 			wings.paint(g);
 		}
 		
@@ -131,7 +131,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		engine = new EngineUpgrade();
 		engine.upgrade1();
-		engine.upgrade2();
+		//engine.upgrade2();
 		
 		ground = new Ground();
 		

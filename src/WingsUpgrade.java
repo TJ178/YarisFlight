@@ -143,6 +143,9 @@ public class WingsUpgrade extends Upgrade {
 	private String imgU1 = "yarisGlider_v2.png"; //1287 × 494 pixels
 	private String imgU2 = "air-canada-flight_wing.png";
 
+	private double[] scales = {scaleU1, scaleU2};
+	private double[] transX = {0, -40};
+	private double[] transY = {0, 0};
 	
 	private Image img;
 	
@@ -151,7 +154,8 @@ public class WingsUpgrade extends Upgrade {
 	
 	public WingsUpgrade() {
 		super(weight, drag, lift);
-		
+		tx = AffineTransform.getTranslateInstance(500, 400); //392 && 322
+
 		//System.out.println((displayX-offsetx) + " " +  (displayY-offsety));
 		//AffineTransform trans = (AffineTransform) tx.clone();
 		//trans.setToScale(1, 1);
@@ -169,23 +173,27 @@ public class WingsUpgrade extends Upgrade {
 	public void upgrade1() {
 		uprade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
 		
-		level = 1;
-		tx = AffineTransform.getTranslateInstance(335, 270); //392 && 322
-		tx.scale(scaleU1, scaleU1);
+		level = 0;
+		//tx = AffineTransform.getTranslateInstance(335, 270); //392 && 322
+		//tx.scale(scaleU1, scaleU1);
 	}
 	
 	public void upgrade2() {
 		uprade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
 		
-		level = 2;
-		tx = AffineTransform.getTranslateInstance(displayX-offsetx + 495, displayY-offsety + 385); //392 && 322
-		tx.scale(scaleU2, scaleU2);
+		level = 1;
+		//tx = AffineTransform.getTranslateInstance(displayX-offsetx + 495, displayY-offsety + 385); //392 && 322
+		//tx.scale(scaleU2, scaleU2);
 	}
 	
 	//rotation mechanics
-	public void move(double rv) {
-		tx.rotate(-rv, anchorX, anchorY);
-		this.rv = rv;
+	public void moveTo(double angle) {
+		//tx.rotate(, anchorX, anchorY);
+		tx.setToTranslation(displayX, displayY);
+		tx.rotate(-angle);
+
+		tx.translate( transX[getLevel()], transY[getLevel()]);
+		tx.scale(scales[getLevel()], scales[getLevel()]);
 	}
 	
 	//rotate methods
