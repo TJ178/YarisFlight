@@ -18,7 +18,8 @@ public class EngineUpgrade extends Upgrade {
 	private double rv;
 	private double anchorX = 750;
 	private double anchorY = 650;
-	private int level = 0;
+	private int level = -1;
+	private boolean isThrusting = false;
 	
 	private int weightU1 = 10;
 	private int dragU1 = 10;
@@ -34,17 +35,20 @@ public class EngineUpgrade extends Upgrade {
 	private int liftU2 = 20;
 	private int widthU2 = (int)(186 * scale);	//385 × 1500 pixels
 	private int heightU2 = (int)(119 * scale);
-	private double scaleU2 = 0.3;
+	private double scaleU2 = 0.2;
 	private double anchorxU2 = 172;
 	private double anchoryU2 = -343;
 	
 	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
+	private String imgU1Lit = "rocketU1_lit.png";
 	private String imgU2 = "thicc_rocket.png"; //384 × 799 pixels
+	private String imgU2Lit = "thicc_rocket_lit.png";
 
 	private double[] scales = {scaleU1, scaleU2};
-	private double[] transX = {-30, -50};
+	private double[] transX = {-30, -35};
 	private double[] transY = {75, 100};
-  	
+  	private String[] imgs = {imgU1, imgU2};
+  	private String[] imgsLit = {imgU1Lit, imgU2Lit};
 
 	
 	private Image img;
@@ -159,6 +163,23 @@ public class EngineUpgrade extends Upgrade {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public void setIsThrusting(boolean val) {
+		isThrusting = true;
+	}
+	public boolean getIsThrusting() {
+		return isThrusting;
+	}
+	public void getLit() {
+		if(getLevel() > -1) {
+			img = getImage(imgsLit[getLevel()]);
+		}
+	}
+	public void notLit() {
+		if(getLevel() > -1) {
+			img = getImage(imgs[getLevel()]);
+		}
 	}
 	
 	//paint stuff
