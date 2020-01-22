@@ -138,6 +138,14 @@ public class Player {
 		y = newY;
 	}
 	
+	public double getAngle() {
+		return angle;
+	}
+
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+
 	/*
 	 * colliding method, I'll leave it for reference for now
 	public boolean collided(int ox, int oy, int ow, int oh) {

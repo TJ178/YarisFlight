@@ -38,8 +38,13 @@ public class EngineUpgrade extends Upgrade {
 	private double anchorxU2 = 172;
 	private double anchoryU2 = -343;
 	
-	private String imgU1 = "rocketU1_right.png"; //1287 × 494 pixels
+	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
 	private String imgU2 = "thicc_rocket.png"; //384 × 799 pixels
+
+	private double[] scales = {scaleU1, scaleU2};
+	private double[] transX = {-30, -50};
+	private double[] transY = {75, 100};
+  	
 
 	
 	private Image img;
@@ -53,6 +58,7 @@ public class EngineUpgrade extends Upgrade {
 		//System.out.println((displayX-offsetx) + " " +  (displayY-offsety));
 		//AffineTransform trans = (AffineTransform) tx.clone();
 		//trans.setToScale(1, 1);
+		tx = AffineTransform.getTranslateInstance(500, 400);
 	}
 	
 	public void uprade(int weight, int drag, int lift, String FileName, double anchorX, double anchorY) {
@@ -67,25 +73,29 @@ public class EngineUpgrade extends Upgrade {
 	public void upgrade1() {
 		uprade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
 		
-		level = 1;
-		tx = AffineTransform.getTranslateInstance(310, 375); //392 && 322
+		level = 0;
+		//tx = AffineTransform.getTranslateInstance(310, 375); //392 && 322
 		//tx.rotate(-Math.PI / 4);
-		tx.scale(scaleU1, scaleU1);
+		//tx.scale(scaleU1, scaleU1);
 	}
 	
 	public void upgrade2() {
 		uprade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
 		
-		level = 2;
-		tx = AffineTransform.getTranslateInstance(displayX-offsetx + 440, displayY-offsety + 340); //392 && 322
-		tx.rotate(Math.PI / 2);
-		tx.scale(scaleU2, scaleU2);
+		level = 1;
+		//tx = AffineTransform.getTranslateInstance(400, 400); //392 && 322
+		//tx.rotate(Math.PI / 2);
+		//tx.scale(scaleU2, scaleU2);
 	}
 	
 	//rotation mechanics
-	public void move(double rv) {
-		tx.rotate(-rv, anchorX, anchorY);
-		this.rv = rv;
+	public void moveTo(double angle) {
+		//tx.rotate(, anchorX, anchorY);
+		tx.setToTranslation(500, 400);
+		tx.rotate(-angle + (Math.PI / 2));
+
+		tx.translate(transX[getLevel()], transY[getLevel()]);
+		tx.scale(scales[getLevel()], scales[getLevel()]);
 	}
 	
 	//rotate methods
