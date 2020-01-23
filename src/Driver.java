@@ -95,7 +95,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 		player.setX(-400);	
 		player.setY(1200);	
-		player.onRampTop = true;	
+		player.onRamp = true;	
 	}
 	
 	
@@ -151,7 +151,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		scorekeep = new ScoreKeeper();
 		
-		player = new Player("yarisright.png", ramp);
+		player = new Player("yarisright.png");
 		
 		
 		startGame();
