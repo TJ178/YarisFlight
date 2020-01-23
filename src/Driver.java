@@ -35,7 +35,6 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		player.move();
 		wings.moveTo(player.getAngle());
 		engine.moveTo(player.getAngle());
-		
 		/*if(collision.inGround()) {
 			//player.setVx(0);
 			//player.setVy(0);
@@ -124,13 +123,13 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//player.setX(screen_width/2);
 		//player.setY(screen_height/2);
 		wings = new WingsUpgrade();
-		wings.upgrade1();
+		//wings.upgrade1();
 		wings.upgrade2();
 		
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
-		engine.upgrade1();
+		//engine.upgrade1();
 		engine.upgrade2();
 		
 		ground = new Ground();

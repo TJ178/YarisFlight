@@ -15,13 +15,16 @@ public class EngineUpgrade extends Upgrade {
 	private double anchorY = 650;
 	private int level = -1;
 	private boolean isThrusting = false;
+	private double fuelPerc =1.0;
+	private boolean isFuel = true;
 	
 	private int weightU1 = 10;
 	private int dragU1 = 10;
 	private int liftU1 = 10;
 	private double scaleU1 = 0.2;
-	private double anchorxU1 = 893;;
+	private double anchorxU1 = 893;
 	private double anchoryU1 = 155;
+	private int fuelU1 = 10;
 
 	private int weightU2 = 20;
 	private int dragU2 = 5;
@@ -29,6 +32,7 @@ public class EngineUpgrade extends Upgrade {
 	private double scaleU2 = 0.2;
 	private double anchorxU2 = 172;
 	private double anchoryU2 = -343;
+	private int fuelU2 = 20;
 	
 	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
 	private String imgU1Lit = "rocketU1_lit.png";
@@ -40,7 +44,7 @@ public class EngineUpgrade extends Upgrade {
 	private double[] transY = {75, 90};
   	private String[] imgsStrings = {imgU1, imgU2};
   	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
-  	//private 
+  	private int[] fuels = {fuelU1, fuelU2}; 
 
 	private Image img;
 	private Image[] imgs = new Image[2];
@@ -85,9 +89,10 @@ public class EngineUpgrade extends Upgrade {
 	public void moveTo(double angle) {
 		tx.setToTranslation(500, 400);
 		tx.rotate(-angle + (Math.PI / 2));
-
-		tx.translate(transX[getLevel()], transY[getLevel()]);
-		tx.scale(scales[getLevel()], scales[getLevel()]);
+		if(getLevel() > -1) {
+			tx.translate(transX[getLevel()], transY[getLevel()]);
+			tx.scale(scales[getLevel()], scales[getLevel()]);
+		}
 	}
 	
 	//getters and setters time
@@ -149,16 +154,20 @@ public class EngineUpgrade extends Upgrade {
 	public boolean getIsThrusting() {
 		return isThrusting;
 	}
+	
 	public void getLit() {
 		if(getLevel() > -1) {
 			img = imgsLit[getLevel()];
 		}
+		isThrusting = true;
 	}
 	public void notLit() {
 		if(getLevel() > -1) {
 			img = imgs[getLevel()];
 		}
+		isThrusting = false;
 	}
+	
 	
 	//paint stuff
 	public void paint(Graphics g) {
