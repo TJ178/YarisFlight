@@ -146,6 +146,12 @@ public class EngineUpgrade extends Upgrade {
 		isThrusting = false;
 	}
 	
+	public double getFuelUsage() {
+		if(getLevel() > -1) {
+			return fuelUsage[getLevel()];
+		}
+		return 0;
+	}
 	
 	//paint stuff
 	public void paint(Graphics g) {
