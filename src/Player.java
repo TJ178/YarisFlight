@@ -40,9 +40,12 @@ public class Player {
 	private boolean onGround = false;			//keep track if yaris dies
 	private boolean alive;						//aliveness of our manual 2007 red yaris driving friend
 	private Shape bounds;						//collision boundaries for yaris (for obstacles and ground)
-	public boolean onRamp;
+	public boolean onRampTop;
+	public boolean onRampMid;
+	public boolean onRampBot;
+	private RampUpgrade ramp;
 	
-	public Player(String fileName) {
+	public Player(String fileName, RampUpgrade ramp) {
 		//width;
 		//height;
 		x = 0;
@@ -56,6 +59,7 @@ public class Player {
 		tx = AffineTransform.getTranslateInstance(displayX-offsetx, displayY-offsety);
 		tx.scale(scale, scale);
 		bounds = new Rectangle();
+		this.ramp = ramp;
 	}
 	
 	private AffineTransform tx;
@@ -158,7 +162,7 @@ public class Player {
 	
 	public void move() {
 		//update physics and apply new velocity
-		if(!onRamp){
+		if(!(onRampTop || onRampMid || onRampBot)){
 			updateAccelerations();
 			
 			vx += ax;
@@ -206,7 +210,54 @@ public class Player {
 			bounds = new Rectangle(92,206,900,359);
 			bounds = tx.createTransformedShape(bounds);
 		}else{
+			ax = 4;
+			ay = -4;
+			vx = 3;
+			vy = -5.5;
 			
+			if(onRampTop){
+				if(y > 1050){
+					angle -= .02;
+					x += 10;
+					y -= 4;
+				}else if(y > 800){
+					angle -= 0.01;
+					x += 3;
+					y -= 8;
+				}else if (y <= 800 && y > 250){
+					angle = 5.4;
+					vx += ax;
+					vy += ay;
+					x += vx;
+					y += vy;
+				}else if (y <= 250 && x < 670){
+					angle += 0.08;
+					x += 10;
+					y -= 4;
+				}else{
+					onRampTop = false;
+					vx = mass*0.2;
+					vy = mass*0.2;
+				}
+				
+				/*if(y < ramp.getRampTopY()){
+					onRampTop = false;
+					onRampMid = true;
+				}*/
+			}
+			
+			
+			if(angle > Math.PI*2){
+				angle = 0;
+			}else if(angle < 0){
+				angle = Math.PI*2;
+			}
+			
+			tx.setToTranslation(displayX, displayY);
+			tx.rotate(-angle);
+	
+			tx.translate(-offsetx, -offsety);
+			tx.scale(scale, scale);
 			
 			
 		}
