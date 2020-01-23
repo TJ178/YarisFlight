@@ -308,7 +308,7 @@ public class Player {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
 		g2.setColor(Color.BLACK);
-		g2.draw(bounds);
+		//g2.draw(bounds);
 	}
 	
 	// converts image to make it drawable in paint

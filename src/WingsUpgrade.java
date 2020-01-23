@@ -121,6 +121,7 @@ public class WingsUpgrade extends Upgrade {
 	private double anchorX = 750;
 	private double anchorY = 650;
 	private int level = 0;
+	private double fuel;
 	
 	private int weightU1 = 10;
 	private int dragU1 = 10;

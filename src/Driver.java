@@ -131,7 +131,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		engine = new EngineUpgrade();
 		engine.upgrade1();
-		//engine.upgrade2();
+		engine.upgrade2();
 		
 		ground = new Ground();
 		
