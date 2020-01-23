@@ -34,6 +34,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	ScoreKeeper scorekeep;
 	
+	StatusBar fuelbar;
+	
 	//put variables // things to update in here
 	public void update(){
 		player.move();
@@ -152,6 +154,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		player = new Player("yarisright.png");
 		
+		fuelbar = new StatusBar(100, 100, 100, 30, 0, Color.yellow, false, 1, "Fuel", false, 0, 100, 50, false);
+		
 		
 		startGame();
 		
@@ -220,6 +224,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(-.05);
 			break;
 		case 40:
+			
 			player.setThrust(20);
 			engine.getLit();
 			break;
