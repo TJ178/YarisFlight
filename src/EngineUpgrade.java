@@ -10,9 +10,6 @@ public class EngineUpgrade extends Upgrade {
 	private static int drag;
 	private static int lift;
 	
-	private double scale = 1;
-	private double anchorX = 750;
-	private double anchorY = 650;
 	private int level = -1;
 	private boolean isThrusting = false;
 	private double fuelPerc =1.0;
@@ -22,16 +19,12 @@ public class EngineUpgrade extends Upgrade {
 	private int dragU1 = 10;
 	private int liftU1 = 10;
 	private double scaleU1 = 0.2;
-	private double anchorxU1 = 893;
-	private double anchoryU1 = 155;
 	private int fuelU1 = 10;
 
 	private int weightU2 = 20;
 	private int dragU2 = 5;
 	private int liftU2 = 20;
 	private double scaleU2 = 0.2;
-	private double anchorxU2 = 172;
-	private double anchoryU2 = -343;
 	private int fuelU2 = 20;
 	
 	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
@@ -45,6 +38,7 @@ public class EngineUpgrade extends Upgrade {
   	private String[] imgsStrings = {imgU1, imgU2};
   	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
   	private int[] fuels = {fuelU1, fuelU2}; 
+  	private double[] fuelUsage = {0.002, 0.0005};
 
 	private Image img;
 	private Image[] imgs = new Image[2];
@@ -64,7 +58,7 @@ public class EngineUpgrade extends Upgrade {
 		tx = AffineTransform.getTranslateInstance(500, 400);
 	}
 	
-	public void upgrade(int weight, int drag, int lift, String FileName, double anchorX, double anchorY) {
+	public void upgrade(int weight, int drag, int lift, String FileName) {
 		setWeight(weight);
 		setDrag(drag);
 		setLift(lift);
@@ -72,14 +66,14 @@ public class EngineUpgrade extends Upgrade {
 	}
 	
 	public void upgrade1() {
-		upgrade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
+		upgrade(weightU1, dragU1, liftU1, imgU1);
 		
 		level = 0;
 		
 	}
 	
 	public void upgrade2() {
-		upgrade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
+		upgrade(weightU2, dragU2, liftU2, imgU2);
 		
 		level = 1;
 		
@@ -126,22 +120,6 @@ public class EngineUpgrade extends Upgrade {
 
 	public void setImg(Image img) {
 		this.img = img;
-	}
-	
-	public double getAnchorX() {
-		return anchorX;
-	}
-
-	public void setAnchorX(double anchorX) {
-		this.anchorX = anchorX;
-	}
-
-	public double getAnchorY() {
-		return anchorY;
-	}
-
-	public void setAnchorY(double anchorY) {
-		this.anchorY = anchorY;
 	}
 	
 	public int getLevel() {
