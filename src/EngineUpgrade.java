@@ -10,12 +10,7 @@ public class EngineUpgrade extends Upgrade {
 	private static int drag;
 	private static int lift;
 	
-	private int x = 0, y = 200;
-	private int displayX = 500, displayY = 400;
 	private double scale = 1;
-	private int offsetx = (int)(540*scale);
-	private int offsety = (int)(390*scale);
-	private double rv;
 	private double anchorX = 750;
 	private double anchorY = 650;
 	private int level = -1;
@@ -24,8 +19,6 @@ public class EngineUpgrade extends Upgrade {
 	private int weightU1 = 10;
 	private int dragU1 = 10;
 	private int liftU1 = 10;
-	private int widthU1 = (int)(1287 * scale);
-	private int heightU1 = (int)(494 * scale);
 	private double scaleU1 = 0.2;
 	private double anchorxU1 = 893;;
 	private double anchoryU1 = 155;
@@ -33,8 +26,6 @@ public class EngineUpgrade extends Upgrade {
 	private int weightU2 = 20;
 	private int dragU2 = 5;
 	private int liftU2 = 20;
-	private int widthU2 = (int)(186 * scale);	//385 × 1500 pixels
-	private int heightU2 = (int)(119 * scale);
 	private double scaleU2 = 0.2;
 	private double anchorxU2 = 172;
 	private double anchoryU2 = -343;
@@ -45,13 +36,15 @@ public class EngineUpgrade extends Upgrade {
 	private String imgU2Lit = "thicc_rocket_lit.png";
 
 	private double[] scales = {scaleU1, scaleU2};
-	private double[] transX = {-30, -35};
-	private double[] transY = {75, 100};
-  	private String[] imgs = {imgU1, imgU2};
-  	private String[] imgsLit = {imgU1Lit, imgU2Lit};
+	private double[] transX = {-30, -90};
+	private double[] transY = {75, 90};
+  	private String[] imgsStrings = {imgU1, imgU2};
+  	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
+  	//private 
 
-	
 	private Image img;
+	private Image[] imgs = new Image[2];
+	private Image[] imgsLit = new Image[2];
 	
 	private AffineTransform tx;
 
@@ -59,58 +52,43 @@ public class EngineUpgrade extends Upgrade {
 	public EngineUpgrade() {
 		super(weight, drag, lift);
 		
-		//System.out.println((displayX-offsetx) + " " +  (displayY-offsety));
-		//AffineTransform trans = (AffineTransform) tx.clone();
-		//trans.setToScale(1, 1);
+		for(int i = 0; i < 2; i ++) {
+			imgs[i] = getImage(imgsStrings[i]);
+			imgsLit[i] = getImage(imgsStringsLit[i]);
+		}
+		
 		tx = AffineTransform.getTranslateInstance(500, 400);
 	}
 	
-	public void uprade(int weight, int drag, int lift, String FileName, double anchorX, double anchorY) {
+	public void upgrade(int weight, int drag, int lift, String FileName, double anchorX, double anchorY) {
 		setWeight(weight);
 		setDrag(drag);
 		setLift(lift);
 		setImg(getImage(FileName));
-		this.anchorX = anchorX;
-		this.anchorY = anchorY;
 	}
 	
 	public void upgrade1() {
-		uprade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
+		upgrade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
 		
 		level = 0;
-		//tx = AffineTransform.getTranslateInstance(310, 375); //392 && 322
-		//tx.rotate(-Math.PI / 4);
-		//tx.scale(scaleU1, scaleU1);
+		
 	}
 	
 	public void upgrade2() {
-		uprade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
+		upgrade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
 		
 		level = 1;
-		//tx = AffineTransform.getTranslateInstance(400, 400); //392 && 322
-		//tx.rotate(Math.PI / 2);
-		//tx.scale(scaleU2, scaleU2);
+		
 	}
 	
 	//rotation mechanics
 	public void moveTo(double angle) {
-		//tx.rotate(, anchorX, anchorY);
 		tx.setToTranslation(500, 400);
 		tx.rotate(-angle + (Math.PI / 2));
 
 		tx.translate(transX[getLevel()], transY[getLevel()]);
 		tx.scale(scales[getLevel()], scales[getLevel()]);
 	}
-	
-	//rotate methods
-	public void rotateCW() {
-		tx.rotate(rv);
-	}
-	
-	public void rotateCCW() {
-		tx.rotate(-rv);
-	}
-	
 	
 	//getters and setters time
 	public int getWeight() {
@@ -173,12 +151,12 @@ public class EngineUpgrade extends Upgrade {
 	}
 	public void getLit() {
 		if(getLevel() > -1) {
-			img = getImage(imgsLit[getLevel()]);
+			img = imgsLit[getLevel()];
 		}
 	}
 	public void notLit() {
 		if(getLevel() > -1) {
-			img = getImage(imgs[getLevel()]);
+			img = imgs[getLevel()];
 		}
 	}
 	

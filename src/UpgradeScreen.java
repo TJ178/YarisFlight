@@ -21,7 +21,7 @@ import java.awt.geom.AffineTransform;
 
 public class UpgradeScreen {
 	
-	public void paint(Graphics g, WingsUpgrade wings) {
+	public void paint(Graphics g, WingsUpgrade wings, EngineUpgrade engine, ScoreKeeper ScoreKeeper, Score currentScore) {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g.setColor(Color.GREEN);
@@ -29,6 +29,7 @@ public class UpgradeScreen {
 		
 		g.setColor(Color.WHITE);
 		g.drawString("Upgrades", 400, 50);
+		g.drawString("You have "+ScoreKeeper.getMoney()+" dollars.", 350, 100);
 		
 		g.drawString("Wings:", 400, 150);
 		if(wings.getLevel() < 1) {
@@ -46,10 +47,23 @@ public class UpgradeScreen {
 		}
 		
 		g.drawString("Engine:", 400, 400);
-		g.drawString("Level 1 ($420)", 300, 550);
-		g.drawString("Level 2 ($6969)", 700, 550);
 		
-		//g.setColor(Co);
+		if(engine.getLevel() < 1) {
+			g.drawString("Level 1 ($420)", 300, 550);
+			
+			g.drawString("Level 2 ($6969)", 700, 550);
+			}
+			
+			if(engine.getLevel()==1) {
+				g.drawString("Level 2 ($6969)", 700, 550);
+			}
+			
+			if(engine.getLevel()>=2) {
+				g.drawString("Engine is Fully Upgraded.", 400, 550);
+			}
+			
+		
+		
 		
 		
 
