@@ -52,6 +52,16 @@ public class RampUpgrade extends Upgrade {
 		
 	}
 	
+	public int getRampTopY(){
+		return 750;
+	}
+	public int getRampMidY(){
+		return 500;
+	}
+	public int getRampBotY(){
+		return 0;
+	}
+	
 	
 	private Image getImage(String path) {
 		Image tempImage = null;
