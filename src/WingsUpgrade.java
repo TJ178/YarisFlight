@@ -115,17 +115,14 @@ public class WingsUpgrade extends Upgrade {
 	private int x = 0, y = 200;
 	private int displayX = 500, displayY = 400;
 	private double scale = 1;
-	private int offsetx = (int)(540*scale);
-	private int offsety = (int)(390*scale);
 	private double rv;
 	private double anchorX = 750;
 	private double anchorY = 650;
 	private int level = 0;
-	private double fuel;
 	
 	private int weightU1 = 10;
-	private int dragU1 = 10;
-	private int liftU1 = 10;
+	private int dragU1 = 5;
+	private int liftU1 = 40;
 	private int widthU1 = (int)(1287 * scale);
 	private int heightU1 = (int)(494 * scale);
 	private double scaleU1 = 0.2;
@@ -133,8 +130,8 @@ public class WingsUpgrade extends Upgrade {
 	private double anchoryU1 = 655;
 
 	private int weightU2 = 20;
-	private int dragU2 = 5;
-	private int liftU2 = 20;
+	private int dragU2 = 2;
+	private int liftU2 = 60;
 	private int widthU2 = (int)(186 * scale);	//186 × 119 pixels
 	private int heightU2 = (int)(119 * scale);
 	private double scaleU2 = 0.75;
@@ -154,7 +151,7 @@ public class WingsUpgrade extends Upgrade {
 
 	
 	public WingsUpgrade() {
-		super(weight, drag, lift);
+		super(0, 0, 0, 0);
 		tx = AffineTransform.getTranslateInstance(500, 400); //392 && 322
 
 		//System.out.println((displayX-offsetx) + " " +  (displayY-offsety));
@@ -162,7 +159,7 @@ public class WingsUpgrade extends Upgrade {
 		//trans.setToScale(1, 1);
 	}
 	
-	public void uprade(int weight, int drag, int lift, String FileName, double anchorX, double anchorY) {
+	public void upgrade(int weight, int drag, int lift, String FileName, double anchorX, double anchorY) {
 		setWeight(weight);
 		setDrag(drag);
 		setLift(lift);
@@ -172,7 +169,7 @@ public class WingsUpgrade extends Upgrade {
 	}
 	
 	public void upgrade1() {
-		uprade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
+		upgrade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
 		
 		level = 0;
 		//tx = AffineTransform.getTranslateInstance(335, 270); //392 && 322
@@ -180,7 +177,7 @@ public class WingsUpgrade extends Upgrade {
 	}
 	
 	public void upgrade2() {
-		uprade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
+		upgrade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
 		
 		level = 1;
 		//tx = AffineTransform.getTranslateInstance(displayX-offsetx + 495, displayY-offsety + 385); //392 && 322

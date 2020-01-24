@@ -103,7 +103,7 @@ public void paint(Graphics g, int playerx, int playery) {
 	}
 	if (ctx.getTranslateY() < -100) {
 		cy = playery -800;
-		System.out.println(cy);
+		//System.out.println(cy);
 		
 	}else if (ctx.getTranslateY() > 900) {
 		cy = playery + cheight;

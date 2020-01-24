@@ -138,21 +138,21 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			cloudRow1[i] = new Cloud("cloud.png");
 		}
 
-		//player.setX(screen_width/2);
-		//player.setY(screen_height/2);
+		player = new Player("yarisright.png");
+		
 		wings = new WingsUpgrade();
 		//wings.upgrade1();
-		wings.upgrade2();
+		wings.upgrade1();
+		player.addUpgrade(wings);
 		
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
 		//engine.upgrade1();
-		engine.upgrade2();
+		engine.upgrade1();
+		player.addUpgrade(engine);
 		
 		ground = new Ground();
-		
-		player = new Player("yarisright.png");
 		
 		collision = new CollisionHandler(player, ground);
 		
@@ -231,22 +231,22 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			break;
 		case 40:
 			if(engine.getFuelPerc() > 0) {
-				player.setThrust(20);
+				player.setThrust(player.getPossibleThrust());
 				engine.getLit();
 			}else {
 				player.setThrust(0);
 				engine.notLit();
 			}
 			break;
+		case 32:
 		case 38:
 			if(engine.getFuelPerc() > 0) {
-				player.setThrust(10);
+				player.setThrust(player.getPossibleThrust());
 				engine.getLit();
 			}else {
 				player.setThrust(0);
 				engine.notLit();
 			}
-
 			break;
 		default:
 			System.out.println(key);
@@ -272,6 +272,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setThrust(0);
 			engine.notLit();
 			break;
+		case 32:
 		case 38:
 			player.setThrust(0);
 			engine.notLit();

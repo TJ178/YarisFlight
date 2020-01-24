@@ -20,7 +20,7 @@ public class Player {
 	private double ax, ay;			//acceleration
 	private double angle;			//current flight angle
 	private double rv;	    		//rotation velocity
-	private double appliedThrust;	//forward thrust from yaris
+	private double appliedThrust;	//current forward thrust from yaris
 	
 	//display variables
 	private double scale = .25;					//size of yaris on screen
@@ -33,8 +33,12 @@ public class Player {
 	
 	//physics variables
 	private int mass = 100;						//thiccness of yaris,, actually controls the strength of the physics
-	private double liftdragratio = 4;			//amount of drag compared to lift
+	private int lift = 0;
+	private int drag = 10;
+	private double liftdragratio = lift / drag;
 	private int gravity = -15;					//make her fall
+	
+	private double thrustAmount = 0; 	// amount of thrust that is output
 	
 	//gameplay variables
 	private boolean onGround = false;			//keep track if yaris dies
@@ -99,11 +103,15 @@ public class Player {
 		return ax;
 	}
 	
-	public void setThrust(int newThrust){
+	public void setThrust(double newThrust){
 		appliedThrust = newThrust;
 	}
 	public double getThrust(){
 		return appliedThrust;
+	}
+	
+	public double getPossibleThrust() {
+		return thrustAmount;
 	}
 	
 	public void setGround(boolean g) {
@@ -144,6 +152,28 @@ public class Player {
 
 	public void setAngle(double angle) {
 		this.angle = angle;
+	}
+	
+	public void addUpgrade(Upgrade d) {
+		drag += d.getDrag();
+		mass += d.getWeight();
+		lift += d.getLift();
+		if(d instanceof EngineUpgrade) {
+			thrustAmount = d.getThrust();
+			System.out.println(thrustAmount);
+		}
+		liftdragratio = lift / drag; 
+		
+	}
+	
+	public void removeUpgrade(Upgrade d) {
+		drag -= d.getDrag();
+		mass -= d.getWeight();
+		lift -= d.getLift();
+		if(d instanceof EngineUpgrade) {
+			thrustAmount = 0;
+		}
+		liftdragratio = lift / drag;
 	}
 
 	
@@ -352,7 +382,7 @@ public class Player {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
 		g2.setColor(Color.BLACK);
-		g2.draw(bounds);
+		//g2.draw(bounds);
 	}
 	
 	// converts image to make it drawable in paint
