@@ -33,10 +33,10 @@ public class Player {
 	
 	//physics variables
 	private int mass = 100;						//thiccness of yaris,, actually controls the strength of the physics
-	private int lift = 0;
-	private int drag = 10;
-	private double liftdragratio = lift / drag;
-	private int gravity = -15;					//make her fall
+	private int lift = 1;
+	private int drag = 5;
+	private double liftdragratio = (double)(lift) / drag;
+	private int gravity = -30;					//make her fall
 	
 	private double thrustAmount = 0; 	// amount of thrust that is output
 	
@@ -265,10 +265,10 @@ public class Player {
 		
 		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
 		double drag = Math.abs( lift * Math.pow(liftdragratio, -1));
-		//System.out.println("angle: "+ angle);
-		//System.out.println("angleOfAttack: " + angleOfAttack);
-		//System.out.println("lift: " + lift);
-		//System.out.println("drag: " + drag);
+		System.out.println("angle: "+ angle);
+		System.out.println("angleOfAttack: " + angleOfAttack);
+		System.out.println("lift: " + lift);
+		System.out.println("drag: " + drag);
 		
 		
 		
@@ -284,6 +284,7 @@ public class Player {
 		
 		double fx = (appliedThrust - drag)*costheta - lift*sintheta;
 		double fy = (appliedThrust - drag)*sintheta + lift*costheta + gravity;
+		System.out.println("fy:" + (appliedThrust - drag)*sintheta);
 		
 		
 		////////////old system that exists just in case
