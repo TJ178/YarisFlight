@@ -23,7 +23,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private int screen_height = 800;
 	private int screen_width = 1000;
 	private Timer t;
-	private int stage = 2;
+	private int stage = 0;
 	
 	public Cloud[] cloudRow1 = new Cloud[5];
 	
@@ -107,13 +107,28 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 		fuelbar.paint(g);
 		
-		if(stage == 2) {
+		
+		switch(stage) {
+		case 0:
+			mainMenu(g);
+			break;
+		case 1:
 			upgradeScreen(g);
-		}
-		if(stage == 3) {
+			break;
+		case 2:
 			startGame();
-			stage = 0;
+			stage ++;
+			break;
+		case 3:
+			if(collision.inGround() /*&& player.onGround() && player.getAx() > 670*/) {
+				stage = 4;
+			}
+			break;
+		case 4:
+			endScreen(g);
+			break;
 		}
+		
 		
 	}
 	
@@ -176,14 +191,14 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		player = new Player("yarisright.png");
 		
 		wings = new WingsUpgrade();
-		wings.upgrade1();
-		player.addUpgrade(wings);
+		//wings.upgrade1();
+		//player.addUpgrade(wings);
 		
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
-		engine.upgrade2();
-		player.addUpgrade(engine);
+		//engine.upgrade1();
+		//player.addUpgrade(engine);
 		
 		ground = new Ground();
 		
@@ -210,8 +225,13 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	public void upgradeScreen(Graphics g) {		
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 30);
+		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
+
 		Graphics2D g2 = (Graphics2D) g;
+		
+		
 		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		//tx.scale(0.6, 0.6);
 		//g.setFont(font1);
 
 		//background
@@ -237,7 +257,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("Wings:", 475, 275);
 		switch(wings.getLevel()) {
 			case -1:
-				g.drawString("Level 1 ($420)", 475, 348);		
+				g.drawString("Level 1 ($420)", 460, 348);		
 				break;
 			case 0:
 				g.drawString("Level 2 ($6969)", 475, 348);
@@ -250,31 +270,68 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("Engine:", 475, 425);
 		switch(engine.getLevel()) {
 			case -1:
-				g.drawString("Level 1 ($420)", 475, 498);		
+				g.drawString("Level 1 ($420)", 460, 498);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 475, 498);
+				g.drawString("Level 2 ($6969)", 430, 498);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
 				break;
 		}
 		
-		g.drawString("Fuel Tank", 480, 575);
+		g.drawString("Fuel Tank:", 475, 575);
 		switch(1) {
 			case -1:
-				g.drawString("Level 1 ($420)", 475, 648);		
+				g.drawString("Level 1 ($420)", 450, 648);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 475, 648);
+				g.drawString("Level 2 ($6969)", 450, 648);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 648);
 				break;
 		}
+		g.setFont(font2);
+		g.drawString("Press Space to Start", 250, 750);
 	}
 	
-	public void mainMenu() {
+	public void mainMenu(Graphics g) {
+		Font font1 = new Font("Book Antiqua", Font.PLAIN, 100);
+		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
+
+		Graphics2D g2 = (Graphics2D) g;
+		tx = AffineTransform.getTranslateInstance(0, 0);
+		tx.scale(1,1);
+		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		
+		g.setColor(Color.cyan);
+		g.setFont(font1);
+		
+		g.drawString("Yaris Flight", 250, 200);
+		
+		g.setFont(font2);
+		
+		g.drawString("Press Space to Start", 250, 400);
+		
+	}
+	public void endScreen(Graphics g) {
+		Font font1 = new Font("Book Antiqua", Font.PLAIN, 25);
+		Font font2 = new Font("Book Antiqua", Font.PLAIN, 20);
+
+		Graphics2D g2 = (Graphics2D) g;
+		tx = AffineTransform.getTranslateInstance(200, 160);
+		tx.scale(0.6, 0.6);
+		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		
+		g.setFont(font1);
+		g.setColor(Color.cyan);
+		g.drawString("Darnit you crashed the 2007 Toyota Yaris!", 250, 200);
+		
+		g.setFont(font2);
+		g.drawString("You flew " + scorekeep.getNewDistRecord() + " meters!", 250, 250);
+		g.drawString("You reached a maximum altitude of " + scorekeep.getNewAltRecord() + " meters!", 250, 300);
+		g.drawString("You reached a top speed of " + scorekeep.getNewSpeedRecord() + " meters per second!", 250, 350);
 		
 	}
 	
@@ -300,7 +357,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(stage == 2) {
+		if(stage == 1) {
 			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 300, 600, 400)) {
 				switch(wings.getLevel()){
 					case -1:
@@ -386,11 +443,24 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(-.05);
 			break;
 		case 40:
+			if(engine.getFuelPerc() > 0) {
+				player.setThrust(player.getPossibleThrust());
+				engine.getLit();
+			}else {
+				player.setThrust(0);
+				engine.notLit();
+			}
 			if(stage == 2) {
 				stage++;
 			}
-			
+			break;	
 		case 32:
+			if(stage == 0 || stage == 1) {
+				stage++;
+			}else if(stage == 4) {
+				stage = 0;
+			}
+			break;
 		case 38:
 			if(engine.getFuelPerc() > 0 && !player.onRamp && !player.onGround()) {
 				player.setThrust(player.getPossibleThrust());
