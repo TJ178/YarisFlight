@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,7 +11,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
+import java.awt.geom.AffineTransform;
+import java.net.URL;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,6 +40,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	ScoreKeeper scorekeep;
 	
+	private AffineTransform tx;
+
 	//UpgradeScreen upgradeScreen;
 	
 	//put variables // things to update in here
@@ -103,7 +108,16 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 	}
 	
-	
+	private Image getImage(String path) {
+		Image tempImage = null;
+		try {
+			URL imageURL = WingsUpgrade.class.getResource(path);
+			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tempImage;
+	}
 	
 	public void startGame(){	
 		scorekeep.start();	
@@ -185,16 +199,20 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		f.setVisible(true);
 	}
 	
+	//upgrade screen
 	public void upgradeScreen(Graphics g) {		
+		Graphics2D g2 = (Graphics2D) g;
+		
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 30);
 		//g.setFont(font1);
+		g2.drawImage(getImage("UpgradeBackground.png"), tx, null);
 
 		//background
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 0, screen_width, screen_height);
+		//g.setColor(Color.GREEN);
+		//g.fillRect(0, 0, screen_width, screen_height);
 		
 		//rectangles
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.CYAN);
 		g.fillRect(400, 50, 200, 100);
 		
 		//wings
@@ -205,7 +223,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.fillRect(400, 600, 200, 100);
 		
 		
-		g.setColor(Color.red);
+		g.setColor(Color.BLACK);
 		g.drawString("Upgrades", 475, 75);
 		g.drawString("You have "+ scorekeep.getMoney()+" dollars.", 450, 100);
 		
@@ -247,6 +265,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 648);
 				break;
 		}
+	}
+	
+	//menu screen
+	public void mainScreen() {
+		
 	}
 	
 	public boolean isInside(int x, int y, int xBound1, int yBound1, int xBound2, int yBound2) {
@@ -404,5 +427,6 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }
