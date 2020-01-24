@@ -15,8 +15,7 @@ public class WingsUpgrade extends Upgrade {
 	private static int lift;
 	
 	private int displayX = 500, displayY = 400;
-	private double scale = 1;
-	private int level = 0;
+	private int level = -1;
 	
 	private int weightU1 = 10;
 	private int dragU1 = 5;

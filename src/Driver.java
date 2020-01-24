@@ -107,16 +107,28 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 		fuelbar.paint(g);
 		
-		if(stage == 0) {
+		
+		switch(stage) {
+		case 0:
 			mainMenu(g);
-		}
-		if(stage == 1) {
+			break;
+		case 1:
 			upgradeScreen(g);
-		}
-		if(stage == 2) {
+			break;
+		case 2:
 			startGame();
-			stage = 3;
+			stage ++;
+			break;
+		case 3:
+			int i = 0;
+			if(player.onGround() && !player.onRamp) {
+				stage = 0;
+			}
+			break;
+		case 4:
+			break;
 		}
+		
 		
 	}
 	
@@ -179,14 +191,14 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		player = new Player("yarisright.png");
 		
 		wings = new WingsUpgrade();
-		wings.upgrade1();
-		player.addUpgrade(wings);
+		//wings.upgrade1();
+		//player.addUpgrade(wings);
 		
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
-		engine.upgrade1();
-		player.addUpgrade(engine);
+		//engine.upgrade1();
+		//player.addUpgrade(engine);
 		
 		ground = new Ground();
 		
@@ -213,6 +225,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	
 	public void upgradeScreen(Graphics g) {		
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 30);
+		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
+
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
 		//g.setFont(font1);
@@ -240,7 +254,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("Wings:", 475, 275);
 		switch(wings.getLevel()) {
 			case -1:
-				g.drawString("Level 1 ($420)", 475, 348);		
+				g.drawString("Level 1 ($420)", 460, 348);		
 				break;
 			case 0:
 				g.drawString("Level 2 ($6969)", 475, 348);
@@ -253,28 +267,30 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("Engine:", 475, 425);
 		switch(engine.getLevel()) {
 			case -1:
-				g.drawString("Level 1 ($420)", 475, 498);		
+				g.drawString("Level 1 ($420)", 460, 498);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 475, 498);
+				g.drawString("Level 2 ($6969)", 430, 498);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
 				break;
 		}
 		
-		g.drawString("Fuel Tank", 480, 575);
+		g.drawString("Fuel Tank:", 475, 575);
 		switch(1) {
 			case -1:
-				g.drawString("Level 1 ($420)", 475, 648);		
+				g.drawString("Level 1 ($420)", 450, 648);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 475, 648);
+				g.drawString("Level 2 ($6969)", 450, 648);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 648);
 				break;
 		}
+		g.setFont(font2);
+		g.drawString("Press Space to Start", 250, 750);
 	}
 	
 	public void mainMenu(Graphics g) {
@@ -291,7 +307,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		g.setFont(font2);
 		
-		g.drawString("Press Space to Strart", 250, 400);
+		g.drawString("Press Space to Start", 250, 400);
 		
 	}
 	
