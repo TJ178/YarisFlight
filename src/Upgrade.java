@@ -9,13 +9,14 @@ public class Upgrade {
 	protected int weight;
 	protected int drag;
 	protected int lift;
-	//protected int speed;
+	protected int thrust;
 	
-	public Upgrade(int weight, int drag, int lift) {
+	public Upgrade(int weight, int drag, int lift, int thrust) {
 		this.weight = weight;
 		//this.speed = speed;
 		this.lift = lift;
 		this.drag = drag;
+		this.thrust = thrust;
 	}
 	
 	public Upgrade(){
@@ -52,5 +53,20 @@ public class Upgrade {
 
 	public void setDrag(int drag) {
 		this.drag = drag;
+	}
+	public int getLift() {
+		return lift;
+	}
+
+	public void setLift(int lift) {
+		this.lift = lift;
+	}
+
+	public int getThrust() {
+		return thrust;
+	}
+
+	public void setThrust(int thrust) {
+		this.thrust = thrust;
 	}
 }

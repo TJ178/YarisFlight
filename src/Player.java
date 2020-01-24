@@ -20,7 +20,7 @@ public class Player {
 	private double ax, ay;			//acceleration
 	private double angle;			//current flight angle
 	private double rv;	    		//rotation velocity
-	private double appliedThrust;	//forward thrust from yaris
+	private double appliedThrust;	//current forward thrust from yaris
 	
 	//display variables
 	private double scale = .25;					//size of yaris on screen
@@ -33,8 +33,12 @@ public class Player {
 	
 	//physics variables
 	private int mass = 100;						//thiccness of yaris,, actually controls the strength of the physics
-	private double liftdragratio = 4;			//amount of drag compared to lift
+	private int lift = 0;
+	private int drag = 10;
+	private double liftdragratio = lift / drag;
 	private int gravity = -15;					//make her fall
+	
+	private double thrustAmount = 0; 	// amount of thrust that is output
 	
 	//gameplay variables
 	private boolean onGround = false;			//keep track if yaris dies
@@ -99,11 +103,15 @@ public class Player {
 		return ax;
 	}
 	
-	public void setThrust(int newThrust){
+	public void setThrust(double newThrust){
 		appliedThrust = newThrust;
 	}
 	public double getThrust(){
 		return appliedThrust;
+	}
+	
+	public double getPossibleThrust() {
+		return thrustAmount;
 	}
 	
 	public void setGround(boolean g) {
@@ -145,20 +153,33 @@ public class Player {
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
-
-	/*
-	 * colliding method, I'll leave it for reference for now
-	public boolean collided(int ox, int oy, int ow, int oh) {
-		Rectangle obs = new Rectangle(ox, oy, ow, oh);
-		Rectangle froggy = new Rectangle((int) tx.getTranslateX(), (int) tx.getTranslateY(), width, height);
-		return obs.intersects(froggy);
-	}
-	*/
 	
+	public void addUpgrade(Upgrade d) {
+		drag += d.getDrag();
+		mass += d.getWeight();
+		lift += d.getLift();
+		if(d instanceof EngineUpgrade) {
+			thrustAmount = d.getThrust();
+			System.out.println(thrustAmount);
+		}
+		liftdragratio = lift / drag; 
+		
+	}
+	
+	public void removeUpgrade(Upgrade d) {
+		drag -= d.getDrag();
+		mass -= d.getWeight();
+		lift -= d.getLift();
+		if(d instanceof EngineUpgrade) {
+			thrustAmount = 0;
+		}
+		liftdragratio = lift / drag;
+	}
+
 	
 	public void move() {
 		//update physics and apply new velocity
-		if(!onRamp){
+		if(!onRamp && !onGround){
 			updateAccelerations();
 			
 			vx += ax;
@@ -205,9 +226,14 @@ public class Player {
 			//create bounds for yaris & rotate them to match physics
 			bounds = new Rectangle(92,206,900,359);
 			bounds = tx.createTransformedShape(bounds);
-		}else{
+		}else if(onRamp){
 			
 			startAnimation();	
+		}else {
+			ax = 0;
+			ay = 0;
+			vx = 0;
+			vy = 0;
 		}
 	}
 	
@@ -333,11 +359,6 @@ public class Player {
 				vx = mass*0.2;
 				vy = mass*0.2;
 			}
-			
-			/*if(y < ramp.getRampTopY()){
-				onRampTop = false;
-				onRampMid = true;
-			}*/
 		}
 		
 		
