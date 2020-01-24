@@ -41,13 +41,17 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		player.move();
 		wings.moveTo(player.getAngle());
 		engine.moveTo(player.getAngle());
-		/*if(collision.inGround()) {
-			//player.setVx(0);
-			//player.setVy(0);
+		if(!engine.getIsThrusting() && player.getThrust() > 0) {
+			player.setThrust(0);
+		}
+		
+		if(collision.inGround()) {
+			player.setVx(0);
+			player.setVy(0);
 			player.setGround(true);
 		}else {
 			player.setGround(false);
-		}*/
+		}
 		
 	}
 	
@@ -73,6 +77,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		if(wings.getLevel() > 0) {
 			wings.paint(g);
 		}
+		ramp.paint(g,player.getX(), player.getY());
+		ground.paint(g, player.getY());
 		
 		g.setColor(Color.black);
 		g.drawString("x: " + player.getX(), 0, 10);
@@ -83,9 +89,9 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("accelY: " + player.getAy(),0, 60);
 		g.drawString("vx: " + player.getVx(),0, 70);
 		g.drawString("vy: " + player.getVy(),0, 80);
+		g.drawString("fuel: "+ engine.getFuelPerc(), 0, 90);
 
-		ramp.paint(g,player.getX(), player.getY());
-		ground.paint(g, player.getY());
+		fuelbar.paint(g);
 		
 	}
 	
@@ -146,13 +152,13 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		ground = new Ground();
 		
+		player = new Player("yarisright.png");
+		
 		collision = new CollisionHandler(player, ground);
 		
 		ramp = new RampUpgrade("Ramp_Top.png","Ramp_middle.png", "Ramp_bottom_toEdit.png", "Ramp_ExtraPart.png");
 		
 		scorekeep = new ScoreKeeper();
-		
-		player = new Player("yarisright.png");
 		
 		fuelbar = new StatusBar(100, 100, 100, 30, 0, Color.yellow, false, 1, "Fuel", false, 0, 100, 50, false);
 		
@@ -224,13 +230,22 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(-.05);
 			break;
 		case 40:
-			
-			player.setThrust(20);
-			engine.getLit();
+			if(engine.getFuelPerc() > 0) {
+				player.setThrust(20);
+				engine.getLit();
+			}else {
+				player.setThrust(0);
+				engine.notLit();
+			}
 			break;
 		case 38:
-			player.setThrust(10);
-			engine.getLit();
+			if(engine.getFuelPerc() > 0) {
+				player.setThrust(10);
+				engine.getLit();
+			}else {
+				player.setThrust(0);
+				engine.notLit();
+			}
 
 			break;
 		default:

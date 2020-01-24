@@ -38,7 +38,7 @@ public class EngineUpgrade extends Upgrade {
   	private String[] imgsStrings = {imgU1, imgU2};
   	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
   	private int[] fuels = {fuelU1, fuelU2}; 
-  	private double[] fuelUsage = {0.002, 0.0005};
+  	private double[] fuelUsage = {0.01, 0.1};
 
 	private Image img;
 	private Image[] imgs = new Image[2];
@@ -87,6 +87,15 @@ public class EngineUpgrade extends Upgrade {
 			tx.translate(transX[getLevel()], transY[getLevel()]);
 			tx.scale(scales[getLevel()], scales[getLevel()]);
 		}
+		
+
+		if(isThrusting) {
+			fuelPerc -= fuelUsage[level] / fuels[level];
+			if(fuelPerc < 0) {
+				isThrusting = false;
+			}
+		}
+		
 	}
 	
 	//getters and setters time
@@ -153,10 +162,18 @@ public class EngineUpgrade extends Upgrade {
 		return 0;
 	}
 	
+	public double getFuelPerc() {
+		if(level > -1) {
+			return fuelPerc;
+		}
+		return 0;
+	}
+	
 	//paint stuff
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
+		
 	}
 	
 	private Image getImage(String path) {

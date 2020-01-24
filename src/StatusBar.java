@@ -38,6 +38,10 @@ public class StatusBar {
 	public void setValue(double v){
 		currentValue = v;
 	}
+	
+	public double getValue() {
+		return currentValue;
+	}
 
 
 	public void paint(Graphics g) {

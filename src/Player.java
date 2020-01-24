@@ -146,19 +146,10 @@ public class Player {
 		this.angle = angle;
 	}
 
-	/*
-	 * colliding method, I'll leave it for reference for now
-	public boolean collided(int ox, int oy, int ow, int oh) {
-		Rectangle obs = new Rectangle(ox, oy, ow, oh);
-		Rectangle froggy = new Rectangle((int) tx.getTranslateX(), (int) tx.getTranslateY(), width, height);
-		return obs.intersects(froggy);
-	}
-	*/
-	
 	
 	public void move() {
 		//update physics and apply new velocity
-		if(!onRamp){
+		if(!onRamp && !onGround){
 			updateAccelerations();
 			
 			vx += ax;
@@ -205,9 +196,14 @@ public class Player {
 			//create bounds for yaris & rotate them to match physics
 			bounds = new Rectangle(92,206,900,359);
 			bounds = tx.createTransformedShape(bounds);
-		}else{
+		}else if(onRamp){
 			
 			startAnimation();	
+		}else {
+			ax = 0;
+			ay = 0;
+			vx = 0;
+			vy = 0;
 		}
 	}
 	
@@ -333,11 +329,6 @@ public class Player {
 				vx = mass*0.2;
 				vy = mass*0.2;
 			}
-			
-			/*if(y < ramp.getRampTopY()){
-				onRampTop = false;
-				onRampMid = true;
-			}*/
 		}
 		
 		
@@ -361,7 +352,7 @@ public class Player {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
 		g2.setColor(Color.BLACK);
-		//g2.draw(bounds);
+		g2.draw(bounds);
 	}
 	
 	// converts image to make it drawable in paint

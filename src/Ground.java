@@ -12,7 +12,7 @@ public class Ground {
 	private Rectangle bounds = new Rectangle();
 	
 	public Ground(){
-		
+		bounds = new Rectangle();
 	}
 	
 	public void paint(Graphics g, int playerY){
