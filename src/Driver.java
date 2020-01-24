@@ -224,8 +224,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	}
 	
 	public void upgradeScreen(Graphics g) {		
-		Font font1 = new Font("Book Antiqua", Font.PLAIN, 20);
+		Font font1 = new Font("Book Antiqua", Font.PLAIN, 13);
 		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
+		Font font3 = new Font("Book Antiqua", Font.BOLD, 20);
+
 
 		Graphics2D g2 = (Graphics2D) g;
 		tx = AffineTransform.getTranslateInstance(0, 0);
@@ -250,41 +252,46 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//fuel
 		g.fillRect(400, 600, 200, 100);
 		
-		g.setFont(font1);
+		g.setFont(font3);
 		g.setColor(Color.black);
-		g.drawString("Upgrades", 475, 75);
-		g.drawString("You have "+ scorekeep.getMoney()+" dollars.", 450, 100);
+		g.drawString("Upgrades", 450, 75);
+		g.drawString("You have "+ scorekeep.getMoney()+" Dollars!", 410, 100);
 		
-		g.drawString("Wings:", 475, 275);
+		g.drawString("Wings:", 470, 275); 
+		g.setFont(font1);
 		switch(wings.getLevel()) {
 			case -1:
 				g.drawString("Level 1 ($420)", 460, 348);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 475, 348);
+				g.drawString("Level 2 ($6969)", 450, 348);
 				break;
 			case 1:
-				g.drawString("Oops! Wings are Fully Upgraded!", 410, 348);
+				g.drawString("Oops! Wings are Fully Upgraded!", 405, 348);
 				break;
 		}
 		
-		g.drawString("Engine:", 475, 425);
+		g.setFont(font3);
+		g.drawString("Engine:", 465, 425);
+		g.setFont(font1);
 		switch(engine.getLevel()) {
 			case -1:
 				g.drawString("Level 1 ($420)", 460, 498);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 430, 498);
+				g.drawString("Level 2 ($6969)", 450, 498);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
 				break;
 		}
 		
-		g.drawString("Fuel Tank:", 475, 575);
-		switch(1) {
+		g.setFont(font3);
+		g.drawString("Fuel Tank:", 460, 575);
+		g.setFont(font1);
+		switch(-1) {
 			case -1:
-				g.drawString("Level 1 ($420)", 450, 648);		
+				g.drawString("Level 1 ($420)", 460, 648);		
 				break;
 			case 0:
 				g.drawString("Level 2 ($6969)", 450, 648);
