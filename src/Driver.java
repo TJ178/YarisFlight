@@ -64,6 +64,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setGround(false);
 		}
 		
+		scorekeep.trackScores(player);
+		
 	}
 	
 	public void paint(Graphics g){
@@ -122,6 +124,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		case 3:
 			if(collision.inGround() /*&& player.onGround() && player.getAx() > 670*/) {
 				stage = 4;
+				scorekeep.calculateScores();
 			}
 			break;
 		case 4:
@@ -160,7 +163,9 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 /////////////////////////////////////////////// DRIVER ///////////////////////////////////////////
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		update();
+		if(stage == 3) {
+			update();
+		}
 		repaint();
 	}
 	
@@ -335,11 +340,33 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setFont(font1);
 		g.setColor(Color.cyan);
 		g.drawString("Darnit you crashed the 2007 Toyota Yaris!", 250, 200);
-		
 		g.setFont(font2);
-		g.drawString("You flew " + scorekeep.getNewDistRecord() + " meters!", 250, 250);
-		g.drawString("You reached a maximum altitude of " + scorekeep.getNewAltRecord() + " meters!", 250, 300);
-		g.drawString("You reached a top speed of " + scorekeep.getNewSpeedRecord() + " meters per second!", 250, 350);
+		
+		if(scorekeep.getNewDistRecord()) {
+			g.setColor(Color.green);
+		}else {
+			g.setColor(Color.cyan);
+		}
+		g.drawString("You flew " + scorekeep.getMaxDist()*0.055 + " meters!", 250, 250);
+		
+		
+		if(scorekeep.getNewAltRecord()) {
+			g.setColor(Color.green);
+		}else {
+			g.setColor(Color.cyan);
+		}
+		g.drawString("You reached a maximum altitude of " + scorekeep.getMaxAlt()*0.055 + " meters!", 250, 300);
+		
+		if(scorekeep.getNewSpeedRecord()) {
+			g.setColor(Color.green);
+		}else {
+			g.setColor(Color.cyan);
+		}
+		double maxspeed = scorekeep.getMaxSpeed()*0.055*60*1000/3600;
+		int temp = (int) (maxspeed * 100);
+		maxspeed = maxspeed - (maxspeed - temp*0.01);
+		g.drawString("You reached a top speed of " + maxspeed + " km per hour!", 250, 350);
+		g.drawString("Money Earned: $" +scorekeep.getMoney(), 250, 400);
 		
 	}
 	
