@@ -224,11 +224,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	}
 	
 	public void upgradeScreen(Graphics g) {		
-		Font font1 = new Font("Book Antiqua", Font.PLAIN, 30);
+		Font font1 = new Font("Book Antiqua", Font.PLAIN, 20);
 		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
 
 		Graphics2D g2 = (Graphics2D) g;
-		
+		tx = AffineTransform.getTranslateInstance(0, 0);
+		tx.scale(1,1);		
 		
 		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
 		//tx.scale(0.6, 0.6);
@@ -249,7 +250,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//fuel
 		g.fillRect(400, 600, 200, 100);
 		
-		
+		g.setFont(font1);
 		g.setColor(Color.black);
 		g.drawString("Upgrades", 475, 75);
 		g.drawString("You have "+ scorekeep.getMoney()+" dollars.", 450, 100);
@@ -458,7 +459,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			if(stage == 0 || stage == 1) {
 				stage++;
 			}else if(stage == 4) {
-				stage = 0;
+				stage = 1;
 			}
 			break;
 		case 38:
