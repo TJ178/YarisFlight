@@ -120,7 +120,6 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			stage ++;
 			break;
 		case 3:
-			int i = 0;
 			if(player.onGround() && !player.onRamp) {
 				stage = 0;
 			}
