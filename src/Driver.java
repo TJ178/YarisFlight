@@ -362,9 +362,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				switch(wings.getLevel()){
 					case -1:
 						wings.upgrade1();
+						player.addUpgrade(wings);
 						break;
 					case 0:
 						wings.upgrade2();
+						player.addUpgrade(wings);
 						break;
 				}
 				//System.out.println("upgrade wings");
@@ -375,11 +377,13 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				switch(engine.getLevel()){
 					case -1:
 						engine.upgrade1();
+						player.addUpgrade(engine);
 						System.out.println("upgrade engine");
 	
 						break;
 					case 0:
 						engine.upgrade2();
+						player.addUpgrade(engine);
 						break;
 				}
 				//System.out.println("upgrade engine");

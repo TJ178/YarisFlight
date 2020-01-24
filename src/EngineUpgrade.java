@@ -37,7 +37,7 @@ public class EngineUpgrade extends Upgrade {
   	private String[] imgsStrings = {imgU1, imgU2};
   	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
   	private int[] fuels = {fuelU1, fuelU2}; 
-  	private double[] fuelUsage = {0.01, 0.1};
+  	private double[] fuelUsage = {0.05, 0.1};
 
 	private Image img;
 	private Image[] imgs = new Image[2];
