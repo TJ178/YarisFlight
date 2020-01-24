@@ -20,12 +20,12 @@ public class WingsUpgrade extends Upgrade {
 	
 	private int weightU1 = 10;
 	private int dragU1 = 5;
-	private int liftU1 = 40;
+	private int liftU1 = 20;
 	private double scaleU1 = 0.2;
 
 	private int weightU2 = 20;
-	private int dragU2 = 2;
-	private int liftU2 = 60;
+	private int dragU2 = 10;
+	private int liftU2 = 40;
 	private double scaleU2 = 0.75;
 	
 	private String imgU1 = "yarisGlider_v2.png"; //1287 × 494 pixels

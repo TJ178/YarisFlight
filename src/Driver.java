@@ -182,8 +182,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
-		//engine.upgrade2();
-		//player.addUpgrade(engine);
+		engine.upgrade2();
+		player.addUpgrade(engine);
 		
 		ground = new Ground();
 		

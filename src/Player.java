@@ -36,7 +36,7 @@ public class Player {
 	private int lift = 1;
 	private int drag = 5;
 	private double liftdragratio = (double)(lift) / drag;
-	private int gravity = -30;					//make her fall
+	private int gravity = -15;					//make her fall
 	
 	private double thrustAmount = 0; 	// amount of thrust that is output
 	
@@ -261,10 +261,16 @@ public class Player {
 		if(Math.abs(angle - correctedAngle) > Math.PI){
 			angleOfAttack = correctedAngle - angle;
 		}
+		double lift;
+		double drag;
 		
-		
-		double lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
-		double drag = Math.abs( lift * Math.pow(liftdragratio, -1));
+		if(this.lift > 1){
+			lift = .5 * (Math.pow(vx, 2)+Math.pow(vy, 2)) * angleOfAttack;
+			drag = Math.abs( lift * Math.pow(liftdragratio, -1));
+		}else{
+			lift = 0;
+			drag = 2;
+		}
 		System.out.println("angle: "+ angle);
 		System.out.println("angleOfAttack: " + angleOfAttack);
 		System.out.println("lift: " + lift);
