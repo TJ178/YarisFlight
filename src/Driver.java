@@ -120,11 +120,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			stage ++;
 			break;
 		case 3:
-			if(player.onGround() && !player.onRamp) {
-				stage = 0;
+			if(collision.inGround() /*&& player.onGround() && player.getAx() > 670*/) {
+				stage = 4;
 			}
 			break;
 		case 4:
+			endScreen(g);
 			break;
 		}
 		
@@ -227,7 +228,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
 
 		Graphics2D g2 = (Graphics2D) g;
+		
+		
 		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		//tx.scale(0.6, 0.6);
 		//g.setFont(font1);
 
 		//background
@@ -297,6 +301,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
 
 		Graphics2D g2 = (Graphics2D) g;
+		tx = AffineTransform.getTranslateInstance(0, 0);
+		tx.scale(1,1);
 		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
 		
 		g.setColor(Color.cyan);
@@ -307,6 +313,25 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setFont(font2);
 		
 		g.drawString("Press Space to Start", 250, 400);
+		
+	}
+	public void endScreen(Graphics g) {
+		Font font1 = new Font("Book Antiqua", Font.PLAIN, 25);
+		Font font2 = new Font("Book Antiqua", Font.PLAIN, 20);
+
+		Graphics2D g2 = (Graphics2D) g;
+		tx = AffineTransform.getTranslateInstance(200, 160);
+		tx.scale(0.6, 0.6);
+		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		
+		g.setFont(font1);
+		g.setColor(Color.cyan);
+		g.drawString("Darnit you crashed the 2007 Toyota Yaris!", 250, 200);
+		
+		g.setFont(font2);
+		g.drawString("You flew " + scorekeep.getNewDistRecord() + " meters!", 250, 250);
+		g.drawString("You reached a maximum altitude of " + scorekeep.getNewAltRecord() + " meters!", 250, 300);
+		g.drawString("You reached a top speed of " + scorekeep.getNewSpeedRecord() + " meters per second!", 250, 350);
 		
 	}
 	
@@ -428,6 +453,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		case 32:
 			if(stage == 0 || stage == 1) {
 				stage++;
+			}else if(stage == 4) {
+				stage = 0;
 			}
 			break;
 		case 38:
