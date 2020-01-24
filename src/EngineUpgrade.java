@@ -6,28 +6,29 @@ import java.awt.geom.AffineTransform;
 import java.net.URL;
 
 public class EngineUpgrade extends Upgrade {
-	private static int weight;
-	private static int drag;
+	/*private static int weight;
 	private static int lift;
+	private static int thrust;*/
 	
 	private int level = -1;
 	private boolean isThrusting = false;
+	private double fuelPerc =1.0;
 	
-	private int weightU1 = 10;
-	private int dragU1 = 10;
-	private int liftU1 = 10;
+	private int weightU1 = 5;
+	private int dragU1 = 0;
+	private int thrustU1 = 10;
 	private double scaleU1 = 0.2;
 	private int fuelU1 = 10;
 
-	private int weightU2 = 20;
+	private int weightU2 = 50;
+	private int thrustU2 = 20;
 	private int dragU2 = 5;
-	private int liftU2 = 20;
 	private double scaleU2 = 0.2;
 	private int fuelU2 = 20;
 	
-	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
+	private String imgU1 = "rocketU1.png"; //1287 Ã— 494 pixels
 	private String imgU1Lit = "rocketU1_lit.png";
-	private String imgU2 = "thicc_rocket.png"; //384 × 799 pixels
+	private String imgU2 = "thicc_rocket.png"; //384 Ã— 799 pixels
 	private String imgU2Lit = "thicc_rocket_lit.png";
 
 	private double[] scales = {scaleU1, scaleU2};
@@ -36,7 +37,7 @@ public class EngineUpgrade extends Upgrade {
   	private String[] imgsStrings = {imgU1, imgU2};
   	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
   	private int[] fuels = {fuelU1, fuelU2}; 
-  	private double[] fuelUsage = {0.002, 0.0005};
+  	private double[] fuelUsage = {0.01, 0.1};
 
 	private Image img;
 	private Image[] imgs = new Image[2];
@@ -46,7 +47,7 @@ public class EngineUpgrade extends Upgrade {
 
 	
 	public EngineUpgrade() {
-		super(weight, drag, lift);
+		super(0, 0, 0, 0);
 		
 		for(int i = 0; i < 2; i ++) {
 			imgs[i] = getImage(imgsStrings[i]);
@@ -56,22 +57,22 @@ public class EngineUpgrade extends Upgrade {
 		tx = AffineTransform.getTranslateInstance(500, 400);
 	}
 	
-	public void upgrade(int weight, int drag, int lift, String FileName) {
+	public void upgrade(int weight, int thrust, int drag, String FileName) {
 		setWeight(weight);
+		setThrust(thrust);
 		setDrag(drag);
-		setLift(lift);
 		setImg(getImage(FileName));
 	}
 	
 	public void upgrade1() {
-		upgrade(weightU1, dragU1, liftU1, imgU1);
+		upgrade(weightU1, thrustU1, dragU1, imgU1);
 		
 		level = 0;
 		
 	}
 	
 	public void upgrade2() {
-		upgrade(weightU2, dragU2, liftU2, imgU2);
+		upgrade(weightU2, thrustU2, dragU2, imgU2);
 		
 		level = 1;
 		
@@ -85,6 +86,15 @@ public class EngineUpgrade extends Upgrade {
 			tx.translate(transX[getLevel()], transY[getLevel()]);
 			tx.scale(scales[getLevel()], scales[getLevel()]);
 		}
+		
+
+		if(isThrusting) {
+			fuelPerc -= fuelUsage[level] / fuels[level];
+			if(fuelPerc < 0) {
+				isThrusting = false;
+			}
+		}
+		
 	}
 	
 	//getters and setters time
@@ -93,15 +103,11 @@ public class EngineUpgrade extends Upgrade {
 	}
 
 	public void setWeight(int weight) {
-		EngineUpgrade.weight = weight;
+		this.weight = weight;
 	}
 
 	public int getDrag() {
 		return drag;
-	}
-
-	public void setDrag(int drag) {
-		EngineUpgrade.drag = drag;
 	}
 
 	public int getLift() {
@@ -109,7 +115,7 @@ public class EngineUpgrade extends Upgrade {
 	}
 
 	public void setLift(int lift) {
-		EngineUpgrade.lift = lift;
+		this.lift = lift;
 	}
 	
 	public Image getImg() {
@@ -122,6 +128,10 @@ public class EngineUpgrade extends Upgrade {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public int getThrust() {
+		return thrust;
 	}
 	
 	public void setIsThrusting(boolean val) {
@@ -151,10 +161,18 @@ public class EngineUpgrade extends Upgrade {
 		return 0;
 	}
 	
+	public double getFuelPerc() {
+		if(level > -1) {
+			return fuelPerc;
+		}
+		return 0;
+	}
+	
 	//paint stuff
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
+		
 	}
 	
 	private Image getImage(String path) {

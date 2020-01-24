@@ -36,21 +36,27 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	RampUpgrade ramp;
 	
 	ScoreKeeper scorekeep;
-	
+  
 	//UpgradeScreen upgradeScreen;
+
+	StatusBar fuelbar;
 	
 	//put variables // things to update in here
 	public void update(){
 		player.move();
 		wings.moveTo(player.getAngle());
 		engine.moveTo(player.getAngle());
-		/*if(collision.inGround()) {
-			//player.setVx(0);
-			//player.setVy(0);
+		if(!engine.getIsThrusting() && player.getThrust() > 0) {
+			player.setThrust(0);
+		}
+		
+		if(collision.inGround()) {
+			player.setVx(0);
+			player.setVy(0);
 			player.setGround(true);
 		}else {
 			player.setGround(false);
-		}*/
+		}
 		
 	}
 	
@@ -79,6 +85,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		if(wings.getLevel() > 0) {
 			wings.paint(g);
 		}
+		ramp.paint(g,player.getX(), player.getY());
+		ground.paint(g, player.getY());
 		
 		g.setColor(Color.black);
 		g.drawString("x: " + player.getX(), 0, 10);
@@ -89,9 +97,9 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("accelY: " + player.getAy(),0, 60);
 		g.drawString("vx: " + player.getVx(),0, 70);
 		g.drawString("vy: " + player.getVy(),0, 80);
+		g.drawString("fuel: "+ engine.getFuelPerc(), 0, 90);
 
-		ramp.paint(g,player.getX(), player.getY());
-		ground.paint(g, player.getY());
+		fuelbar.paint(g);
 		
 		if(stage == 2) {
 			upgradeScreen(g);
@@ -150,17 +158,17 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			cloudRow1[i] = new Cloud("cloud.png");
 		}
 
-		//player.setX(screen_width/2);
-		//player.setY(screen_height/2);
+		player = new Player("yarisright.png");
+		
 		wings = new WingsUpgrade();
-		//wings.upgrade1();
-		//wings.upgrade2();
+		wings.upgrade1();
+		player.addUpgrade(wings);
 		
 		cloud = new Cloud("cloud.png");
 		
 		engine = new EngineUpgrade();
-		//engine.upgrade1();
-		//engine.upgrade2();
+		engine.upgrade1();
+		player.addUpgrade(engine);
 		
 		ground = new Ground();
 		
@@ -170,7 +178,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		scorekeep = new ScoreKeeper();
 		
-		player = new Player("yarisright.png");
+		fuelbar = new StatusBar(100, 100, 100, 30, 0, Color.yellow, false, 1, "Fuel", false, 0, 100, 50, false);
 		
 		/*
 		if(stage == 3) {
@@ -353,16 +361,26 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(-.05);
 			break;
 		case 40:
-			player.setThrust(20);
-			engine.getLit();
 			if(stage == 2) {
 				stage++;
+      }
+			if(engine.getFuelPerc() > 0) {
+				player.setThrust(player.getPossibleThrust());
+				engine.getLit();
+			}else {
+				player.setThrust(0);
+				engine.notLit();
 			}
 			break;
+		case 32:
 		case 38:
-			player.setThrust(10);
-			engine.getLit();
-
+			if(engine.getFuelPerc() > 0) {
+				player.setThrust(player.getPossibleThrust());
+				engine.getLit();
+			}else {
+				player.setThrust(0);
+				engine.notLit();
+			}
 			break;
 		default:
 			System.out.println(key);
@@ -388,6 +406,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setThrust(0);
 			engine.notLit();
 			break;
+		case 32:
 		case 38:
 			player.setThrust(0);
 			engine.notLit();
