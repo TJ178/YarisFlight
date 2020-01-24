@@ -23,7 +23,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private int screen_height = 800;
 	private int screen_width = 1000;
 	private Timer t;
-	private int stage = 2;
+	private int stage = 0;
 	
 	public Cloud[] cloudRow1 = new Cloud[5];
 	
@@ -107,12 +107,15 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 		fuelbar.paint(g);
 		
-		if(stage == 2) {
+		if(stage == 0) {
+			mainMenu(g);
+		}
+		if(stage == 1) {
 			upgradeScreen(g);
 		}
-		if(stage == 3) {
+		if(stage == 2) {
 			startGame();
-			stage = 0;
+			stage = 3;
 		}
 		
 	}
@@ -274,7 +277,21 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		}
 	}
 	
-	public void mainMenu() {
+	public void mainMenu(Graphics g) {
+		Font font1 = new Font("Book Antiqua", Font.PLAIN, 100);
+		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
+
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		
+		g.setColor(Color.cyan);
+		g.setFont(font1);
+		
+		g.drawString("Yaris Flight", 250, 200);
+		
+		g.setFont(font2);
+		
+		g.drawString("Press Space to Strart", 250, 400);
 		
 	}
 	
@@ -300,7 +317,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(stage == 2) {
+		if(stage == 1) {
 			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 300, 600, 400)) {
 				switch(wings.getLevel()){
 					case -1:
@@ -382,9 +399,6 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(-.05);
 			break;
 		case 40:
-			if(stage == 2) {
-				stage++;
-      }
 			if(engine.getFuelPerc() > 0) {
 				player.setThrust(player.getPossibleThrust());
 				engine.getLit();
@@ -394,6 +408,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			}
 			break;
 		case 32:
+			if(stage == 0 || stage == 1) {
+				stage++;
+			}
+			break;
 		case 38:
 			if(engine.getFuelPerc() > 0) {
 				player.setThrust(player.getPossibleThrust());
