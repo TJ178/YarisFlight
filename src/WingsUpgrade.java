@@ -14,28 +14,18 @@ public class WingsUpgrade extends Upgrade {
 	private static int drag;
 	private static int lift;
 	
-	private int x = 0, y = 200;
 	private int displayX = 500, displayY = 400;
 	private double scale = 1;
-	private double rv;
-	private double anchorX = 750;
-	private double anchorY = 650;
 	private int level = 0;
 	
 	private int weightU1 = 10;
 	private int dragU1 = 5;
 	private int liftU1 = 40;
-	private int widthU1 = (int)(1287 * scale);
-	private int heightU1 = (int)(494 * scale);
 	private double scaleU1 = 0.2;
-	private double anchorxU1 = 750;
-	private double anchoryU1 = 655;
 
 	private int weightU2 = 20;
 	private int dragU2 = 2;
 	private int liftU2 = 60;
-	private int widthU2 = (int)(186 * scale);	//186 × 119 pixels
-	private int heightU2 = (int)(119 * scale);
 	private double scaleU2 = 0.75;
 	
 	private String imgU1 = "yarisGlider_v2.png"; //1287 × 494 pixels
@@ -55,7 +45,7 @@ public class WingsUpgrade extends Upgrade {
 		tx = AffineTransform.getTranslateInstance(500, 400); //392 && 322
 	}
 	
-	public void upgrade(int weight, int drag, int lift, String FileName, double anchorX, double anchorY) {
+	public void upgrade(int weight, int drag, int lift, String FileName) {
 		setWeight(weight);
 		setDrag(drag);
 		setLift(lift);
@@ -63,7 +53,7 @@ public class WingsUpgrade extends Upgrade {
 	}
 	
 	public void upgrade1() {
-		upgrade(weightU1, dragU1, liftU1, imgU1, anchorxU1, anchoryU1);
+		upgrade(weightU1, dragU1, liftU1, imgU1);
 		
 		level = 0;
 		//tx = AffineTransform.getTranslateInstance(335, 270); //392 && 322
@@ -71,7 +61,7 @@ public class WingsUpgrade extends Upgrade {
 	}
 	
 	public void upgrade2() {
-		upgrade(weightU2, dragU2, liftU2, imgU2, anchorxU2, anchoryU2);
+		upgrade(weightU2, dragU2, liftU2, imgU2);
 		
 		level = 1;
 		//tx = AffineTransform.getTranslateInstance(displayX-offsetx + 495, displayY-offsety + 385); //392 && 322
