@@ -274,6 +274,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		}
 	}
 	
+	public void mainMenu() {
+		
+	}
+	
 	public boolean isInside(int x, int y, int xBound1, int yBound1, int xBound2, int yBound2) {
 		if(x >= xBound1 && x <= xBound2 && y >= yBound1 && y <= yBound2) {
 			return true;
