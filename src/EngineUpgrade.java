@@ -26,9 +26,9 @@ public class EngineUpgrade extends Upgrade {
 	private double scaleU2 = 0.2;
 	private int fuelU2 = 20;
 	
-	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
+	private String imgU1 = "rocketU1.png"; //1287 Ã— 494 pixels
 	private String imgU1Lit = "rocketU1_lit.png";
-	private String imgU2 = "thicc_rocket.png"; //384 × 799 pixels
+	private String imgU2 = "thicc_rocket.png"; //384 Ã— 799 pixels
 	private String imgU2Lit = "thicc_rocket_lit.png";
 
 	private double[] scales = {scaleU1, scaleU2};

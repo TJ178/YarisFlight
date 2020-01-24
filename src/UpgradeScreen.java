@@ -33,9 +33,8 @@ public class UpgradeScreen {
 		
 		g.drawString("Wings:", 400, 150);
 		if(wings.getLevel() < 1) {
-		g.drawString("Level 1 ($420)", 300, 250);
-		
-		g.drawString("Level 2 ($6969)", 700, 250);
+			g.drawString("Level 1 ($420)", 300, 250);		
+			g.drawString("Level 2 ($6969)", 700, 250);
 		}
 		
 		if(wings.getLevel()==1) {
@@ -61,11 +60,6 @@ public class UpgradeScreen {
 			if(engine.getLevel()>=2) {
 				g.drawString("Engine is Fully Upgraded.", 400, 550);
 			}
-			
-		
-		
-		
-		
-
-}
+		}
+	
 }
