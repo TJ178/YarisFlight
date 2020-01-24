@@ -12,8 +12,6 @@ public class EngineUpgrade extends Upgrade {
 	
 	private int level = -1;
 	private boolean isThrusting = false;
-	private double fuelPerc =1.0;
-	private boolean isFuel = true;
 	
 	private int weightU1 = 10;
 	private int dragU1 = 10;
