@@ -93,9 +93,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		if(wings.getLevel() > 0) {
 			wings.paint(g);
 		}
-		ramp.paint(g,player.getX(), player.getY());
-		ground.paint(g, player.getY());
 		
+		ground.paint(g, player.getX(), player.getY());
+		ramp.paint(g,player.getX(), player.getY());
+
 		g.setColor(Color.black);
 		g.drawString("x: " + player.getX(), 0, 10);
 		g.drawString("y: " + player.getY(), 0, 20);
@@ -203,11 +204,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//engine.upgrade1();
 		//player.addUpgrade(engine);
 		
-		ground = new Ground();
+		ground = new Ground("ground.png");
 		
 		collision = new CollisionHandler(player, ground);
 		
-		ramp = new RampUpgrade("Ramp_Top.png","Ramp_middle.png", "Ramp_bottom_toEdit.png", "Ramp_ExtraPart.png");
+		ramp = new RampUpgrade("Ramp_Top_realistic.png","Ramp_middle_realistic.png", "Ramp_Bottom_realisitic.png", "Ramp_ExtraPart_realisitic.png");
 		
 		scorekeep = new ScoreKeeper();
 		

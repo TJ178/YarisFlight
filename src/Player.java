@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class Player {
 	
 	//instance variables
-	private int x, y;				//position in map
+	private double x, y;				//position in map
 	private double vx, vy;			//velocity 
 	private double ax, ay;			//acceleration
 	private double angle;			//current flight angle
@@ -131,7 +131,7 @@ public class Player {
 	}
 	
 	public int getX() {
-		return x;
+		return (int)x;
 	}
 	
 	public void setX(int newX) {
@@ -139,7 +139,7 @@ public class Player {
 	}
 	
 	public int getY() {
-		return y;
+		return (int)y;
 	}
 	
 	public void setY(int newY) {
@@ -339,28 +339,32 @@ public class Player {
 	public void startAnimation(){
 		ax = 4;
 		ay = -4;
-		vx = 3;
-		vy = -5.5;
+		vx = 2.4;
+		vy = -7;
 		
 		if(onRamp){
 			if(y > 1050){
-				angle -= .02;
-				x += 10;
-				y -= 4;
-			}else if(y > 800){
+				angle -= .011;
+				x += 5;
+				y -= 2.5;
+			}else if(y > 970){
+				angle -= 0.008;
+				x += 4;
+				y -= 3.3;
+			}else if(y <= 970 && y > 800){
 				angle -= 0.01;
 				x += 3;
 				y -= 8;
-			}else if (y <= 800 && y > 250){
-				angle = 5.4;
+			}else if (y <= 920 && y > 270){
+				angle = 5.3;
 				vx += ax;
 				vy += ay;
 				x += vx;
 				y += vy;
-			}else if (y <= 250 && x < 670){
-				angle += 0.08;
-				x += 10;
-				y -= 4;
+			}else if (y <= 270 && x < 650){
+				angle += 0.05;
+				x += 9;
+				y -= 2.5;
 			}else{
 				onRamp = false;
 				vx = mass*0.2;
