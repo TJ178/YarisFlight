@@ -27,7 +27,7 @@ public class Cloud extends Entity {
 //car constructor 
 public Cloud(String fileName) {
 	cx = (int)(Math.random()*1000-500);
-	cy = (int)(Math.random()*800);
+	cy = (int)(Math.random()*550+250);
 	cvx = 0;
 	cvy = 0;
 	cwidth = (int)(386*scale);
