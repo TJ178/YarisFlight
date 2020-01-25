@@ -21,11 +21,13 @@ public class WingsUpgrade extends Upgrade {
 	private int dragU1 = 5;
 	private int liftU1 = 20;
 	private double scaleU1 = 0.2;
+	private int priceU1 = 500;
 
 	private int weightU2 = 20;
 	private int dragU2 = 10;
 	private int liftU2 = 40;
 	private double scaleU2 = 0.75;
+	private int priceU2 = 2000;
 	
 	private String imgU1 = "yarisGlider_v2.png"; //1287 × 494 pixels
 	private String imgU2 = "air-canada-flight_wing.png";
@@ -33,6 +35,7 @@ public class WingsUpgrade extends Upgrade {
 	private double[] scales = {scaleU1, scaleU2};
 	private double[] transX = {-170, -40};
 	private double[] transY = {-140, 0};
+	private int[] prices = {priceU1, priceU2};
 	
 	private Image img;
 	
@@ -114,6 +117,10 @@ public class WingsUpgrade extends Upgrade {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public int getUpgradePrice() {
+		return prices[level+1];
 	}
 	
 	//paint stuff

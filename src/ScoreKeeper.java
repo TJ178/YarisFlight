@@ -7,6 +7,7 @@ public class ScoreKeeper {
 	private int distMaxCur;
 	private int speedMaxCur;
 	private long startTime;
+	private int moneyEarned;
 	
 	private boolean newAltRecord;
 	private boolean newDistRecord;
@@ -24,10 +25,11 @@ public class ScoreKeeper {
 	
 	
 	public void calculateScores(){
-		money += altMaxCur*.1;
-		money += distMaxCur*.1;
-		money += calcMaxSpeedKmh(speedMaxCur);
-		money += (System.currentTimeMillis() - startTime)*.0001;
+		moneyEarned += altMaxCur*.1;
+		moneyEarned += distMaxCur*.1;
+		moneyEarned += calcMaxSpeedKmh(speedMaxCur);
+		moneyEarned += (System.currentTimeMillis() - startTime)*.0001;
+		money += moneyEarned;
 		
 		if(altMaxCur > altitudeRecord) {
 			altitudeRecord = altMaxCur;
@@ -64,6 +66,12 @@ public class ScoreKeeper {
 	
 	public int getMoney() {
 		return money;
+	}
+	public int getMoneyEarned() {
+		return moneyEarned;
+	}
+	public void spendMoney(int m) {
+		money -= m;
 	}
 
 
@@ -106,6 +114,10 @@ public class ScoreKeeper {
 		newSpeedRecord = false;
 		startTime = System.currentTimeMillis();
 		
+		moneyEarned = 0;
+		altMaxCur = 0;
+		distMaxCur = 0;
+		speedMaxCur = 0;
 		
 	}
 }

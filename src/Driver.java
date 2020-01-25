@@ -149,10 +149,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void startGame(){	
 		scorekeep.start();	
 
-		player.setX(-400);	
-		player.setY(1200);	
-		player.setAngle(0);
-		player.onRamp = true;
+		player.reset();
+		engine.refuel();
 	}
 	
 	
@@ -266,10 +264,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setFont(font1);
 		switch(wings.getLevel()) {
 			case -1:
-				g.drawString("Level 1 ($420)", 460, 348);		
+				g.drawString("Level 1 $"+wings.getUpgradePrice(), 460, 348);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 450, 348);
+				g.drawString("Level 2 $"+wings.getUpgradePrice(), 450, 348);
 				break;
 			case 1:
 				g.drawString("Oops! Wings are Fully Upgraded!", 405, 348);
@@ -281,10 +279,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setFont(font1);
 		switch(engine.getLevel()) {
 			case -1:
-				g.drawString("Level 1 ($420)", 460, 498);		
+				g.drawString("Level 1 $"+engine.getUpgradePrice(), 460, 498);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 450, 498);
+				g.drawString("Level 2 $"+engine.getUpgradePrice(), 450, 498);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
@@ -296,10 +294,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setFont(font1);
 		switch(-1) {
 			case -1:
-				g.drawString("Level 1 ($420)", 460, 648);		
+				g.drawString("Level 1 $", 460, 648);		
 				break;
 			case 0:
-				g.drawString("Level 2 ($6969)", 450, 648);
+				g.drawString("Level 2 $", 450, 648);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 648);
@@ -328,6 +326,9 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.drawString("Press Space to Start", 250, 400);
 		
 	}
+	
+	
+	
 	public void endScreen(Graphics g) {
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 25);
 		Font font2 = new Font("Book Antiqua", Font.PLAIN, 20);
@@ -366,7 +367,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		int temp = (int) (maxspeed * 100);
 		maxspeed = maxspeed - (maxspeed - temp*0.01);
 		g.drawString("You reached a top speed of " + maxspeed + " km per hour!", 250, 350);
-		g.drawString("Money Earned: $" +scorekeep.getMoney(), 250, 400);
+		g.drawString("Money Earned: $" +scorekeep.getMoneyEarned(), 250, 400);
 		
 	}
 	
@@ -393,13 +394,15 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(stage == 1) {
-			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 300, 600, 400)) {
+			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 300, 600, 400) && wings.getUpgradePrice() < scorekeep.getMoney()) {
 				switch(wings.getLevel()){
 					case -1:
+						scorekeep.spendMoney(wings.getUpgradePrice());
 						wings.upgrade1();
 						player.addUpgrade(wings);
 						break;
 					case 0:
+						scorekeep.spendMoney(wings.getUpgradePrice());
 						wings.upgrade2();
 						player.addUpgrade(wings);
 						break;
@@ -408,15 +411,17 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 			}
 			
-			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 450, 600, 550)){
+			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 450, 600, 550) && engine.getUpgradePrice() < scorekeep.getMoney()) {
 				switch(engine.getLevel()){
 					case -1:
+						scorekeep.spendMoney(engine.getUpgradePrice());
 						engine.upgrade1();
 						player.addUpgrade(engine);
 						System.out.println("upgrade engine");
 	
 						break;
 					case 0:
+						scorekeep.spendMoney(engine.getUpgradePrice());
 						engine.upgrade2();
 						player.addUpgrade(engine);
 						break;

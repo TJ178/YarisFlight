@@ -406,10 +406,10 @@ public class Player {
 	
 	
 	public void reset() {
-		// TODO Auto-generated method stub
-		tx.setToTranslation(x, y);
-		vx = 0;
-		vy = 0;
+		x = -400;
+		y = 1200;
+		angle = 0;
+		onRamp = true;
 	}
 
 }

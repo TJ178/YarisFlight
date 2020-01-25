@@ -19,12 +19,14 @@ public class EngineUpgrade extends Upgrade {
 	private int thrustU1 = 10;
 	private double scaleU1 = 0.2;
 	private int fuelU1 = 10;
+	private int priceU1 = 420;
 
 	private int weightU2 = 50;
 	private int thrustU2 = 20;
 	private int dragU2 = 5;
 	private double scaleU2 = 0.2;
 	private int fuelU2 = 20;
+	private int priceU2 = 6969;
 	
 	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
 	private String imgU1Lit = "rocketU1_lit.png";
@@ -38,6 +40,7 @@ public class EngineUpgrade extends Upgrade {
   	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
   	private int[] fuels = {fuelU1, fuelU2}; 
   	private double[] fuelUsage = {0.05, 0.1};
+  	private int[] prices = {priceU1, priceU2};
 
 	private Image img;
 	private Image[] imgs = new Image[2];
@@ -166,6 +169,14 @@ public class EngineUpgrade extends Upgrade {
 			return fuelPerc;
 		}
 		return 0;
+	}
+	
+	public void refuel() {
+		fuelPerc = 1;
+	}
+	
+	public int getUpgradePrice() {
+		return prices[level+1];
 	}
 	
 	//paint stuff
