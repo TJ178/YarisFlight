@@ -293,14 +293,14 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setFont(font3);
 		g.drawString("Fuel Tank:", 460, 575);
 		g.setFont(font1);
-		switch(-1) {
-			case -1:
-				g.drawString("Level 1 $", 460, 648);		
-				break;
+		switch(engine.getFuelManager().getLevel()) {
 			case 0:
-				g.drawString("Level 2 $", 450, 648);
+				g.drawString("Level 1 $"+engine.getFuelManager().getUpgradePrice(), 460, 648);		
 				break;
 			case 1:
+				g.drawString("Level 2 $"+engine.getFuelManager().getUpgradePrice(), 450, 648);
+				break;
+			case 2:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 648);
 				break;
 		}
@@ -431,18 +431,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 			}
 				
-			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 600, 600, 700)){
-				/*
-				switch(engine.getLevel()){
-				case -1:
-					engine.upgrade1();
-					break;
-				case 0:
-					engine.upgrade2();
-					break;
+			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 600, 600, 700) && engine.getFuelManager().getUpgradePrice() < scorekeep.getMoney()){
+				
+				if(engine.getFuelManager().getLevel() < 2) {
+					scorekeep.spendMoney(engine.getFuelManager().getUpgradePrice());
+					engine.getFuelManager().upgrade();
 				}
-				*/
-				System.out.println("tim is slowwwwww");
 			}
 		}
 		System.out.println(e.getXOnScreen() + ":" + e.getYOnScreen());

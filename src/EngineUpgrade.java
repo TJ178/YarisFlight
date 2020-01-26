@@ -14,6 +14,8 @@ public class EngineUpgrade extends Upgrade {
 	private boolean isThrusting = false;
 	private double fuelPerc =1.0;
 	
+	private double fuelMultiplier = 1;
+	
 	private int weightU1 = 5;
 	private int dragU1 = 0;
 	private int thrustU1 = 10;
@@ -47,6 +49,8 @@ public class EngineUpgrade extends Upgrade {
 	private Image[] imgsLit = new Image[2];
 	
 	private AffineTransform tx;
+	
+	private FuelUpgrade fuelManager;
 
 	
 	public EngineUpgrade() {
@@ -58,6 +62,7 @@ public class EngineUpgrade extends Upgrade {
 		}
 		
 		tx = AffineTransform.getTranslateInstance(500, 400);
+		fuelManager = new FuelUpgrade();
 	}
 	
 	public void upgrade(int weight, int thrust, int drag, String FileName) {
@@ -92,7 +97,7 @@ public class EngineUpgrade extends Upgrade {
 		
 
 		if(isThrusting) {
-			fuelPerc -= fuelUsage[level] / fuels[level];
+			fuelPerc -= fuelUsage[level]*fuelManager.getMultiplier() / fuels[level];
 			if(fuelPerc < 0) {
 				isThrusting = false;
 			}
@@ -169,6 +174,10 @@ public class EngineUpgrade extends Upgrade {
 			return fuelPerc;
 		}
 		return 0;
+	}
+	
+	public FuelUpgrade getFuelManager() {
+		return fuelManager;
 	}
 	
 	public void refuel() {
