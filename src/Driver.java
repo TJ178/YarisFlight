@@ -283,9 +283,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				g.drawString("Level 1 $"+engine.getUpgradePrice(), 460, 498);		
 				break;
 			case 0:
-				g.drawString("Level 2 $"+engine.getUpgradePrice(), 450, 498);
+				g.drawString("Level 2 $"+engine.getUpgradePrice(), 460, 498);
 				break;
 			case 1:
+				g.drawString("Level 3 $"+engine.getUpgradePrice(), 450, 498);
+				break;
+			case 2:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
 				break;
 		}
@@ -419,11 +422,16 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 						engine.upgrade1();
 						player.addUpgrade(engine);
 						System.out.println("upgrade engine");
-	
 						break;
 					case 0:
 						scorekeep.spendMoney(engine.getUpgradePrice());
 						engine.upgrade2();
+						player.addUpgrade(engine);
+						System.out.println("upgrade engine");
+						break;
+					case 1:
+						scorekeep.spendMoney(engine.getUpgradePrice());
+						engine.upgrade4();
 						player.addUpgrade(engine);
 						break;
 				}

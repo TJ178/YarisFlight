@@ -16,47 +16,55 @@ public class EngineUpgrade extends Upgrade {
 	
 	private double fuelMultiplier = 1;
 	
-	private int weightU1 = 5;
+	private int weightU1 = 2;
 	private int dragU1 = 0;
-	private int thrustU1 = 10;
-	private double scaleU1 = 0.2;
-	private int fuelU1 = 10;
-	private int priceU1 = 420;
-
-	private int weightU2 = 50;
-	private int thrustU2 = 20;
-	private int dragU2 = 5;
-	private double scaleU2 = 0.2;
-	private int fuelU2 = 20;
-	private int priceU2 = 6969;
+	private int thrustU1 = 5;
+	private double scaleU1 = 0.3;
+	private int fuelU1 = 5;
+	private int priceU1 = 69;
 	
-	private String imgU1 = "rocketU1.png"; //1287 × 494 pixels
-	private String imgU1Lit = "rocketU1_lit.png";
-	private String imgU2 = "thicc_rocket.png"; //384 × 799 pixels
-	private String imgU2Lit = "thicc_rocket_lit.png";
+	private int weightU2 = 5;
+	private int dragU2 = 0;
+	private int thrustU2 = 10;
+	private double scaleU2 = 0.2;
+	private int fuelU2 = 10;
+	private int priceU2 = 420;
 
-	private double[] scales = {scaleU1, scaleU2};
-	private double[] transX = {-30, -90};
-	private double[] transY = {75, 90};
-  	private String[] imgsStrings = {imgU1, imgU2};
-  	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit};
-  	private int[] fuels = {fuelU1, fuelU2}; 
-  	private double[] fuelUsage = {0.05, 0.1};
-  	private int[] prices = {priceU1, priceU2};
+	private int weightU4 = 50;
+	private int thrustU4 = 20;
+	private int dragU4 = 5;
+	private double scaleU4 = 0.2;
+	private int fuelU4 = 20;
+	private int priceU4 = 6969;
+	
+	private String imgU1 = "fanNotTims.png";
+	private String imgU1Lit = "fanNew.gif";
+	private String imgU2 = "rocketU1.png"; //1287 × 494 pixels
+	private String imgU2Lit = "rocketU1_lit.png";
+	private String imgU4 = "thicc_rocket.png"; //384 × 799 pixels
+	private String imgU4Lit = "thicc_rocket_lit.png";
+
+	private double[] scales = {scaleU1, scaleU2, scaleU4};
+	private double[] transX = {-170, -30, -90};
+	private double[] transY = {-130, 75, 90};
+  	private String[] imgsStrings = {imgU1, imgU2, imgU4};
+  	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit, imgU4Lit};
+  	private int[] fuels = {fuelU1, fuelU2, fuelU4}; 
+  	private double[] fuelUsage = {0.02, 0.05, 0.1};
+  	private int[] prices = {priceU1, priceU2, priceU4};
 
 	private Image img;
-	private Image[] imgs = new Image[2];
-	private Image[] imgsLit = new Image[2];
+	private Image[] imgs = new Image[3];
+	private Image[] imgsLit = new Image[3];
 	
 	private AffineTransform tx;
-	
 	private FuelUpgrade fuelManager;
 
 	
 	public EngineUpgrade() {
 		super(0, 0, 0, 0);
 		
-		for(int i = 0; i < 2; i ++) {
+		for(int i = 0; i < 3; i ++) {
 			imgs[i] = getImage(imgsStrings[i]);
 			imgsLit[i] = getImage(imgsStringsLit[i]);
 		}
@@ -86,10 +94,23 @@ public class EngineUpgrade extends Upgrade {
 		
 	}
 	
+	public void upgrade4() {
+		upgrade(weightU4, thrustU4, dragU4, imgU4);
+		
+		level = 2;
+		
+	}
+	
+	//public voi
+	
 	//rotation mechanics
 	public void moveTo(double angle) {
 		tx.setToTranslation(500, 400);
-		tx.rotate(-angle + (Math.PI / 2));
+		if(level > 0) {
+			tx.rotate(-angle + (Math.PI / 2));
+		}else {
+			tx.rotate(-angle);
+		}
 		if(getLevel() > -1) {
 			tx.translate(transX[getLevel()], transY[getLevel()]);
 			tx.scale(scales[getLevel()], scales[getLevel()]);
