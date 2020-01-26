@@ -299,31 +299,38 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			case -1:
 				g.drawString("Level 1 $"+engine.getUpgradePrice(), 460, 498);
 				
-				tx = AffineTransform.getTranslateInstance(300, 450);
+				tx = AffineTransform.getTranslateInstance(270, 450);
 				tx.scale(0.2, 0.2);
 				g2.drawImage(getImage(engine.getEngineUpgrade(0)), tx, null);
 				
-				tx = AffineTransform.getTranslateInstance(640, 450);
+				tx = AffineTransform.getTranslateInstance(620, 450);
 				tx.scale(0.2, 0.2);
 				g2.drawImage(getImage(engine.getEngineUpgrade(0)), tx, null);
 				
 				break;
 			case 0:
-<<<<<<< HEAD
+//<<<<<<< HEAD
 				g.drawString("Level 2 $"+engine.getUpgradePrice(), 450, 498);
-				tx = AffineTransform.getTranslateInstance(255, 450);
+				tx = AffineTransform.getTranslateInstance(300, 450);
 				tx.scale(0.15, 0.15);
 				g2.drawImage(getImage(engine.getEngineUpgrade(1)), tx, null);
 				
-				tx = AffineTransform.getTranslateInstance(605, 450);
+				tx = AffineTransform.getTranslateInstance(640, 450);
 				tx.scale(0.15, 0.15);
 				g2.drawImage(getImage(engine.getEngineUpgrade(1)), tx, null);
-=======
-				g.drawString("Level 2 $"+engine.getUpgradePrice(), 460, 498);
->>>>>>> branch 'master' of https://github.com/TJ178/YarisFlight.git
+//=======
+				//g.drawString("Level 2 $"+engine.getUpgradePrice(), 460, 498);
+//>>>>>>> branch 'master' of https://github.com/TJ178/YarisFlight.git
 				break;
 			case 1:
 				g.drawString("Level 3 $"+engine.getUpgradePrice(), 450, 498);
+				tx = AffineTransform.getTranslateInstance(250, 450);
+				tx.scale(0.15, 0.15);
+				g2.drawImage(getImage(engine.getEngineUpgrade(2)), tx, null);
+				
+				tx = AffineTransform.getTranslateInstance(610, 450);
+				tx.scale(0.15, 0.15);
+				g2.drawImage(getImage(engine.getEngineUpgrade(2)), tx, null);
 				break;
 			case 2:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
