@@ -247,7 +247,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		//rectangles
 		g.setColor(Color.CYAN);
-		g.fillRect(400, 50, 200, 100);
+		g.fillRect(300, 50, 400, 100);
 		
 		//wings
 		g.fillRect(400, 300, 200, 100);
