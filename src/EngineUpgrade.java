@@ -45,7 +45,7 @@ public class EngineUpgrade extends Upgrade {
   	private int[] prices = {priceU1, priceU2};
 
 	private Image img;
-	private Image[] imgs = new Image[2];
+	private Image[] imgs = new Image[2]; //the two nonlit engines
 	private Image[] imgsLit = new Image[2];
 	
 	private AffineTransform tx;
@@ -106,6 +106,23 @@ public class EngineUpgrade extends Upgrade {
 		
 	}
 	
+	
+	
+	public String[] getImgsStrings(){
+		return imgsStrings;
+		
+	}
+	public String getEngineUpgrade(int level){
+		return imgsStrings[level];
+	}		
+
+	public void setImgsStrings(String[] imgsStrings) {
+		//this.imgsStrings = imgsStrings;
+		for(int i = 0; i < imgsStrings.length; i ++) {
+			this.imgsStrings[i] = imgsStrings[i]; 
+		}
+	}
+
 	//getters and setters time
 	public int getWeight() {
 		return weight;

@@ -31,6 +31,7 @@ public class WingsUpgrade extends Upgrade {
 	
 	private String imgU1 = "yarisGlider_v2.png"; //1287 × 494 pixels
 	private String imgU2 = "air-canada-flight_wing.png";
+	private String[] wingsImgs = {"yarisGlider_v2.png", "air-canada-flight_wing.png"};
 
 	private double[] scales = {scaleU1, scaleU2};
 	private double[] transX = {-170, -40};
@@ -80,6 +81,17 @@ public class WingsUpgrade extends Upgrade {
 			tx.scale(scales[getLevel()], scales[getLevel()]);
 		}
 	}
+	
+	public String getWingsUpgrade(int level){
+		return wingsImgs[level];
+	}		
+
+	public void setWingsImgs(String[] wingsImgs) {
+		//this.imgsStrings = imgsStrings;
+		for(int i = 0; i < wingsImgs.length; i ++) {
+			this.wingsImgs[i] = wingsImgs[i]; 
+		}
+		}
 	
 	
 	//getters and setters time

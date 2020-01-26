@@ -265,25 +265,58 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setFont(font1);
 		switch(wings.getLevel()) {
 			case -1:
-				g.drawString("Level 1 $"+wings.getUpgradePrice(), 460, 348);		
+				g.drawString("Level 1 $"+wings.getUpgradePrice(), 460, 348);	
+				tx = AffineTransform.getTranslateInstance(260, 315);
+				tx.scale(0.1, 0.1);
+				g2.drawImage(getImage(wings.getWingsUpgrade(0)), tx, null);
+				
+				tx = AffineTransform.getTranslateInstance(610, 315);
+				tx.scale(0.1, 0.1);
+				g2.drawImage(getImage(wings.getWingsUpgrade(0)), tx, null);
 				break;
 			case 0:
 				g.drawString("Level 2 $"+wings.getUpgradePrice(), 450, 348);
+				
+				tx = AffineTransform.getTranslateInstance(300, 315);
+				tx.scale(0.5, 0.5);
+				g2.drawImage(getImage(wings.getWingsUpgrade(1)), tx, null);
+				
+				tx = AffineTransform.getTranslateInstance(630, 315);
+				tx.scale(0.5, 0.5);
+				g2.drawImage(getImage(wings.getWingsUpgrade(1)), tx, null);
 				break;
 			case 1:
 				g.drawString("Oops! Wings are Fully Upgraded!", 405, 348);
 				break;
 		}
 		
+		
+		
 		g.setFont(font3);
 		g.drawString("Engine:", 465, 425);
 		g.setFont(font1);
 		switch(engine.getLevel()) {
 			case -1:
-				g.drawString("Level 1 $"+engine.getUpgradePrice(), 460, 498);		
+				g.drawString("Level 1 $"+engine.getUpgradePrice(), 460, 498);
+				
+				tx = AffineTransform.getTranslateInstance(300, 450);
+				tx.scale(0.2, 0.2);
+				g2.drawImage(getImage(engine.getEngineUpgrade(0)), tx, null);
+				
+				tx = AffineTransform.getTranslateInstance(640, 450);
+				tx.scale(0.2, 0.2);
+				g2.drawImage(getImage(engine.getEngineUpgrade(0)), tx, null);
+				
 				break;
 			case 0:
 				g.drawString("Level 2 $"+engine.getUpgradePrice(), 450, 498);
+				tx = AffineTransform.getTranslateInstance(255, 450);
+				tx.scale(0.15, 0.15);
+				g2.drawImage(getImage(engine.getEngineUpgrade(1)), tx, null);
+				
+				tx = AffineTransform.getTranslateInstance(605, 450);
+				tx.scale(0.15, 0.15);
+				g2.drawImage(getImage(engine.getEngineUpgrade(1)), tx, null);
 				break;
 			case 1:
 				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
@@ -305,9 +338,19 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				break;
 		}
 		g.setFont(font2);
-		g.drawString("Press Space to Start", 250, 750);
+		g.drawString("Press Space to Start", 290, 750);
 	}
 	
+	private String getEngineUpgrade(Object imgsStrings, int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Object getImgsStrings() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public void mainMenu(Graphics g) {
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 100);
 		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
@@ -320,11 +363,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g.setColor(Color.cyan);
 		g.setFont(font1);
 		
-		g.drawString("Yaris Flight", 250, 200);
+		g.drawString("Yaris Flight", 230, 200);
 		
 		g.setFont(font2);
 		
-		g.drawString("Press Space to Start", 250, 400);
+		g.drawString("Press Space to Start", 270, 370);
 		
 	}
 	
