@@ -271,6 +271,11 @@ public class Player {
 			lift = 0;
 			drag = 2;
 		}
+		
+		if(Math.sqrt(Math.pow(vx, 2)+Math.pow(vy, 2)) < 20 && angle > Math.PI/2-0.4 && angle < Math.PI/2+0.4) {
+			lift = 0;
+			drag = 0;
+		}
 		//System.out.println("angle: "+ angle);
 		//System.out.println("angleOfAttack: " + angleOfAttack);
 		//System.out.println("lift: " + lift);
