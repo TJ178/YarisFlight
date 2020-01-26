@@ -24,6 +24,12 @@ public class StatusBar {
 	public StatusBar(int x, int y, int h, int w, double angel, Color c,boolean vert, int labelposup, String labe, boolean showMax, 
 			int min, int max, double value, boolean changeColors) {
 		
+		xCoord = x;
+		yCoord  = y;
+		width = w;
+		height = h;
+		
+		
 		barColor = c;
 		verticalBar = vert;
 		labelPositionTop = labelposup;

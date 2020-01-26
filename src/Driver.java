@@ -65,7 +65,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		}
 		
 		scorekeep.trackScores(player);
-		
+		fuelbar.setValue(engine.getFuelPerc()*100);
 	}
 	
 	public void paint(Graphics g){
@@ -212,7 +212,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		scorekeep = new ScoreKeeper();
 		
-		fuelbar = new StatusBar(100, 100, 100, 30, 0, Color.yellow, false, 1, "Fuel", false, 0, 100, 50, false);
+		fuelbar = new StatusBar(900, 600, 100, 30, 0, Color.yellow, true, 1, "Fuel", false, 100, 0, 0, false);
 		
 		/*
 		if(stage == 3) {
@@ -358,7 +358,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			g.setColor(Color.cyan);
 		}
 		g.drawString("You reached a maximum altitude of " + scorekeep.getMaxAlt()*0.055 + " meters!", 250, 300);
-		
+			
 		if(scorekeep.getNewSpeedRecord()) {
 			g.setColor(Color.green);
 		}else {
@@ -369,7 +369,6 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		maxspeed = maxspeed - (maxspeed - temp*0.01);
 		g.drawString("You reached a top speed of " + maxspeed + " km per hour!", 250, 350);
 		g.drawString("Money Earned: $" +scorekeep.getMoneyEarned(), 250, 400);
-		
 	}
 	
 	public boolean isInside(int x, int y, int xBound1, int yBound1, int xBound2, int yBound2) {
