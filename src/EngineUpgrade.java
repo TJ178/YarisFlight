@@ -97,7 +97,8 @@ public class EngineUpgrade extends Upgrade {
 		
 
 		if(isThrusting) {
-			fuelPerc -= fuelUsage[level]*fuelManager.getMultiplier() / fuels[level];
+			//System.out.println(fuelManager.getMultiplier());
+			fuelPerc -= fuelUsage[level] / (fuels[level]*fuelManager.getMultiplier());
 			if(fuelPerc < 0) {
 				isThrusting = false;
 			}

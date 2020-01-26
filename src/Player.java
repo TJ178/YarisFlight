@@ -271,10 +271,10 @@ public class Player {
 			lift = 0;
 			drag = 2;
 		}
-		System.out.println("angle: "+ angle);
-		System.out.println("angleOfAttack: " + angleOfAttack);
-		System.out.println("lift: " + lift);
-		System.out.println("drag: " + drag);
+		//System.out.println("angle: "+ angle);
+		//System.out.println("angleOfAttack: " + angleOfAttack);
+		//System.out.println("lift: " + lift);
+		//System.out.println("drag: " + drag);
 		
 		
 		
@@ -290,7 +290,7 @@ public class Player {
 		
 		double fx = (appliedThrust - drag)*costheta - lift*sintheta;
 		double fy = (appliedThrust - drag)*sintheta + lift*costheta + gravity;
-		System.out.println("fy:" + (appliedThrust - drag)*sintheta);
+		//System.out.println("fy:" + (appliedThrust - drag)*sintheta);
 		
 		
 		////////////old system that exists just in case
