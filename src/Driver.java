@@ -25,6 +25,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private Timer t;
 	private int stage = 0;
 	
+	private final boolean debug = true;
+	
 	public Cloud[] cloudRow1 = new Cloud[5];
 	
 	Player player;
@@ -96,17 +98,19 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		ground.paint(g, player.getX(), player.getY());
 		ramp.paint(g,player.getX(), player.getY());
-
-		g.setColor(Color.black);
-		g.drawString("x: " + player.getX(), 0, 10);
-		g.drawString("y: " + player.getY(), 0, 20);
-		g.drawString("ground: " + player.onGround(), 0, 30);
-		g.drawString("Thrust: " + player.getThrust(), 0, 40);
-		g.drawString("accelX: " + player.getAx(),0, 50);
-		g.drawString("accelY: " + player.getAy(),0, 60);
-		g.drawString("vx: " + player.getVx(),0, 70);
-		g.drawString("vy: " + player.getVy(),0, 80);
-		g.drawString("fuel: "+ engine.getFuelPerc(), 0, 90);
+		
+		if(debug) {
+			g.setColor(Color.black);
+			g.drawString("x: " + player.getX(), 0, 10);
+			g.drawString("y: " + player.getY(), 0, 20);
+			g.drawString("ground: " + player.onGround(), 0, 30);
+			g.drawString("Thrust: " + player.getThrust(), 0, 40);
+			g.drawString("accelX: " + player.getAx(),0, 50);
+			g.drawString("accelY: " + player.getAy(),0, 60);
+			g.drawString("vx: " + player.getVx(),0, 70);
+			g.drawString("vy: " + player.getVy(),0, 80);
+			g.drawString("fuel: "+ engine.getFuelPerc(), 0, 90);
+		}
 
 		fuelbar.paint(g);
 		
@@ -228,16 +232,16 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	}
 	
 	public void upgradeScreen(Graphics g) {		
-		Font font1 = new Font("Book Antiqua", Font.PLAIN, 13);
-		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
-		Font font3 = new Font("Book Antiqua", Font.BOLD, 20);
+		Font font1 = new Font("MV Boli", Font.PLAIN, 25);
+		Font font2 = new Font("MV Boli", Font.PLAIN, 45);
+		Font font3 = new Font("Courier New", Font.PLAIN, 50);
 
 
 		Graphics2D g2 = (Graphics2D) g;
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		tx.scale(1,1);		
 		
-		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		g2.drawImage(getImage("newUpgradeBackground.png"), tx, null);
 		//tx.scale(0.6, 0.6);
 		//g.setFont(font1);
 
@@ -246,113 +250,116 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		//g.fillRect(0, 0, screen_width, screen_height);
 		
 		//rectangles
-		g.setColor(Color.CYAN);
-		g.fillRect(300, 50, 400, 100);
+		g.setColor(Color.GREEN);
+		//g.fillRect(300, 50, 400, 100);
 		
 		//wings
-		g.fillRect(400, 300, 200, 100);
+		g2.drawImage(getImage("upgradeButton.png"), 270, 410, null);
 		//engine
-		g.fillRect(400, 450, 200, 100);
+		//g.fillRect(400, 450, 200, 100);
+		g2.drawImage(getImage("upgradeButton.png"), 270, 548, null);
 		//fuel
-		g.fillRect(400, 600, 200, 100);
+		//g.fillRect(400, 600, 200, 100);
+		g2.drawImage(getImage("upgradeButton.png"), 270, 688, null);
 		
 		g.setFont(font3);
 		g.setColor(Color.black);
-		g.drawString("Upgrades", 450, 75);
-		g.drawString("You have "+ scorekeep.getMoney()+" Dollars!", 410, 100);
+		g.drawString("$"+ scorekeep.getMoney(), 30, 140);
+		g.setFont(font2);
+		g.drawString("Upgrades", 40, 325);
 		
-		g.drawString("Wings:", 470, 275); 
+		g.drawString("Wings:", 40, 400); 
 		g.setFont(font1);
 		switch(wings.getLevel()) {
 			case -1:
-				g.drawString("Level 1 $"+wings.getUpgradePrice(), 460, 348);	
-				tx = AffineTransform.getTranslateInstance(260, 315);
+				g.drawString("Level 1 $"+wings.getUpgradePrice(), 270, 400);	
+				
+				tx = AffineTransform.getTranslateInstance(40, 420);
 				tx.scale(0.1, 0.1);
 				g2.drawImage(getImage(wings.getWingsUpgrade(0)), tx, null);
 				
-				tx = AffineTransform.getTranslateInstance(610, 315);
+				/*tx = AffineTransform.getTranslateInstance(610, 315);
 				tx.scale(0.1, 0.1);
-				g2.drawImage(getImage(wings.getWingsUpgrade(0)), tx, null);
+				g2.drawImage(getImage(wings.getWingsUpgrade(0)), tx, null);*/
 				break;
 			case 0:
-				g.drawString("Level 2 $"+wings.getUpgradePrice(), 450, 348);
+				g.drawString("Level 2 $"+wings.getUpgradePrice(), 270, 400);
 				
-				tx = AffineTransform.getTranslateInstance(300, 315);
+				tx = AffineTransform.getTranslateInstance(60, 420);
 				tx.scale(0.5, 0.5);
 				g2.drawImage(getImage(wings.getWingsUpgrade(1)), tx, null);
 				
-				tx = AffineTransform.getTranslateInstance(630, 315);
+				/*tx = AffineTransform.getTranslateInstance(630, 315);
 				tx.scale(0.5, 0.5);
-				g2.drawImage(getImage(wings.getWingsUpgrade(1)), tx, null);
+				g2.drawImage(getImage(wings.getWingsUpgrade(1)), tx, null);*/
 				break;
 			case 1:
-				g.drawString("Oops! Wings are Fully Upgraded!", 405, 348);
+				g.drawString("MAXED OUT!", 270, 400);
 				break;
 		}
 		
 		
 		
-		g.setFont(font3);
-		g.drawString("Engine:", 465, 425);
+		g.setFont(font2);
+		g.drawString("Engine:", 40, 540);
 		g.setFont(font1);
 		switch(engine.getLevel()) {
 			case -1:
-				g.drawString("Level 1 $"+engine.getUpgradePrice(), 460, 498);
+				g.drawString("Level 1 $"+engine.getUpgradePrice(), 270, 540);
 				
-				tx = AffineTransform.getTranslateInstance(270, 450);
+				tx = AffineTransform.getTranslateInstance(60, 535);
 				tx.scale(0.2, 0.2);
 				g2.drawImage(getImage(engine.getEngineUpgrade(0)), tx, null);
 				
-				tx = AffineTransform.getTranslateInstance(620, 450);
+				/*tx = AffineTransform.getTranslateInstance(620, 450);
 				tx.scale(0.2, 0.2);
-				g2.drawImage(getImage(engine.getEngineUpgrade(0)), tx, null);
+				g2.drawImage(getImage(engine.getEngineUpgrade(0)), tx, null);*/
 				
 				break;
 			case 0:
-//<<<<<<< HEAD
-				g.drawString("Level 2 $"+engine.getUpgradePrice(), 450, 498);
-				tx = AffineTransform.getTranslateInstance(300, 450);
+				g.drawString("Level 2 $"+engine.getUpgradePrice(), 270, 540);
+				
+				tx = AffineTransform.getTranslateInstance(140, 555);
+				tx.rotate(Math.PI/2);
 				tx.scale(0.15, 0.15);
 				g2.drawImage(getImage(engine.getEngineUpgrade(1)), tx, null);
 				
-				tx = AffineTransform.getTranslateInstance(640, 450);
+				/*x = AffineTransform.getTranslateInstance(640, 450);
 				tx.scale(0.15, 0.15);
-				g2.drawImage(getImage(engine.getEngineUpgrade(1)), tx, null);
-//=======
-				//g.drawString("Level 2 $"+engine.getUpgradePrice(), 460, 498);
-//>>>>>>> branch 'master' of https://github.com/TJ178/YarisFlight.git
+				g2.drawImage(getImage(engine.getEngineUpgrade(1)), tx, null);*/
 				break;
 			case 1:
-				g.drawString("Level 3 $"+engine.getUpgradePrice(), 450, 498);
-				tx = AffineTransform.getTranslateInstance(250, 450);
+				g.drawString("Level 3 $"+engine.getUpgradePrice(), 270, 540);
+				tx = AffineTransform.getTranslateInstance(200, 510);
+				tx.rotate(Math.PI/2);
 				tx.scale(0.15, 0.15);
 				g2.drawImage(getImage(engine.getEngineUpgrade(2)), tx, null);
 				
-				tx = AffineTransform.getTranslateInstance(610, 450);
+				/*tx = AffineTransform.getTranslateInstance(610, 450);
 				tx.scale(0.15, 0.15);
-				g2.drawImage(getImage(engine.getEngineUpgrade(2)), tx, null);
+				g2.drawImage(getImage(engine.getEngineUpgrade(2)), tx, null);*/
 				break;
 			case 2:
-				g.drawString("Oops! Engine is Fully Upgraded!", 410, 498);
+				g.drawString("MAXED OUT!", 270, 540);
 				break;
 		}
 		
-		g.setFont(font3);
-		g.drawString("Fuel Tank:", 460, 575);
+		g.setFont(font2);
+		g.drawString("Fuel Tank:", 40, 680);
 		g.setFont(font1);
 		switch(engine.getFuelManager().getLevel()) {
 			case 0:
-				g.drawString("Level 1 $"+engine.getFuelManager().getUpgradePrice(), 460, 648);		
+				g.drawString("Level 1 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);		
 				break;
 			case 1:
-				g.drawString("Level 2 $"+engine.getFuelManager().getUpgradePrice(), 450, 648);
+				g.drawString("Level 2 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);
 				break;
 			case 2:
-				g.drawString("Oops! Engine is Fully Upgraded!", 410, 648);
+				g.drawString("MAXED OUT!", 270, 680);
 				break;
 		}
-		g.setFont(font2);
-		g.drawString("Press Space to Start", 290, 750);
+		//g.setFont(font2);
+		//g.drawString("Press Space to Start", 290, 750);
 	}
 	
 	private String getEngineUpgrade(Object imgsStrings, int i) {
@@ -367,21 +374,22 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 	public void mainMenu(Graphics g) {
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 100);
-		Font font2 = new Font("Book Antiqua", Font.PLAIN, 50);
+		Font font2 = new Font("Book Antiqua", Font.PLAIN, 40);
 
 		Graphics2D g2 = (Graphics2D) g;
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		tx.scale(1,1);
 		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
 		
-		g.setColor(Color.cyan);
+		g.setColor(Color.black);
 		g.setFont(font1);
 		
-		g.drawString("Yaris Flight", 230, 200);
+		//g.drawString("Yaris Flight", 230, 200);
+		g2.drawImage(getImage("logo.png"), 110, 150, null);
 		
 		g.setFont(font2);
 		
-		g.drawString("Press Space to Start", 270, 370);
+		g.drawString("Press the spacebar to start", 250, 600);
 		
 	}
 	
@@ -451,7 +459,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(stage == 1) {
-			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 300, 600, 400) && wings.getUpgradePrice() < scorekeep.getMoney()) {
+			if(isInside(e.getX(), e.getY(), 270, 443, 430, 500) && wings.getUpgradePrice() < scorekeep.getMoney()) {
 				switch(wings.getLevel()){
 					case -1:
 						scorekeep.spendMoney(wings.getUpgradePrice());
@@ -468,31 +476,32 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 			}
 			
-			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 450, 600, 550) && engine.getUpgradePrice() < scorekeep.getMoney()) {
+			if(isInside(e.getX(), e.getY(), 270, 581, 430, 636) && engine.getUpgradePrice() < scorekeep.getMoney()) {
 				switch(engine.getLevel()){
 					case -1:
 						scorekeep.spendMoney(engine.getUpgradePrice());
 						engine.upgrade1();
 						player.addUpgrade(engine);
-						System.out.println("upgrade engine");
+						if(debug) {System.out.println("upgrade engine");}
 						break;
 					case 0:
 						scorekeep.spendMoney(engine.getUpgradePrice());
 						engine.upgrade2();
 						player.addUpgrade(engine);
-						System.out.println("upgrade engine");
+						if(debug) {System.out.println("upgrade engine");}
 						break;
 					case 1:
 						scorekeep.spendMoney(engine.getUpgradePrice());
 						engine.upgrade4();
 						player.addUpgrade(engine);
+						if(debug) {System.out.println("upgrade engine");}
 						break;
 				}
 				//System.out.println("upgrade engine");
 
 			}
 				
-			if(isInside(e.getXOnScreen(), e.getYOnScreen(), 400, 600, 600, 700) && engine.getFuelManager().getUpgradePrice() < scorekeep.getMoney()){
+			if(isInside(e.getX(), e.getY(), 270, 721, 430, 780) && engine.getFuelManager().getUpgradePrice() < scorekeep.getMoney()){
 				
 				if(engine.getFuelManager().getLevel() < 2) {
 					scorekeep.spendMoney(engine.getFuelManager().getUpgradePrice());
@@ -500,7 +509,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				}
 			}
 		}
-		System.out.println(e.getXOnScreen() + ":" + e.getYOnScreen());
+		if(debug) {System.out.println(e.getX() + ":" + e.getY());}
 	}
 
 	@Override
@@ -567,7 +576,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			}
 			break;
 		default:
-			System.out.println(key);
+			if(debug) {System.out.println(key);}
 			//update();
 			//repaint();
 		}
@@ -597,7 +606,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 			break;
 		default:
-			System.out.println(key);
+			if(debug) {System.out.println(key);}
 		}
 		
 	}

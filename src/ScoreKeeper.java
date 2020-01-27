@@ -20,7 +20,7 @@ public class ScoreKeeper {
 	private int speedRecord;
 	
 	public ScoreKeeper(){
-		money = 0;
+		money = 100000;
 	}
 	
 	
