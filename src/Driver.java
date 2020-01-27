@@ -119,7 +119,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		}
 
 		Graphics2D g2d = (Graphics2D)(g);
-		g.drawImage(fuelgauge, 890, 570, null);
+		g.drawImage(fuelgauge, 900, 580, null);
 		fuelbar.paint(g);
 		
 		
@@ -224,7 +224,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		scorekeep = new ScoreKeeper();
 		
-		fuelbar = new StatusBar(913, 593, 132, 58, 0, Color.yellow, true, 1, "", false, 100, 0, 0, false);
+		fuelbar = new StatusBar(923, 603, 132, 58, 0, Color.yellow, true, 1, "", false, 100, 0, 0, false);
 		fuelgauge = getImage("fuelgauge.png");
 		
 		/*
@@ -234,7 +234,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		*/
 		
 		f.add(this);
-		t = new Timer(17, this);
+		t = new Timer(10, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -364,6 +364,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				g.drawString("Level 2 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);
 				break;
 			case 2:
+				g.drawString("Level 3 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);
+				break;
+			case 3:
+				g.drawString("Level 4 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);
+				break;
+			case 4:
 				g.drawString("MAXED OUT!", 270, 680);
 				break;
 		}
@@ -388,7 +394,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		Graphics2D g2 = (Graphics2D) g;
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		tx.scale(1,1);
-		g2.drawImage(getImage("tableback.jpg"), tx, null);
+		g2.drawImage(getImage("tableback.png"), tx, null);
 		
 		g.setColor(Color.black);
 		g.setFont(font1);
@@ -431,7 +437,11 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			g.drawString("New Record!!", 290, 250);
 			g.setColor(Color.BLACK);
 		}
-		g.drawString("Distance: " + scorekeep.getMaxDist()*0.055 + "m", 290, 213);
+		
+		double maxdist = scorekeep.getMaxDist()*0.055;
+		int temp = (int) (maxdist * 1000);
+		maxdist = temp / 1000.0;
+		g.drawString("Distance: " + maxdist + "m", 290, 213);
 		
 		
 		if(scorekeep.getNewAltRecord()) {
@@ -439,7 +449,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			g.drawString("New Record!!", 290, 330);
 			g.setColor(Color.BLACK);
 		}
-		g.drawString("Max Altitude: " + scorekeep.getMaxAlt()*0.055 + "m", 290, 300);
+		double maxalt = scorekeep.getMaxAlt()*0.055;
+		temp = (int) (maxalt * 1000);
+		maxalt = temp / 1000.0;
+		g.drawString("Max Altitude: " + maxalt + "m", 290, 300);
 			
 		
 		if(scorekeep.getNewSpeedRecord()) {
@@ -448,7 +461,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			g.setColor(Color.BLACK);
 		}
 		double maxspeed = scorekeep.getMaxSpeed()*0.055*60*1000/3600;
-		int temp = (int) (maxspeed * 1000);
+		temp = (int) (maxspeed * 1000);
 		maxspeed = temp / 1000.0;
 		g.drawString("Top Speed: " + maxspeed + " kmh", 290, 388);
 		g.drawString("Money Earned: $" +scorekeep.getMoneyEarned(), 290, 470);
@@ -521,7 +534,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				
 			if(isInside(e.getX(), e.getY(), 270, 721, 430, 780) && engine.getFuelManager().getUpgradePrice() < scorekeep.getMoney()){
 				
-				if(engine.getFuelManager().getLevel() < 2) {
+				if(engine.getFuelManager().getLevel() < 4) {
 					scorekeep.spendMoney(engine.getFuelManager().getUpgradePrice());
 					engine.getFuelManager().upgrade();
 				}
