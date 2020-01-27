@@ -378,12 +378,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 
 	public void mainMenu(Graphics g) {
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 100);
-		Font font2 = new Font("Book Antiqua", Font.PLAIN, 40);
-
+		Font font2 = new Font("MV Boli", Font.PLAIN, 35);
+	
 		Graphics2D g2 = (Graphics2D) g;
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		tx.scale(1,1);
-		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
+		g2.drawImage(getImage("tableback.jpg"), tx, null);
 		
 		g.setColor(Color.black);
 		g.setFont(font1);
@@ -392,6 +392,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		g2.drawImage(getImage("logo.png"), 110, 150, null);
 		
 		g.setFont(font2);
+		
+		tx = AffineTransform.getTranslateInstance(150, 520);
+		tx.scale(1.3,1);
+		g2.drawImage(getImage("notebook.png"), tx, null);
 		
 		g.drawString("Press the spacebar to start", 250, 600);
 		
