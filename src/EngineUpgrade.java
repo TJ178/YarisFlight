@@ -54,13 +54,9 @@ public class EngineUpgrade extends Upgrade {
   	private int[] prices = {priceU1, priceU2, priceU4};
 
 	private Image img;
-//<<<<<<< HEAD
-	//private Image[] imgs = new Image[2]; //the two nonlit engines
-	//private Image[] imgsLit = new Image[2];
-//=======
-	private Image[] imgs = new Image[3];
+	
+	private Image[] imgs = new Image[3];  
 	private Image[] imgsLit = new Image[3];
-//>>>>>>> branch 'master' of https://github.com/TJ178/YarisFlight.git
 	
 	private AffineTransform tx;
 	private FuelUpgrade fuelManager;
