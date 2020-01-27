@@ -402,42 +402,43 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	public void endScreen(Graphics g) {
 		Font font1 = new Font("Book Antiqua", Font.PLAIN, 25);
 		Font font2 = new Font("Book Antiqua", Font.PLAIN, 20);
+		Font font3 = new Font("MV Boli", Font.PLAIN, 30);
 
 		Graphics2D g2 = (Graphics2D) g;
-		tx = AffineTransform.getTranslateInstance(200, 160);
-		tx.scale(0.6, 0.6);
-		g2.drawImage(getImage("upgradeBackground.png"), tx, null);
 		
-		g.setFont(font1);
-		g.setColor(Color.cyan);
-		g.drawString("Darnit you crashed the 2007 Toyota Yaris!", 250, 200);
-		g.setFont(font2);
+		g2.drawImage(getImage("notebook.png"), 220, 50, null);
+		
+		g.setFont(font3);
+		g.setColor(Color.black);
+		g.drawString("You crashed the Yaris!", 300, 150);
+		
 		
 		if(scorekeep.getNewDistRecord()) {
-			g.setColor(Color.green);
-		}else {
-			g.setColor(Color.cyan);
+			g.setColor(Color.GREEN);
+			g.drawString("New Record!!", 290, 250);
+			g.setColor(Color.BLACK);
 		}
-		g.drawString("Distance: " + scorekeep.getMaxDist()*0.055 + " meters", 250, 250);
+		g.drawString("Distance: " + scorekeep.getMaxDist()*0.055 + "m", 290, 213);
 		
 		
 		if(scorekeep.getNewAltRecord()) {
-			g.setColor(Color.green);
-		}else {
-			g.setColor(Color.cyan);
+			g.setColor(Color.GREEN);
+			g.drawString("New Record!!", 290, 330);
+			g.setColor(Color.BLACK);
 		}
-		g.drawString("Maximum Altitude: " + scorekeep.getMaxAlt()*0.055 + " meters", 250, 300);
+		g.drawString("Max Altitude: " + scorekeep.getMaxAlt()*0.055 + "m", 290, 300);
 			
+		
 		if(scorekeep.getNewSpeedRecord()) {
-			g.setColor(Color.green);
-		}else {
-			g.setColor(Color.cyan);
+			g.setColor(Color.GREEN);
+			g.drawString("New Record!!", 290, 420);
+			g.setColor(Color.BLACK);
 		}
 		double maxspeed = scorekeep.getMaxSpeed()*0.055*60*1000/3600;
 		int temp = (int) (maxspeed * 1000);
 		maxspeed = temp / 1000.0;
-		g.drawString("Top Speed: " + maxspeed + " km per hour", 250, 350);
-		g.drawString("Money Earned: $" +scorekeep.getMoneyEarned(), 250, 400);
+		g.drawString("Top Speed: " + maxspeed + " kmh", 290, 388);
+		g.drawString("Money Earned: $" +scorekeep.getMoneyEarned(), 290, 470);
 	}
 	
 	public boolean isInside(int x, int y, int xBound1, int yBound1, int xBound2, int yBound2) {
