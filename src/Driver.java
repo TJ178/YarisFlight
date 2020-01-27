@@ -25,7 +25,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	private Timer t;
 	private int stage = 0;
 	
-	private final boolean debug = true;
+	private final boolean debug = false;
 	
 	public Cloud[] cloudRow1 = new Cloud[5];
 	
@@ -45,6 +45,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 	//UpgradeScreen upgradeScreen;
 
 	StatusBar fuelbar;
+	private Image fuelgauge;
 	
 	private AffineTransform tx;
 
@@ -112,6 +113,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			g.drawString("fuel: "+ engine.getFuelPerc(), 0, 90);
 		}
 
+		Graphics2D g2d = (Graphics2D)(g);
+		g.drawImage(fuelgauge, 890, 570, null);
 		fuelbar.paint(g);
 		
 		
@@ -216,7 +219,8 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		scorekeep = new ScoreKeeper();
 		
-		fuelbar = new StatusBar(900, 600, 100, 30, 0, Color.yellow, true, 1, "Fuel", false, 100, 0, 0, false);
+		fuelbar = new StatusBar(913, 593, 132, 58, 0, Color.yellow, true, 1, "", false, 100, 0, 0, false);
+		fuelgauge = getImage("fuelgauge.png");
 		
 		/*
 		if(stage == 3) {
