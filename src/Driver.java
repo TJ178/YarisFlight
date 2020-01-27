@@ -399,6 +399,10 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		
 		g.drawString("Press the spacebar to start", 250, 600);
 		
+		Font font3 = new Font("MV Boli", Font.PLAIN, 28);
+		g.setFont(font3);
+		g.drawString("Use L/R to turn, space to thrust", 250, 700);
+		
 	}
 	
 	
