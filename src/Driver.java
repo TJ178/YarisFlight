@@ -359,6 +359,12 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				g.drawString("Level 2 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);
 				break;
 			case 2:
+				g.drawString("Level 3 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);
+				break;
+			case 3:
+				g.drawString("Level 4 $"+engine.getFuelManager().getUpgradePrice(), 270, 680);
+				break;
+			case 4:
 				g.drawString("MAXED OUT!", 270, 680);
 				break;
 		}
@@ -383,7 +389,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		Graphics2D g2 = (Graphics2D) g;
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		tx.scale(1,1);
-		g2.drawImage(getImage("tableback.jpg"), tx, null);
+		g2.drawImage(getImage("tableback.png"), tx, null);
 		
 		g.setColor(Color.black);
 		g.setFont(font1);
@@ -516,7 +522,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 				
 			if(isInside(e.getX(), e.getY(), 270, 721, 430, 780) && engine.getFuelManager().getUpgradePrice() < scorekeep.getMoney()){
 				
-				if(engine.getFuelManager().getLevel() < 2) {
+				if(engine.getFuelManager().getLevel() < 4) {
 					scorekeep.spendMoney(engine.getFuelManager().getUpgradePrice());
 					engine.getFuelManager().upgrade();
 				}
