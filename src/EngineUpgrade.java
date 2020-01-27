@@ -21,21 +21,21 @@ public class EngineUpgrade extends Upgrade {
 	private int thrustU1 = 5;
 	private double scaleU1 = 0.2;
 	private int fuelU1 = 5;
-	private int priceU1 = 69;
+	private int priceU1 = 70;
 	
 	private int weightU2 = 5;
 	private int dragU2 = 0;
 	private int thrustU2 = 10;
 	private double scaleU2 = 0.2;
 	private int fuelU2 = 10;
-	private int priceU2 = 420;
+	private int priceU2 = 419;
 
 	private int weightU4 = 50;
 	private int thrustU4 = 20;
 	private int dragU4 = 5;
 	private double scaleU4 = 0.2;
 	private int fuelU4 = 20;
-	private int priceU4 = 6969;
+	private int priceU4 = 7000;
 	
 	private String imgU1 = "fanNotTims.png";
 	private String imgU1Lit = "fanNew.gif";
