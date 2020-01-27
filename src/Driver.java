@@ -418,7 +418,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		}else {
 			g.setColor(Color.cyan);
 		}
-		g.drawString("You flew " + scorekeep.getMaxDist()*0.055 + " meters!", 250, 250);
+		g.drawString("Distance: " + scorekeep.getMaxDist()*0.055 + " meters", 250, 250);
 		
 		
 		if(scorekeep.getNewAltRecord()) {
@@ -426,7 +426,7 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 		}else {
 			g.setColor(Color.cyan);
 		}
-		g.drawString("You reached a maximum altitude of " + scorekeep.getMaxAlt()*0.055 + " meters!", 250, 300);
+		g.drawString("Maximum Altitude: " + scorekeep.getMaxAlt()*0.055 + " meters", 250, 300);
 			
 		if(scorekeep.getNewSpeedRecord()) {
 			g.setColor(Color.green);
@@ -434,9 +434,9 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			g.setColor(Color.cyan);
 		}
 		double maxspeed = scorekeep.getMaxSpeed()*0.055*60*1000/3600;
-		int temp = (int) (maxspeed * 100);
-		maxspeed = maxspeed - (maxspeed - temp*0.01);
-		g.drawString("You reached a top speed of " + maxspeed + " km per hour!", 250, 350);
+		int temp = (int) (maxspeed * 1000);
+		maxspeed = temp / 1000.0;
+		g.drawString("Top Speed: " + maxspeed + " km per hour", 250, 350);
 		g.drawString("Money Earned: $" +scorekeep.getMoneyEarned(), 250, 400);
 	}
 	
