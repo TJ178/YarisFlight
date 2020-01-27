@@ -552,32 +552,32 @@ public class Driver  extends JPanel implements ActionListener, KeyListener, Mous
 			player.setRv(-.05);
 			break;
 		case 40:
-			if(engine.getFuelPerc() > 0) {
-				player.setThrust(player.getPossibleThrust());
-				engine.getLit();
-			}else {
-				player.setThrust(0);
-				engine.notLit();
-			}
-			if(stage == 2) {
-				stage++;
-			}
+			
 			break;	
 		case 32:
-			if(stage == 0 || stage == 1) {
+			switch(stage) { 
+			case 0:
 				stage++;
-			}else if(stage == 4) {
+				break;
+			case 1:
+				stage++;
+				break;
+			case 3:
+				if(engine.getFuelPerc() > 0) {
+					player.setThrust(player.getPossibleThrust());
+					engine.getLit();
+				}else {
+					player.setThrust(0);
+					engine.notLit();
+				}
+				break;
+			case 4:
 				stage = 1;
+				break;
 			}
+			
 			break;
 		case 38:
-			if(engine.getFuelPerc() > 0 && !player.onRamp && !player.onGround()) {
-				player.setThrust(player.getPossibleThrust());
-				engine.getLit();
-			}else {
-				player.setThrust(0);
-				engine.notLit();
-			}
 			break;
 		default:
 			if(debug) {System.out.println(key);}

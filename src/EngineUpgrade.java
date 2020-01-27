@@ -19,7 +19,7 @@ public class EngineUpgrade extends Upgrade {
 	private int weightU1 = 2;
 	private int dragU1 = 0;
 	private int thrustU1 = 5;
-	private double scaleU1 = 0.3;
+	private double scaleU1 = 0.2;
 	private int fuelU1 = 5;
 	private int priceU1 = 69;
 	
@@ -45,8 +45,8 @@ public class EngineUpgrade extends Upgrade {
 	private String imgU4Lit = "thicc_rocket_lit.png";
 
 	private double[] scales = {scaleU1, scaleU2, scaleU4};
-	private double[] transX = {-170, -30, -90};
-	private double[] transY = {-130, 75, 90};
+	private double[] transX = {-150, -30, -90};
+	private double[] transY = {-85, 75, 90};
   	private String[] imgsStrings = {imgU1, imgU2, imgU4};
   	private String[] imgsStringsLit = {imgU1Lit, imgU2Lit, imgU4Lit};
   	private int[] fuels = {fuelU1, fuelU2, fuelU4}; 
