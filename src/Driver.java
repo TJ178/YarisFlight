@@ -20,8 +20,9 @@ import javax.swing.Timer;
 
 /*comments
  * 
- * 
- * 
+ * so fun!
+ * add minimap to show position relative to ground
+ * very fun & well done 
  */
 
 public class Driver  extends JPanel implements ActionListener, KeyListener, MouseListener, MouseMotionListener{
